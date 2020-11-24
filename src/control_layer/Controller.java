@@ -18,7 +18,13 @@ public class Controller {
 	private ArrayList<View> views;
 	
 	
-	public static void main(String[] args) {	}
+	public static void main(String[] args) {
+		new Controller();
+	}
+	
+	public Controller() {
+		database.getInstance();
+	}
 	
 	public void changeVisibleCiew(View v) {}
 	
