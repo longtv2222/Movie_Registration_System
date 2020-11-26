@@ -23,7 +23,7 @@ public class Controller {
 	}
 	
 	public Controller() {
-		database.getInstance();
+		DBManager.getInstance();
 	}
 	
 	public void changeVisibleCiew(View v) {}

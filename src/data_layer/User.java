@@ -9,12 +9,18 @@ public abstract class User {
 	protected ArrayList<Reservation> reservations;
 	protected String email;
 	protected Calendar purchaseDate;
-	protected DBManager database;
 	protected String password;
-	
-	public void addCard(String accountNum, String ccv, String expiry) {}
-	public void addTicket(int userID) {}
-	public void emailReciept() {}
-	public void creditAccount(int reservationID) {}
-	
+
+	public void addCard(String accountNum, String ccv, String expiry) {
+	}
+
+	public void addTicket(int userID) {
+	}
+
+	public void emailReciept() {
+	}
+
+	public void creditAccount(int reservationID) {
+	}
+
 }

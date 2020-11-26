@@ -9,6 +9,7 @@ public class Reservation {
 	private Room room;
 	private Calendar time_date;
 	private double price;
+	private User user;
 	
 	public void changeSeat(int x, int y) {}
 	public void changeTimeSlot(Calendar c) {}

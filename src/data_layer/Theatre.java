@@ -10,7 +10,6 @@ public class Theatre {
 	private HashMap<Integer, Room> theatreRoom;
 	private ArrayList<Reservation> reservations;
 	private ArrayList<Movie> movies;
-	private DBManager database;
 	private int theatreID;
 	
 	public Theatre(){}

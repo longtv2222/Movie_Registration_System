@@ -32,6 +32,8 @@ public class DBManager {
                 + "	capacity real\n"
                 + ");";
 		
+		//Load data into theatre
+		
 		try (Connection conn = DriverManager.getConnection(url);
                 Statement stmt = conn.createStatement()) {
             // create a new table
@@ -48,8 +50,7 @@ public class DBManager {
 	 */
 	public Connection dbConnector() {
 		try {
-			url = "jdbc:sqlite:DBSM.sqlite";
-			Connection conn = DriverManager.getConnection(url);
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:DBSM.sqlite");
 			return conn;
 		} catch (Exception e) {
 			e.printStackTrace();
