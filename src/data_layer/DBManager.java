@@ -22,25 +22,10 @@ public class DBManager {
 		}
 
 		
-		createNewTable();
+
 	}
 
 	public void createNewTable() {
-		String sql = "CREATE TABLE IF NOT EXISTS warehouses (\n"
-                + "	id integer PRIMARY KEY,\n"
-                + "	name text NOT NULL,\n"
-                + "	capacity real\n"
-                + ");";
-		
-		//Load data into theatre
-		
-		try (Connection conn = DriverManager.getConnection(url);
-                Statement stmt = conn.createStatement()) {
-            // create a new table
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
 	}
 	
 	
