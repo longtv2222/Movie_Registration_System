@@ -201,27 +201,36 @@ public class DBManager {
 
 	public void populateReservation(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList)
 			throws SQLException {
-//		Statement statement = conn.createStatement();
-//		ResultSet rs = statement.executeQuery("SELECT * FROM Reservation");
-//
-//		while (rs.next()) { // I know this looks disastrous but trust me :)
-//			int t_id = rs.getInt("t_id");
-//			int room_id = rs.getInt("room_id");
-//			int hour = rs.getInt("hour");
-//			int minute = rs.getInt("minute");
-//			int month = rs.getInt("month");
-//			int day = rs.getInt("day");
-//			int year = rs.getInt("year");
-//			int movie_id = rs.getInt("movieID");
-//			int price = rs.getInt("PRICE");
-//			int x_cor = rs.getInt("x_cor");
-//			int y_cor = rs.getInt("y_cor");
-//			int userID = rs.getInt("userID");
-//
-//			Viewing view = new Viewing(hour, minute, month, day, year, movieList.get(movie_id)); // Creat Viewing object
-//			Viewing refObject = theaterList.get(t_id).getViewing(room_id, view); // Find object view inside theater list
-//			refObject.addReservation(x_cor, y_cor, r);
-//		}
+		Statement statement = conn.createStatement();
+		ResultSet rs = statement.executeQuery("SELECT * FROM Reservation");
+
+		while (rs.next()) { // I know this looks disastrous but trust me :)
+			int t_id = rs.getInt("t_id");
+			int room_id = rs.getInt("room_id");
+			int hour = rs.getInt("hour");
+			int minute = rs.getInt("minute");
+			int month = rs.getInt("month");
+			int day = rs.getInt("day");
+			int year = rs.getInt("year");
+			int movie_id = rs.getInt("movieID");
+			int price = rs.getInt("PRICE");
+			int x_cor = rs.getInt("x_cor");
+			int y_cor = rs.getInt("y_cor");
+
+			Viewing view = new Viewing(hour, minute, month, day, year, movieList.get(movie_id)); // Creat Viewing object
+			Viewing refObject = theaterList.get(t_id).getViewing(room_id, view); // Find object view inside theater list
+
+			if (refObject != null) {
+				Reservation reser = new Reservation(movieList.get(movie_id), theaterList.get(t_id),
+						theaterList.get(t_id).getRoom().get(room_id), refObject, price);
+				refObject.addReservation(x_cor, y_cor, reser);
+			}
+
+		}
+	}
+
+	public void populateUserList(HashMap<Integer, User> userList) throws SQLException {
+
 	}
 
 	public void populateMovie(HashMap<Integer, Movie> movieList) throws SQLException {
