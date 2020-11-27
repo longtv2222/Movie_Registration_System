@@ -268,6 +268,6 @@ public class DBManager {
 		Statement state = conn.createStatement();
 		ResultSet rs = state.executeQuery("SELECT LAST_INSERT_ROWID();");
 
-		theatre.setTheatreID(rs.getInt(1));
+		theatre.setTheatreID(rs.getInt(1)); // Set id of the newly inserted theatre
 	}
 }
