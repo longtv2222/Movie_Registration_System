@@ -3,8 +3,11 @@ package data_layer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 //Singleton class DBManager.
 public class DBManager {
@@ -105,7 +108,7 @@ public class DBManager {
 
 	private void createTableUser() throws SQLException {
 		Statement state = conn.createStatement();
-		state.execute("CREATE TABLE IF NOT EXISTS User(UserID INTEGER PRIMARY KEY);");
+		state.execute("CREATE TABLE IF NOT EXISTS User(UserID INTEGER PRIMARY KEY, username TEXT);");
 	}
 
 	private void createReservationTable() throws SQLException {
@@ -120,13 +123,13 @@ public class DBManager {
 	private void createRegisteredUserTable() throws SQLException {
 		Statement state = conn.createStatement();
 		state.execute(
-				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer references User(userid) ON DELETE CASCADE,userName TEXT);");
+				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer references User(userid) ON DELETE CASCADE);");
 	}
 
 	private void createOrdinaryUserTable() throws SQLException {
 		Statement state = conn.createStatement();
 		state.execute(
-				"CREATE TABLE IF NOT EXISTS RegisteredUser (userid integer references User(userid) ON DELETE CASCADE,userName TEXT, password TEXT);");
+				"CREATE TABLE IF NOT EXISTS RegisteredUser (userid integer references User(userid) ON DELETE CASCADE, password TEXT);");
 	}
 
 	private void createCardTable() throws SQLException {
@@ -148,4 +151,89 @@ public class DBManager {
 		statement.setInt(2, room_id);
 	}
 
+	public void populateTheater(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList)
+			throws SQLException {
+		Statement statement = conn.createStatement();
+		ResultSet rs = statement.executeQuery("SELECT * FROM Theatre");
+
+		while (rs.next()) {
+			int t_id = rs.getInt("t_id");
+			String t_name = rs.getString("t_name");
+			String t_address = rs.getString("t_address");
+			theaterList.put(t_id, new Theatre(t_id, t_name, t_address)); // Putting the value in hash map
+		}
+
+		populateRoom(theaterList, movieList);
+	}
+
+	public void populateRoom(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList)
+			throws SQLException {
+		Statement statement = conn.createStatement();
+		ResultSet rs = statement.executeQuery("SELECT * FROM Room");
+		while (rs.next()) { // For loop populate all rooms of all theater
+			int t_id = rs.getInt("t_id");
+			int room_id = rs.getInt("room_id");
+			theaterList.get(t_id).addRoom(room_id, new Room(room_id));
+		}
+
+		populateViewing(theaterList, movieList);
+	}
+
+	public void populateViewing(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList)
+			throws SQLException {
+		Statement statement = conn.createStatement();
+		ResultSet rs = statement.executeQuery("SELECT * FROM Viewing");
+
+		while (rs.next()) { // I know this looks disastrous but trust me :)
+			int t_id = rs.getInt("t_id");
+			int room_id = rs.getInt("room_id");
+			int hour = rs.getInt("hour");
+			int minute = rs.getInt("minute");
+			int month = rs.getInt("month");
+			int day = rs.getInt("day");
+			int year = rs.getInt("year");
+			int movie_id = rs.getInt("movieID");
+
+			Viewing view = new Viewing(hour, minute, month, day, year, movieList.get(movie_id)); // Creat Viewing object
+			theaterList.get(t_id).addViewing(room_id, view); // Add viewing to room of theater
+		}
+	}
+
+	public void populateReservation(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList)
+			throws SQLException {
+//		Statement statement = conn.createStatement();
+//		ResultSet rs = statement.executeQuery("SELECT * FROM Reservation");
+//
+//		while (rs.next()) { // I know this looks disastrous but trust me :)
+//			int t_id = rs.getInt("t_id");
+//			int room_id = rs.getInt("room_id");
+//			int hour = rs.getInt("hour");
+//			int minute = rs.getInt("minute");
+//			int month = rs.getInt("month");
+//			int day = rs.getInt("day");
+//			int year = rs.getInt("year");
+//			int movie_id = rs.getInt("movieID");
+//			int price = rs.getInt("PRICE");
+//			int x_cor = rs.getInt("x_cor");
+//			int y_cor = rs.getInt("y_cor");
+//			int userID = rs.getInt("userID");
+//
+//			Viewing view = new Viewing(hour, minute, month, day, year, movieList.get(movie_id)); // Creat Viewing object
+//			Viewing refObject = theaterList.get(t_id).getViewing(room_id, view); // Find object view inside theater list
+//			refObject.addReservation(x_cor, y_cor, r);
+//		}
+	}
+
+	public void populateMovie(HashMap<Integer, Movie> movieList) throws SQLException {
+		Statement statement = conn.createStatement();
+		ResultSet rs = statement.executeQuery("SELECT * FROM Movie");
+
+		while (rs.next()) {
+			int movie_id = rs.getInt("movieid");
+			String movie_name = rs.getString("movieName");
+			double price = rs.getDouble("price");
+			int duration = rs.getInt("duration");
+			movieList.put(movie_id, new Movie(movie_id, movie_name, price, duration));
+		}
+	}
 }
