@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 //Singleton class DBManager.
@@ -108,7 +107,7 @@ public class DBManager {
 
 	private void createTableUser() throws SQLException {
 		Statement state = conn.createStatement();
-		state.execute("CREATE TABLE IF NOT EXISTS User(UserID INTEGER PRIMARY KEY, username TEXT);");
+		state.execute("CREATE TABLE IF NOT EXISTS User(UserID INTEGER PRIMARY KEY, username TEXT UNIQUE);");
 	}
 
 	private void createReservationTable() throws SQLException {
@@ -225,12 +224,7 @@ public class DBManager {
 						theaterList.get(t_id).getRoom().get(room_id), refObject, price);
 				refObject.addReservation(x_cor, y_cor, reser);
 			}
-
 		}
-	}
-
-	public void populateUserList(HashMap<Integer, User> userList) throws SQLException {
-
 	}
 
 	public void populateMovie(HashMap<Integer, Movie> movieList) throws SQLException {
@@ -244,5 +238,36 @@ public class DBManager {
 			int duration = rs.getInt("duration");
 			movieList.put(movie_id, new Movie(movie_id, movie_name, price, duration));
 		}
+	}
+
+	/*
+	 * Check if user's username and password are legit or not. Return false if it's
+	 * not, true if it is.
+	 */
+	boolean validateLogin(String userName, String password) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement(
+				"SELECT * FROM User AS U INNER JOIN RegisteredUser as R ON R.userid = U.UserID WHERE U.username = ? AND R.password = ?;");
+		statement.setString(1, userName);
+		statement.setString(2, password);
+		ResultSet rs = statement.executeQuery();
+		if (!rs.isBeforeFirst())
+			return false;
+		return true;
+	}
+
+	/*
+	 * Insert a new theatre to theatre table and set id for it.
+	 */
+	public void insertNewTheatre(Theatre theatre) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("INSERT INTO THEATRE(t_name,t_address) VALUES (?,?);");
+
+		statement.setString(1, theatre.getName());
+		statement.setString(2, theatre.getAddress());
+		statement.execute();
+
+		Statement state = conn.createStatement();
+		ResultSet rs = state.executeQuery("SELECT LAST_INSERT_ROWID();");
+
+		theatre.setTheatreID(rs.getInt(1));
 	}
 }

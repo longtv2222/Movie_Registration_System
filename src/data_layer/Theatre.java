@@ -11,9 +11,15 @@ public class Theatre {
 	private int theatreID;
 
 	public Theatre(int theatreID, String name, String address) {
-		this.name = name;
-		this.address = address;
-		this.theatreID = theatreID;
+		this.setName(name);
+		this.setAddress(address);
+		this.setTheatreID(theatreID);
+		this.theatreRoom = new HashMap<Integer, Room>();
+	}
+
+	public Theatre(String name, String address) {
+		this.setName(name);
+		this.setAddress(address);
 		this.theatreRoom = new HashMap<Integer, Room>();
 	}
 
@@ -32,6 +38,30 @@ public class Theatre {
 	// Get seat of passed viewing
 	public Viewing getViewing(int roomID, Viewing viewing) {
 		return theatreRoom.get(roomID).getViewing(viewing);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getTheatreID() {
+		return theatreID;
+	}
+
+	public void setTheatreID(int theatreID) {
+		this.theatreID = theatreID;
 	}
 
 }

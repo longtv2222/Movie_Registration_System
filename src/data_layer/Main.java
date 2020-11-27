@@ -1,8 +1,9 @@
 package data_layer;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
+
+import control_layer.Controller;
 
 public class Main {
 
@@ -17,6 +18,8 @@ public class Main {
 			DBManager.getInstance().populateMovie(movieList);
 			DBManager.getInstance().populateTheater(theaterList, movieList);
 			DBManager.getInstance().populateReservation(theaterList, movieList);
+
+			Controller controller = new Controller(theaterList, movieList);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
