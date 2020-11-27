@@ -17,6 +17,15 @@ public class Controller {
 	private DBManager database;
 	private ArrayList<View> views;
 
+	
+	public static void main(String[] args) {
+		new Controller();
+	}
+	
+	public Controller() {
+		this.database = DBManager.getInstance();
+	}
+	
 	public Controller(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList) {
 		this.theaterList = theaterList;
 		this.movieList = movieList;
