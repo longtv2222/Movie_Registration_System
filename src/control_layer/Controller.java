@@ -2,18 +2,26 @@ package control_layer;
 
 //Class import
 import data_layer.DBManager;
+import data_layer.Movie;
 import data_layer.Theatre;
 import data_layer.User;
 import presentation_layer.View;
 
 //Library import
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Controller {
-	private ArrayList<Theatre> theatreList;
-	private ArrayList<User> userList;
+	private HashMap<Integer, Theatre> theaterList;
+	private HashMap<Integer, Movie> movieList;
 	private DBManager database;
 	private ArrayList<View> views;
+
+	public Controller(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList) {
+		this.theaterList = theaterList;
+		this.movieList = movieList;
+		this.database = DBManager.getInstance();
+	}
 
 	public void changeVisibleCiew(View v) {
 	}

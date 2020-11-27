@@ -9,7 +9,6 @@ public abstract class User {
 	protected ArrayList<Reservation> reservations;
 	protected String email;
 	protected Calendar purchaseDate;
-	protected String password;
 
 	public void addCard(String accountNum, String ccv, String expiry) {
 	}
