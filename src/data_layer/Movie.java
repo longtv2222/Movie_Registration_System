@@ -12,4 +12,10 @@ public class Movie {
 		this.price = price;
 		this.duration = duration;
 	}
+
+	public String toString() {
+		String display = "movieID: " + movieID + "\n Movie Name: " + movieName + "\t\tPrice: " + price + "\tDuration: "
+				+ duration;
+		return display;
+	}
 }

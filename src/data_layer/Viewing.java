@@ -24,6 +24,7 @@ public class Viewing {
 	}
 
 	public void addReservation(int x, int y, Reservation r) {
+		seats.get(x).set(y, r);	
 	}
 
 	public boolean tooMuchRu() {
