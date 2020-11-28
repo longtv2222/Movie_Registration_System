@@ -5,6 +5,10 @@ import data_layer.DBManager;
 import data_layer.Movie;
 import data_layer.Theatre;
 import data_layer.User;
+import presentation_layer.AccountView;
+import presentation_layer.LoginView;
+import presentation_layer.MenuView;
+import presentation_layer.SeatView;
 import presentation_layer.View;
 
 import java.sql.SQLException;
@@ -21,6 +25,7 @@ public class Controller {
 	public Controller(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList) {
 		this.theaterList = theaterList;
 		this.movieList = movieList;
+		this.views = new ArrayList<View>();
 	}
 
 	public void loadAllInfo() {
@@ -33,6 +38,13 @@ public class Controller {
 		}
 	}
 
+	public void createViews() {
+		views.add(new LoginView());
+		views.add(new MenuView());
+		views.add(new SeatView());
+		views.add(new AccountView());
+	}
+	
 	// Need to test this
 	public void validateRegisteredUser(String email, String password) {
 		try {

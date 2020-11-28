@@ -4,8 +4,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public abstract class View extends JPanel implements ActionListener{
 	protected ArrayList<Component> cmpArr;

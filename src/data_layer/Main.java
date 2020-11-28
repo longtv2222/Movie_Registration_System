@@ -17,9 +17,7 @@ public class Main {
 		HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
 		Controller controller = new Controller(theaterList, movieList);
 		controller.loadAllInfo(); // Loading all necessary information to theaterList and movieList
-		
-		new LoginView();
-		new MenuView();
+		controller.createViews();
 	}
 
 }
