@@ -38,4 +38,8 @@ public abstract class User {
 		cards.add(card);
 	}
 
+	public void addReservations(Reservation r) {
+		reservations.add(r);
+	}
+
 }

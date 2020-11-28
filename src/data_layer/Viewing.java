@@ -24,11 +24,16 @@ public class Viewing {
 		return this.seats;
 	}
 
+	public Reservation getSeatCoordinate(int x, int y) {
+		return seats.get(x).get(y);
+	}
+
 	public void addReservation(int x, int y, Reservation r) {
-		seats.get(y).set(x, r);
+		seats.get(x).set(y, r);
 	}
 
 	public boolean tooMuchRu() {
 		return false;
 	}
+
 }

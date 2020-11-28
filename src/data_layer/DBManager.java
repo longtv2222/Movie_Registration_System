@@ -211,7 +211,7 @@ public class DBManager {
 
 			if (refObject != null) {
 				Reservation reser = new Reservation(movieList.get(movie_id), theaterList.get(t_id),
-						theaterList.get(t_id).getRoom().get(room_id), refObject, price);
+						theaterList.get(t_id).getRoom().get(room_id), refObject, price, x_cor, y_cor);
 				refObject.addReservation(x_cor, y_cor, reser);
 			}
 		}
@@ -288,6 +288,32 @@ public class DBManager {
 			calendar.set(Calendar.MONTH, rs.getInt("month") - 1); // Calendar object month starts from 0
 			user.addCard(new Card(accountNumber, ccv, calendar));
 		}
+		rs.close();
+	}
+
+	public void populateUserReservation(User user, HashMap<Integer, Theatre> theaterList,
+			HashMap<Integer, Movie> movieList) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM Reservation as R where R.userID = ?");
+		statement.setInt(1, user.userID);
+		ResultSet rs = statement.executeQuery();
+		while (rs.next()) {
+			int t_id = rs.getInt("t_id");
+			int room_id = rs.getInt("room_id");
+			int hour = rs.getInt("hour");
+			int minute = rs.getInt("minute");
+			int month = rs.getInt("month");
+			int day = rs.getInt("day");
+			int year = rs.getInt("year");
+			int movie_id = rs.getInt("movieID");
+			int x_cor = rs.getInt("x_cor");
+			int y_cor = rs.getInt("y_cor");
+
+			Viewing view = new Viewing(hour, minute, month, day, year, movieList.get(movie_id)); // Creat Viewing object
+			Viewing refObject = theaterList.get(t_id).getViewing(room_id, view); // Find object view inside theater list
+			user.addReservations(refObject.getSeatCoordinate(x_cor, y_cor)); // Adding reservation at x_cor,y_cor to
+																				// user
+		}
+
 		rs.close();
 	}
 }

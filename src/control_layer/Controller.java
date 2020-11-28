@@ -37,7 +37,11 @@ public class Controller {
 	public void validateRegisteredUser(String email, String password) {
 		try {
 			if (DBManager.getInstance().validateRegisteredUser(email, password)) {
+				// Created an object of user with given database id.
 				this.user = DBManager.getInstance().getRegisteredUser(email);
+				DBManager.getInstance().populateUserCard(user); // Populate card information of user
+				// Populate reservation of user with reference object from theater list
+				DBManager.getInstance().populateUserReservation(user, theaterList, movieList);
 			} else {
 				System.out.println("Login failed! Your password or your username is wrong");
 			}
