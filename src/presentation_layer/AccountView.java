@@ -50,9 +50,10 @@ public class AccountView extends View{
         //Button
         JButton BTN_Save = new JButton("Save Changes");
         JButton BTN_Return = new JButton("Return");
+        JButton BTN_NextCC = new JButton("Next Credit Card");
         BTN_Save.addActionListener(this);
         BTN_Return.addActionListener(this);
-
+        BTN_NextCC.addActionListener(this);
         
         //Adding components
         //panel_username.add(LB_Username);
@@ -93,6 +94,7 @@ public class AccountView extends View{
         //Buttons
         panel_Button.add(BTN_Save);
         panel_Button.add(BTN_Return);
+        panel_Button.add(BTN_NextCC);
         
         frame.getContentPane().add(BorderLayout.NORTH, panel_Info);
         frame.getContentPane().add(BorderLayout.SOUTH, panel_Button);
