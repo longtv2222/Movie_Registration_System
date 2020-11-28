@@ -38,7 +38,7 @@ public class Controller {
 		try {
 			if (DBManager.getInstance().validateRegisteredUser(email, password)) {
 				// Created an object of user with given database id.
-				this.user = DBManager.getInstance().getRegisteredUser(email);
+				this.user = DBManager.getInstance().getUser(email);
 				DBManager.getInstance().populateUserCard(user); // Populate card information of user
 				// Populate reservation of user with reference object from theater list
 				DBManager.getInstance().populateUserReservation(user, theaterList, movieList);
@@ -50,4 +50,5 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
+
 }

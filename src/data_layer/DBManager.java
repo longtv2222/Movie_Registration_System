@@ -261,9 +261,8 @@ public class DBManager {
 		theatre.setTheatreID(rs.getInt(1)); // Set id of the newly inserted theatre
 	}
 
-	public User getRegisteredUser(String email) throws SQLException {
-		PreparedStatement statement = conn
-				.prepareStatement("SELECT * FROM User as U INNER JOIN RegisteredUser as R WHERE U.email = ?");
+	public User getUser(String email) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM User as U WHERE U.email = ?");
 		statement.setString(1, email);
 		ResultSet rs = statement.executeQuery();
 
@@ -271,7 +270,6 @@ public class DBManager {
 		user.setUserID(rs.getInt("UserID"));
 		user.setEmail(rs.getString("email"));
 		rs.close();
-		populateUserCard(user);
 		return user;
 	}
 
