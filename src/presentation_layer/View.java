@@ -23,8 +23,9 @@ public abstract class View extends JPanel implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	protected void changeVisibility(boolean a) {
+	public void changeVisibility(boolean a) {
 		frame.setVisible(a);
+		frame.repaint();
 	}
 	
 	protected abstract void paintComponent(Graphics g);
