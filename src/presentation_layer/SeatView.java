@@ -3,10 +3,12 @@ package presentation_layer;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 
+import control_layer.Controller;
+
 public class SeatView extends View {
 
-	public SeatView() {
-		super("Seat View");
+	public SeatView(Controller controller) {
+		super("Seat View", controller);
 		// TODO Auto-generated constructor stub
 	}
 

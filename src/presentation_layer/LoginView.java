@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import control_layer.Controller;
+
 
 public class LoginView extends View {
 	private TextField username;
@@ -19,8 +21,8 @@ public class LoginView extends View {
 	private JLabel usernameText;
 	private JLabel passwordText;
 	
-	public LoginView() {
-		super("Login View");
+	public LoginView(Controller controller) {
+		super("Login View", controller);
 		this.setLayout(null);
 		
 		

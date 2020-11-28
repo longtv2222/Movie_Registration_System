@@ -23,8 +23,8 @@ public class Main {
 		controller.loadAllInfo(); // Loading all necessary information to theaterList and movieList
 		//Done like this to preserve the relationship in the UML diagram
 		ArrayList<View> v = new ArrayList<View>();
-		v.add(new LoginView()); v.add(new MenuView()); v.add(new AccountView()); v.add(new SeatView());
-		controller.createViews(v);
+		v.add(new LoginView(controller)); v.add(new MenuView(controller)); v.add(new AccountView(controller)); v.add(new SeatView(controller));
+		controller.setViews(v);
 	}
 
 }
