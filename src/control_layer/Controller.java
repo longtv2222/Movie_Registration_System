@@ -38,11 +38,8 @@ public class Controller {
 		}
 	}
 
-	public void createViews() {
-		views.add(new LoginView());
-		views.add(new MenuView());
-		views.add(new SeatView());
-		views.add(new AccountView());
+	public void createViews(ArrayList<View> v) {
+		this.views = v;
 	}
 	
 	// Need to test this
