@@ -9,5 +9,9 @@ public class OrdinaryUser extends User {
 		// TODO Auto-generated constructor stub
 	}
 
+	public OrdinaryUser() {
+		super();
+	}
+
 	private double credit;
 }

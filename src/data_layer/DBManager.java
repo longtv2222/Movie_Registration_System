@@ -261,7 +261,7 @@ public class DBManager {
 		theatre.setTheatreID(rs.getInt(1)); // Set id of the newly inserted theatre
 	}
 
-	public User getUser(String email) throws SQLException {
+	public RegisteredUser getRegisteredUser(String email) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("SELECT * FROM User as U WHERE U.email = ?");
 		statement.setString(1, email);
 		ResultSet rs = statement.executeQuery();
@@ -270,6 +270,35 @@ public class DBManager {
 		user.setUserID(rs.getInt("UserID"));
 		user.setEmail(rs.getString("email"));
 		rs.close();
+		return user;
+	}
+
+	public OrdinaryUser getOrdinaryUser(String email) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM User as U WHERE U.email = ?");
+		statement.setString(1, email);
+		ResultSet rs = statement.executeQuery();
+		OrdinaryUser user = new OrdinaryUser();
+
+		if (!rs.isBeforeFirst()) { // If user is not in the db
+			// Create user with given email
+			PreparedStatement statement2 = conn.prepareStatement("INSERT INTO User(email) VALUES (?)");
+
+			statement2.setString(1, email);
+			statement2.execute();
+
+			Statement statement3 = conn.createStatement();
+			ResultSet rs2 = statement3.executeQuery("SELECT LAST_INSERT_ROWID();");
+			int userId = rs2.getInt(1);// Get id from the database
+			user.setUserID(userId); // Set id to user
+			PreparedStatement statement4 = conn.prepareStatement("INSERT INTO OrdinaryUser(userid) VALUES (?)");
+			statement4.setInt(1, userId); // Insert this user to ordinary user table
+			statement4.execute();
+		} else { // If user in the db
+			user.setUserID(rs.getInt("UserID"));
+			user.setEmail(rs.getString("email"));
+			rs.close();
+		}
+
 		return user;
 	}
 
