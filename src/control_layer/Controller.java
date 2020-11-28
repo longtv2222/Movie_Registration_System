@@ -39,8 +39,20 @@ public class Controller {
 		}
 	}
 
-	public void createViews(ArrayList<View> v) {
+	public void setViews(ArrayList<View> v) {
 		this.views = v;
+	}
+	
+	public void changeVisibility(int visible) {
+		System.out.println(visible);
+		for(int i = 0; i < views.size(); i++) {
+			if(i == visible) {
+				views.get(i).setVisible(true);
+			}
+			else {
+				views.get(i).setVisible(false);
+			}		
+		}
 	}
 	
 	// Need to test this
