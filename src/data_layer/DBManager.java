@@ -16,6 +16,15 @@ public class DBManager {
 	public String url;
 	private static DBManager onlyInstance = new DBManager();
 
+	public void test(String sql) {
+		try {
+			Statement state = conn.createStatement();
+			state.execute(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/*
 	 * Create connection between conn and the databas
 	 */
@@ -342,5 +351,28 @@ public class DBManager {
 		}
 
 		rs.close();
+	}
+
+	public void createRegisteredUser(RegisteredUser user) {
+		try {
+			PreparedStatement statement = conn.prepareStatement("INSERT INTO User(email) VALUES (?);");
+			statement.setString(1, user.email);
+			statement.execute();
+
+			Statement statement2 = conn.createStatement();
+			ResultSet rs2 = statement2.executeQuery("SELECT LAST_INSERT_ROWID();");
+			user.setUserID(rs2.getInt("LAST_INSERT_ROWID()"));
+			rs2.close();
+
+			PreparedStatement statement3 = conn
+					.prepareStatement("INSERT INTO RegisteredUser(userId, password) VALUES (?,?);");
+			statement3.setInt(1, user.userID);
+			statement3.setString(2, user.getPassword());
+			statement3.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
