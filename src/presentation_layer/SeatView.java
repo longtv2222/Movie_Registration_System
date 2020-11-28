@@ -20,7 +20,7 @@ public class SeatView extends View {
 	private String roomName;
 	private ArrayList<ArrayList<JButton>> seats;
 	private int[] selectedSeat = new int[2];
-	
+	private ArrayList<ArrayList<Boolean>> reservations; //Might need to be changed..
 	//TODO:
 	//place the reservations onto the board of seats
 	
@@ -29,6 +29,19 @@ public class SeatView extends View {
 		roomName = "Room 1";
 		selectedSeat[0] = -1;
 		seats = new ArrayList<ArrayList<JButton>>();
+		
+		//For testing purposes
+			reservations = new ArrayList<ArrayList<Boolean>>();
+			for(int i = 0; i < seatRows; i++) {
+				reservations.add(new ArrayList<Boolean>());
+	        	for(int j = 0; j < seatColumns; j++) {
+	        		if(j%2 == 0)
+	        			reservations.get(i).add(true);
+	        		else
+	        			reservations.get(i).add(false);
+	        	}
+	        }
+		//
 		
 		
 		//Intialize Frame
@@ -50,8 +63,15 @@ public class SeatView extends View {
         	seats.add(new ArrayList<JButton>());
         	for(int j = 0; j < seatColumns; j++) {
         		JButton b  = new JButton(Integer.toString(i) + "," + Integer.toString(j));
-        		b.setBackground(java.awt.Color.lightGray);
-        		b.addActionListener(this);
+        		
+        		if(reservations.get(i).get(j) == true) {
+        			b.setBackground(java.awt.Color.blue);
+        		}
+        		else {
+        			b.addActionListener(this);
+        			b.setBackground(java.awt.Color.lightGray);
+        		}
+        		
         		seats.get(i).add(b);
         		panel_seats.add(b);
         	}
@@ -80,7 +100,7 @@ public class SeatView extends View {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		switch(e.getActionCommand()) {
-			case "Reserve Seats":
+			case "Reserve Seat":
 				break;
 				
 			case "Return":
@@ -105,7 +125,7 @@ public class SeatView extends View {
 					selectedSeat[0] = ss[0];
 					selectedSeat[1] = ss[1];
 				}
-				else {
+				else if(seats.get(ss[0]).get(ss[1]).getBackground() == java.awt.Color.red){
 					seats.get(ss[0]).get(ss[1]).setBackground(java.awt.Color.lightGray);
 					selectedSeat[0] = -1;
 					selectedSeat[1] = -1;
