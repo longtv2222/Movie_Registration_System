@@ -12,7 +12,7 @@ public class Text implements Component{
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public void draw(Graphics g) {
 		g.drawString(text,x,y);
 	}
