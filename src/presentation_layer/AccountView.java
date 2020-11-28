@@ -14,7 +14,10 @@ import javax.swing.JTextField;
 import control_layer.Controller;
 
 public class AccountView extends View{
-
+	private String[] creditCardList;
+	
+	
+	
 	public AccountView(Controller controller) {
 		super("Account View", controller);
 		// TODO Auto-generated constructor stub
@@ -111,6 +114,9 @@ public class AccountView extends View{
 				break;
 				
 			case "Return":
+				break;
+				
+			case "Next Credit Card":
 				break;
 		}
 	}

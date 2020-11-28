@@ -1,22 +1,77 @@
 package presentation_layer;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import control_layer.Controller;
+import javafx.scene.paint.Color;
 
 public class SeatView extends View {
-
+	private int seatRows = 10;
+	private int seatColumns = 10;
+	private String roomName;
+	private ArrayList<ArrayList<JButton>> seats;
+	private int[] selectedSeat = new int[2];
+	
+	//TODO:
+	//place the reservations onto the board of seats
+	
 	public SeatView(Controller controller) {
 		super("Seat View", controller);
-		// TODO Auto-generated constructor stub
+		roomName = "Room 1";
+		selectedSeat[0] = -1;
+		seats = new ArrayList<ArrayList<JButton>>();
+		
+		
+		//Intialize Frame
 		frame = new JFrame("Seat View");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(600, 600);
  
-		
+        //Button Panel
+        JPanel panel_Button = new JPanel();
+        
+		//Theatre/Room label
+        JLabel LB_roomID = new JLabel(roomName);
+        LB_roomID.setFont(LB_roomID.getFont().deriveFont(18.0f));
+        
+        //Seat View 
+        JPanel panel_seats = new JPanel(new GridLayout(seatRows, seatColumns));
+        
+        for(int i = 0; i < seatRows; i++) {
+        	seats.add(new ArrayList<JButton>());
+        	for(int j = 0; j < seatColumns; j++) {
+        		JButton b  = new JButton(Integer.toString(i) + "," + Integer.toString(j));
+        		b.setBackground(java.awt.Color.lightGray);
+        		b.addActionListener(this);
+        		seats.get(i).add(b);
+        		panel_seats.add(b);
+        	}
+        }
+        
+        //Buttons 
+        JButton BTN_Reserve = new JButton("Reserve Seat");
+        JButton BTN_Return = new JButton("Return");
+        BTN_Reserve.addActionListener(this);
+        BTN_Return.addActionListener(this);
+
+        //Add buttons to panel
+        panel_Button.add(BTN_Reserve);
+        panel_Button.add(BTN_Return);
+        
+        
+        //Add to frame
+        frame.getContentPane().add(BorderLayout.NORTH, LB_roomID);
+        frame.getContentPane().add(BorderLayout.CENTER, panel_seats);
+        frame.getContentPane().add(BorderLayout.SOUTH, panel_Button);
         
         frame.setVisible(true);
 	}
@@ -24,6 +79,43 @@ public class SeatView extends View {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		switch(e.getActionCommand()) {
+			case "Reserve Seats":
+				break;
+				
+			case "Return":
+				break;
+				
+				
+			//Handles all buttons for the seats	
+			default:
+				int[] ss = new int[2];
+				ss[0] = Integer.parseInt((e.getActionCommand()).split(",")[0]);
+				ss[1] = Integer.parseInt((e.getActionCommand()).split(",")[1]);
+				//System.out.println(seats.get(ss[0]).get(ss[1]).getBackground());
+				
+				//Not selected
+				if(seats.get(ss[0]).get(ss[1]).getBackground() == java.awt.Color.lightGray){
+					//incase one button is pressed and another is pressed elsewhere.
+					if(selectedSeat[0] != -1) {
+						seats.get(selectedSeat[0]).get(selectedSeat[1]).setBackground(java.awt.Color.lightGray);
+					}
+					
+					seats.get(ss[0]).get(ss[1]).setBackground(java.awt.Color.red);
+					selectedSeat[0] = ss[0];
+					selectedSeat[1] = ss[1];
+				}
+				else {
+					seats.get(ss[0]).get(ss[1]).setBackground(java.awt.Color.lightGray);
+					selectedSeat[0] = -1;
+					selectedSeat[1] = -1;
+				}
+				
+				System.out.println(selectedSeat[0] +" "+ selectedSeat[1]);
+				
+				break;
+		
+		}
 		
 	}
 
