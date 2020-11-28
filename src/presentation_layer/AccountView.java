@@ -23,7 +23,7 @@ public class AccountView extends View{
         frame.setSize(400, 400);
 
         //
-        JPanel panel_Info = new JPanel(new GridLayout(6,2));
+        JPanel panel_Info = new JPanel(new GridLayout(14,2));
         JPanel panel_Button = new JPanel();
         //JPanel panel_username = new JPanel(new GridLayout(1,2));
         //JPanel panel_password = new JPanel(new GridLayout(1,2));
@@ -31,12 +31,21 @@ public class AccountView extends View{
         //Text Fields
         JTextField TF_Username = new JTextField();
         JTextField TF_Password = new JTextField();
+        JTextField TF_RegDate = new JTextField();
         JTextField TF_Email = new JTextField();
+        JTextField TF_CreditCard = new JTextField();
+        JTextField TF_CCV = new JTextField();
+        JTextField TF_ExpiryDate = new JTextField();
+        
         
         //Labels
-        JLabel LB_Username = new JLabel("Username: ");
-        JLabel LB_Password = new JLabel("Password: ");
-        JLabel LB_Email = new JLabel("Email: ");
+        JLabel LB_Username = new JLabel("      Username: ");
+        JLabel LB_Password = new JLabel("      Password: ");
+        JLabel LB_RegDate = new JLabel("      Registration Date: ");
+        JLabel LB_Email = new JLabel("      Email: ");
+        JLabel LB_CreditCard = new JLabel("      Credit Card: ");
+        JLabel LB_CCV = new JLabel("      CCV: ");
+        JLabel LB_ExpiryDate = new JLabel("      Expiry Date: ");
         
         //Button
         JButton BTN_Save = new JButton("Save Changes");
@@ -63,7 +72,23 @@ public class AccountView extends View{
         
         panel_Info.add(new JLabel(""));   panel_Info.add(new JLabel(""));
         
+        panel_Info.add(LB_RegDate);       panel_Info.add(TF_RegDate);
+        
+        panel_Info.add(new JLabel(""));   panel_Info.add(new JLabel(""));
+
         panel_Info.add(LB_Email);         panel_Info.add(TF_Email);
+        
+        panel_Info.add(new JLabel(""));   panel_Info.add(new JLabel(""));
+        
+        panel_Info.add(LB_CreditCard);    panel_Info.add(TF_CreditCard);
+        
+        panel_Info.add(new JLabel(""));   panel_Info.add(new JLabel(""));
+        
+        panel_Info.add(LB_CCV);           panel_Info.add(TF_CCV);
+
+        panel_Info.add(new JLabel(""));   panel_Info.add(new JLabel(""));
+        
+        panel_Info.add(LB_ExpiryDate);    panel_Info.add(TF_ExpiryDate);
         
         //Buttons
         panel_Button.add(BTN_Save);
