@@ -71,11 +71,13 @@ public class DBManager {
 			createOrdinaryUserTable();
 			createCardTable();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/*
+	 * 
+	 */
 	private void createTheatreTable() throws SQLException {
 		Statement state = conn.createStatement();
 		state.execute("Create TABLE IF NOT EXISTS Theatre (t_id INTEGER PRIMARY KEY,t_name TEXT,t_address TEXT);");
@@ -135,19 +137,6 @@ public class DBManager {
 		Statement state = conn.createStatement();
 		state.execute(
 				"CREATE TABLE IF NOT EXISTS Card (userid integer references User(userid) ON DELETE CASCADE,accountNumber TEXT PRIMARY KEY,ccv TEXT,month INTEGER, YEAR INTEGER);");
-	}
-
-	public void insertTheatre(int t_id, String t_name, String t_address) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("INSERT INTO Theatre VALUES (?,?,?);");
-		statement.setInt(1, t_id);
-		statement.setString(2, t_name);
-		statement.setString(3, t_address);
-	}
-
-	public void insertRoom(int t_id, int room_id) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("INSERT INTO Room VALUES (?,?);");
-		statement.setInt(1, t_id);
-		statement.setInt(2, room_id);
 	}
 
 	public void populateTheater(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList)
@@ -250,7 +239,7 @@ public class DBManager {
 		statement.setString(1, userName);
 		statement.setString(2, password);
 		ResultSet rs = statement.executeQuery();
-		if (!rs.isBeforeFirst())
+		if (!rs.isBeforeFirst()) // If there is no user, return false
 			return false;
 		return true;
 	}
