@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import control_layer.Controller;
 import presentation_layer.LoginView;
+import presentation_layer.MenuView;
 
 public class Main {
 
@@ -18,6 +19,7 @@ public class Main {
 		controller.loadAllInfo(); // Loading all necessary information to theaterList and movieList
 		
 		new LoginView();
+		new MenuView();
 	}
 
 }
