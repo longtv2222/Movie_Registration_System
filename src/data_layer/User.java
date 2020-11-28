@@ -18,6 +18,10 @@ public abstract class User {
 	public User() {
 	}
 
+	public User(String email) {
+		this.email = email;
+	}
+
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}

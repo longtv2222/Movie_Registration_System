@@ -1,8 +1,6 @@
 package data_layer;
 
-import java.sql.SQLException;
 import java.util.HashMap;
-
 import control_layer.Controller;
 import presentation_layer.LoginView;
 import presentation_layer.MenuView;
@@ -17,7 +15,7 @@ public class Main {
 		HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
 		Controller controller = new Controller(theaterList, movieList);
 		controller.loadAllInfo(); // Loading all necessary information to theaterList and movieList
-		
+
 		new LoginView();
 		new MenuView();
 	}
