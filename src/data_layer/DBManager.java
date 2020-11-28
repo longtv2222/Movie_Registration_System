@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.HashMap;
 
 //Singleton class DBManager.
@@ -109,7 +110,7 @@ public class DBManager {
 
 	private void createTableUser() throws SQLException {
 		Statement state = conn.createStatement();
-		state.execute("CREATE TABLE IF NOT EXISTS User(UserID INTEGER PRIMARY KEY, username TEXT UNIQUE);");
+		state.execute("CREATE TABLE IF NOT EXISTS User(UserID INTEGER PRIMARY KEY, email TEXT UNIQUE);");
 	}
 
 	private void createReservationTable() throws SQLException {
@@ -233,7 +234,7 @@ public class DBManager {
 	 * Check if user's username and password are legit or not. Return false if it's
 	 * not, true if it is.
 	 */
-	boolean validateLogin(String userName, String password) throws SQLException {
+	public boolean validateRegisteredUser(String userName, String password) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement(
 				"SELECT * FROM User AS U INNER JOIN RegisteredUser as R ON R.userid = U.UserID WHERE U.username = ? AND R.password = ?;");
 		statement.setString(1, userName);
@@ -258,5 +259,35 @@ public class DBManager {
 		ResultSet rs = state.executeQuery("SELECT LAST_INSERT_ROWID();");
 
 		theatre.setTheatreID(rs.getInt(1)); // Set id of the newly inserted theatre
+	}
+
+	public User getRegisteredUser(String email) throws SQLException {
+		PreparedStatement statement = conn
+				.prepareStatement("SELECT * FROM User as U INNER JOIN RegisteredUser as R WHERE U.email = ?");
+		statement.setString(1, email);
+		ResultSet rs = statement.executeQuery();
+
+		RegisteredUser user = new RegisteredUser();
+		user.setUserID(rs.getInt("UserID"));
+		user.setEmail(rs.getString("email"));
+		rs.close();
+		populateUserCard(user);
+		return user;
+	}
+
+	public void populateUserCard(User user) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement("SELECT * FROM Card as C where C.userid = ?");
+		statement.setInt(1, user.userID);
+
+		ResultSet rs = statement.executeQuery();
+		while (rs.next()) {
+			String accountNumber = rs.getString("accountNumber");
+			String ccv = rs.getString("ccv");
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, rs.getInt("YEAR"));
+			calendar.set(Calendar.MONTH, rs.getInt("month") - 1); // Calendar object month starts from 0
+			user.addCard(new Card(accountNumber, ccv, calendar));
+		}
+		rs.close();
 	}
 }

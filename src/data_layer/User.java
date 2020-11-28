@@ -1,25 +1,41 @@
 package data_layer;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public abstract class User {
 	protected int userID;
 	protected ArrayList<Card> cards;
 	protected ArrayList<Reservation> reservations;
 	protected String email;
-	protected Calendar purchaseDate;
 
-	public void addCard(String accountNum, String ccv, String expiry) {
+	public User(int userID, ArrayList<Card> cards, ArrayList<Reservation> reservations, String email) {
+		this.userID = userID;
+		this.cards = cards;
+		this.reservations = reservations;
+		this.email = email;
 	}
 
-	public void addTicket(int userID) {
+	public User() {
 	}
 
-	public void emailReciept() {
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 
-	public void creditAccount(int reservationID) {
+	public void setCards(ArrayList<Card> cards) {
+		this.cards = cards;
+	}
+
+	public void setReservation(ArrayList<Reservation> reservations) {
+		this.reservations = reservations;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void addCard(Card card) {
+		cards.add(card);
 	}
 
 }

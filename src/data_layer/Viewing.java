@@ -10,7 +10,8 @@ public class Viewing {
 	private ArrayList<ArrayList<Reservation>> seats;
 
 	public Viewing(int hour, int minute, int month, int day, int year, Movie show) {
-		startTime.set(year, month, day, hour, minute);
+		startTime = Calendar.getInstance(); // Initialize calendar with current date and time
+		startTime.set(year, month, day, hour, minute); // Set appropriate value to calendar
 		this.show = show;
 
 		seats = new ArrayList<ArrayList<Reservation>>(SIZE); // Initialized column
@@ -24,7 +25,7 @@ public class Viewing {
 	}
 
 	public void addReservation(int x, int y, Reservation r) {
-		seats.get(x).set(y, r);	
+		seats.get(y).set(x, r);
 	}
 
 	public boolean tooMuchRu() {

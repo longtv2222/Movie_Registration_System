@@ -11,19 +11,10 @@ public class Main {
 	// Controller must have reference of all model object and the view and then
 	// controller will handle the flow of data.
 	public static void main(String[] args) {
-		try {
-			HashMap<Integer, Theatre> theaterList = new HashMap<Integer, Theatre>();
-			HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
-
-			DBManager.getInstance().populateMovie(movieList);
-			DBManager.getInstance().populateTheater(theaterList, movieList);
-			DBManager.getInstance().populateReservation(theaterList, movieList);
-
-			Controller controller = new Controller(theaterList, movieList);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
+		HashMap<Integer, Theatre> theaterList = new HashMap<Integer, Theatre>();
+		HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
+		Controller controller = new Controller(theaterList, movieList);
+		controller.loadAllInfo(); // Loading all necessary information to theaterList and movieList
 	}
 
 }
