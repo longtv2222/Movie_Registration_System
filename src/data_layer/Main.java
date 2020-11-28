@@ -1,9 +1,11 @@
 package data_layer;
 
+<<<<<<< HEAD
 import java.sql.SQLException;
 import java.util.ArrayList;
+=======
+>>>>>>> refs/remotes/origin/Model
 import java.util.HashMap;
-
 import control_layer.Controller;
 import presentation_layer.AccountView;
 import presentation_layer.LoginView;
@@ -21,10 +23,16 @@ public class Main {
 		HashMap<Integer, Movie> movieList = new HashMap<Integer, Movie>();
 		Controller controller = new Controller(theaterList, movieList);
 		controller.loadAllInfo(); // Loading all necessary information to theaterList and movieList
+<<<<<<< HEAD
 		//Done like this to preserve the relationship in the UML diagram
 		ArrayList<View> v = new ArrayList<View>();
 		v.add(new LoginView()); v.add(new MenuView()); v.add(new AccountView()); v.add(new SeatView());
 		controller.createViews(v);
+=======
+
+		new LoginView();
+		new MenuView();
+>>>>>>> refs/remotes/origin/Model
 	}
 
 }
