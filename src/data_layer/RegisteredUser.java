@@ -8,13 +8,27 @@ public class RegisteredUser extends User {
 	public RegisteredUser(int userID, ArrayList<Card> cards, ArrayList<Reservation> reservations, String email,
 			String password) {
 		super(userID, cards, reservations, email);
-		this.password = password;
+		this.setPassword(password);
 	}
 
 	public RegisteredUser() {
 		super();
 	}
 
+	public RegisteredUser(String email, String password) {
+		super(email);
+		this.setPassword(password);
+	}
+
 	public void createAnnualInvoice() {
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 }

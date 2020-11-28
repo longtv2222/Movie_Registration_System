@@ -7,6 +7,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -20,29 +21,35 @@ public class LoginView extends View {
 	private TextField password;
 	private JLabel usernameText;
 	private JLabel passwordText;
+	private String user; 
+	private String pass;
 	
 	public LoginView(Controller controller) {
 		super("Login View", controller);
 		this.setLayout(null);
 		
 		
-		username = new TextField("");
-		password = new TextField("");
-		usernameText = new JLabel("sssss");
-		usernameText.setBounds(20, 30, 30, 30);
+		username = new TextField(20);
+		username.setBounds(100,30,200,25);
+		password = new TextField(20);
+		password.setBounds(100,80,200,25);
+		usernameText = new JLabel("User");
+		usernameText.setBounds(20, 30, 30, 25);
+		passwordText = new JLabel("Password");
+		passwordText.setBounds(20,80,80,25);
+		JButton login=new JButton("Login");
+		login.setBounds(100,120,80,35);
+		login.addActionListener(this);
 		
-		JLabel label = new JLabel("Login: ");
-		label.setBounds(20, 50, 30, 30);
-		
-		this.add(new JLabel("Login: "));
-		this.add(new JLabel("Password: "));
-		this.add(label);
+
 
 		this.add(username);
 		this.add(password);
 		this.add(usernameText);
+		this.add(passwordText);
+		this.add(login);
 		
-		//frame.add(SL);
+		
 		
 		frame.pack();
 		frame.repaint();
@@ -53,26 +60,18 @@ public class LoginView extends View {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		user = username.getText();
+		pass = password.getText();
+		username.setText("");
+		password.setText("");
 		
 	}
 
-	@Override
-	public void paint(Graphics g) {
-		
-		
-		//cmp.draw(g);
-	}
-	
-	
 
-	@Override
-	protected void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
-		//usernameText.draw(g);
-		//cmp = password = new TextBox(cmp, 20, 100, 200, 30);
-		
-		System.out.println("dd");
-	}
 
-}
+		@Override
+		protected void paintComponent(Graphics g) {
+			// TODO Auto-generated method stub
+			
+		}
+    }

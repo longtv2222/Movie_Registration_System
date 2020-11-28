@@ -22,6 +22,7 @@ public class Controller {
 	private ArrayList<View> views;
 	private User user;
 
+	
 	public Controller(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList) {
 		this.theaterList = theaterList;
 		this.movieList = movieList;
