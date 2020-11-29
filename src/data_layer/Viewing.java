@@ -1,5 +1,6 @@
 package data_layer;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -11,6 +12,7 @@ public class Viewing {
 
 	public Viewing(int hour, int minute, int month, int day, int year, Movie show) {
 		startTime = new GregorianCalendar(year, month, day, hour, minute);
+	
 		this.show = show;
 		seats = new Reservation[SIZE][SIZE];
 	}
@@ -35,6 +37,10 @@ public class Viewing {
 		return this.startTime;
 	}
 
+	public Movie getMovie() {
+		return show;
+	}
+	
 	public boolean equals(Viewing v) { // Comparing calendar because each viewing has an unique calendar
 		if (v.startTime.get(Calendar.HOUR) != startTime.get(Calendar.HOUR))
 			return false;

@@ -75,6 +75,25 @@ public class Controller {
 		return movieNames.toArray(new String[movieNames.size()]);
 	}
 	
+	public String getMovieTimes(String Theatre, String movie) {
+		Theatre selectedTheatre = null;
+		
+		Iterator it = theaterList.entrySet().iterator();
+		//Find the correct theatre index based off name
+		while(it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			System.out.println(Theatre);
+			//If found get the selected theatre
+			if(((Theatre)pair.getValue()).getName() == Theatre) {
+				selectedTheatre = theaterList.get((int) pair.getKey());
+				break;
+			}
+		}
+		
+		return selectedTheatre.getAllTimes(movie);
+		
+	}
+	
 
 	public void setViews(ArrayList<View> v) {
 		this.views = v;
@@ -100,9 +119,9 @@ public class Controller {
 		GUI.repaint();
 	}
 	
-	public void updateViewInfo(String mv, String theatre, String r, String td) {
+	public void updateViewInfo(String mv, String theatre, String td) {
 
-			
+			/*
 		String date = td.split(" ")[0];
 		String time = td.split(" ")[1];
 		int hours = Integer.parseInt(time.split(":")[0]);
@@ -134,7 +153,7 @@ public class Controller {
 				break;
 			}
 		}
-			
+		*/	
 		
 	}
 
