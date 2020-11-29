@@ -16,6 +16,8 @@ public abstract class User {
 	}
 
 	public User() {
+		cards = new ArrayList<Card>();
+		reservations = new ArrayList<Reservation>();
 	}
 
 	public User(String email) {
