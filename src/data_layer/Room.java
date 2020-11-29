@@ -15,6 +15,10 @@ public class Room {
 		schedule.add(view);
 	}
 
+	public ArrayList<Viewing> getArrViewing(){
+		return schedule;
+	}
+	
 	/*
 	 * Find view object inside schedule. If can't find, return null.
 	 */
@@ -24,5 +28,9 @@ public class Room {
 				return sche;
 		}
 		return null;
+	}
+	
+	public int getroomID() {
+		return roomID;
 	}
 }

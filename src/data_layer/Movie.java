@@ -18,4 +18,8 @@ public class Movie {
 				+ duration;
 		return display;
 	}
+	
+	public String getMovieName() {
+		return movieName;
+	}
 }

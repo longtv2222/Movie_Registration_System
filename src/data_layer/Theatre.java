@@ -29,6 +29,10 @@ public class Theatre {
 		return this.theatreRoom;
 	}
 
+	public Room getSpecificRoom(int r) {
+		return theatreRoom.get(r);
+	}
+	
 	public void addViewing(int roomID, Viewing view) {
 		theatreRoom.get(roomID).addViewing(view);
 	}

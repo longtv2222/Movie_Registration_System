@@ -63,10 +63,10 @@ public class LoginView extends View {
 				status = controller.validateRegisteredUser(user, pass);
 			}
 
-			if (status) {
+			//if (status) {
 				controller.changeVisibility("menu");
-			} else {
-			}
+			//} else {
+			//}
 
 			break;
 		}

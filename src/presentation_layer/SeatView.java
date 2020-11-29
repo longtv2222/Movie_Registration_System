@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import control_layer.Controller;
+import data_layer.Viewing;
 
 public class SeatView extends View {
 	private int seatRows = 10;
@@ -20,6 +21,7 @@ public class SeatView extends View {
 	private ArrayList<ArrayList<JButton>> seats;
 	private int[] selectedSeat = new int[2];
 	private ArrayList<ArrayList<Boolean>> reservations; // Might need to be changed..
+	private Viewing currentView;
 	// TODO:
 	// place the reservations onto the board of seats
 
@@ -89,6 +91,10 @@ public class SeatView extends View {
 		//frame.setVisible(true);
 	}
 
+	public void setCurrentView(Viewing v) {
+		this.currentView = v;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
