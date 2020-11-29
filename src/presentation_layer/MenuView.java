@@ -85,7 +85,7 @@ public class MenuView extends View {
         //ADD TO FRAME
         frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
         frame.getContentPane().add(BorderLayout.NORTH, topPanel);
-        frame.setVisible(true);
+        //frame.setVisible(true);
 	}
 	
 	

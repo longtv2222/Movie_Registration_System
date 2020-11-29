@@ -25,7 +25,7 @@ public abstract class View extends JPanel implements ActionListener{
 	
 	public void changeVisibility(boolean a) {
 		frame.setVisible(a);
-		frame.repaint();
+		//frame.repaint();
 	}
 	
 	protected abstract void paintComponent(Graphics g);
