@@ -51,10 +51,7 @@ public class LoginView extends View {
 		
 		
 		
-		frame.pack();
-		frame.repaint();
-	    frame.setSize(400,400);
-		frame.setVisible(true);
+
 		
 	}
 
@@ -71,8 +68,7 @@ public class LoginView extends View {
 				
 				
 				//moves to menu
-				frame.dispose();
-				controller.changeVisibility(1);
+				controller.changeVisibility("menu");
 				
 				break;
 		}

@@ -11,22 +11,29 @@ import presentation_layer.MenuView;
 import presentation_layer.SeatView;
 import presentation_layer.View;
 
+import java.awt.CardLayout;
 import java.sql.SQLException;
 //Library import
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Controller {
 	private HashMap<Integer, Theatre> theaterList;
 	private HashMap<Integer, Movie> movieList;
 	private ArrayList<View> views;
 	private User user;
+	private JFrame GUI;
+	private JPanel cards;
 
 	
 	public Controller(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList) {
 		this.theaterList = theaterList;
 		this.movieList = movieList;
 		this.views = new ArrayList<View>();
+		GUI =new JFrame("Movie Reservation Application");
 	}
 
 	public void loadAllInfo() {
@@ -41,11 +48,23 @@ public class Controller {
 
 	public void setViews(ArrayList<View> v) {
 		this.views = v;
+		cards = new JPanel(new CardLayout());
+		 cards.add(views.get(0), "login");
+	     cards.add(views.get(1), "menu");
+	     cards.add(views.get(2), "account");
+	     cards.add(views.get(3), "seat");
+	     GUI.getContentPane().add(cards);
+	     GUI.pack();
+	     GUI.repaint();
+	     GUI.setSize(600,600);
+	     GUI.setVisible(true);
 	}
 	
-	public void changeVisibility(int visible) {
-		views.get(visible).changeVisibility(true);
-	}
+	public void changeVisibility(String visible) {
+		CardLayout cl = (CardLayout)(cards.getLayout());
+		cl.show(cards, visible);
+		GUI.repaint();
+		}
 	
 	// Need to test this
 	public void validateRegisteredUser(String email, String password) {

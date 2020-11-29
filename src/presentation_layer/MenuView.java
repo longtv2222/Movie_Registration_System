@@ -36,8 +36,8 @@ public class MenuView extends View {
 		timeList = new String[]{"2020-01-01 19:00", "2020-01-02 21:00"};
 		
 		//Creating the Frame
-        frame = new JFrame("Menu Frame");
-        frame.setSize(400, 400);
+        //frame = new JFrame("Menu Frame");
+        //frame.setSize(400, 400);
 
         //TopPanel
         JPanel topPanel = new JPanel();
@@ -82,8 +82,8 @@ public class MenuView extends View {
 
 
         //ADD TO FRAME
-        frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
-        frame.getContentPane().add(BorderLayout.NORTH, topPanel);
+        this.add(BorderLayout.SOUTH, bottomPanel);
+        this.add(BorderLayout.NORTH, topPanel);
         //frame.setVisible(true);
 	}
 	
@@ -105,18 +105,15 @@ public class MenuView extends View {
 				break;
 				
 			case "View Account":
-				frame.dispose();
-				controller.changeVisibility(2);
+				controller.changeVisibility("account");
 				break;
 				
 			case "Order":
-				frame.dispose();
-				controller.changeVisibility(3);
+				controller.changeVisibility("seat");
 				break;
 				
 			case "Logout":
-				frame.dispose();
-				controller.changeVisibility(0);
+				controller.changeVisibility("login");
 				break;
 		}
 	}
