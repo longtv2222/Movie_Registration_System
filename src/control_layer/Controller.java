@@ -67,7 +67,7 @@ public class Controller {
 		}
 	
 	// Need to test this
-	public void validateRegisteredUser(String email, String password) {
+	public boolean validateRegisteredUser(String email, String password) {
 		try {
 			if (DBManager.getInstance().validateRegisteredUser(email, password)) {
 				// Created an object of user with given database id.
@@ -75,20 +75,25 @@ public class Controller {
 				DBManager.getInstance().populateUserCard(user); // Populate card information of user
 				// Populate reservation of user with reference object from theater list
 				DBManager.getInstance().populateUserReservation(user, theaterList, movieList);
+				return true;
 			} else {
 				System.out.println("Login failed! Your password or your username is wrong");
+				return false;
 			}
 		} catch (SQLException e) {
 			System.out.println("Login failed! Your password or your username is wrong");
 			e.printStackTrace();
+			return false;
 		}
 	}
 
-	public void validateOrdinaryUser(String email) {
+	public boolean validateOrdinaryUser(String email) {
 		try {
 			this.user = DBManager.getInstance().getOrdinaryUser(email);
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 

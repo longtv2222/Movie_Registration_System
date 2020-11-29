@@ -63,12 +63,18 @@ public class LoginView extends View {
 		switch(e.getActionCommand()) {
 		
 			case "Login":
-
-				//REQUIRED TO CHECK HERE
+				boolean status=false;
+				if (pass.isEmpty()) {
+					status=controller.validateOrdinaryUser(user);
+					System.out.println("ORD");
+				}else {
+					status=controller.validateRegisteredUser(user, pass);
+				}
 				
 				
-				//moves to menu
+				if(status) {
 				controller.changeVisibility("menu");
+				}else {}
 				
 				break;
 		}
