@@ -44,7 +44,6 @@ public class SeatView extends View {
 
 		// Intialize Frame
 		frame = new JFrame("Seat View");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 600);
 
 		// Button Panel
@@ -100,6 +99,8 @@ public class SeatView extends View {
 			break;
 
 		case "Return":
+			frame.dispose();
+			controller.changeVisibility(1);
 			break;
 
 		// Handles all buttons for the seats
