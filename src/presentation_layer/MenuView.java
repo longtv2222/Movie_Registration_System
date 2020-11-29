@@ -35,9 +35,7 @@ public class MenuView extends View {
 		movieList = new String[]{"Spiderman", "Titanic"};
 		timeList = new String[]{"2020-01-01 19:00", "2020-01-02 21:00"};
 		
-		//Creating the Frame
-        //frame = new JFrame("Menu Frame");
-        //frame.setSize(400, 400);
+		
 
         //TopPanel
         JPanel topPanel = new JPanel();

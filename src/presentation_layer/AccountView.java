@@ -21,8 +21,7 @@ public class AccountView extends View{
 	public AccountView(Controller controller) {
 		super("Account View", controller);
 		// TODO Auto-generated constructor stub
-		//frame = new JFrame("Account View");
-        //frame.setSize(400, 400);
+	
 
         //
         JPanel panel_Info = new JPanel(new GridLayout(14,2));

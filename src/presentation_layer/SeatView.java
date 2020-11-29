@@ -42,9 +42,7 @@ public class SeatView extends View {
 		}
 		//
 
-		// Intialize Frame
-		//frame = new JFrame("Seat View");
-		//frame.setSize(600, 600);
+
 
 		// Button Panel
 		JPanel panel_Button = new JPanel();
