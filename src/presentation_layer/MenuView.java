@@ -23,96 +23,91 @@ public class MenuView extends View {
 	private String selectedTheatre;
 	private String selectedMovie;
 	private String selectedTime;
-	
+
 	private JComboBox CB_Theatres;
 	private JComboBox CB_Movies;
 	private JComboBox CB_Times;
-	
+
 	public MenuView(Controller controller) {
 		super("Menu", controller);
-		//Needs to be passed in
-		theatreList = new String[]{"Chinnok", "London"};
-		movieList = new String[]{"Spiderman", "Titanic"};
-		timeList = new String[]{"2020-01-01 19:00", "2020-01-02 21:00"};
-		
-		
+		// Needs to be passed in
+		theatreList = new String[] { "Chinnok", "London" };
+		movieList = new String[] { "Spiderman", "Titanic" };
+		timeList = new String[] { "2020-01-01 19:00", "2020-01-02 21:00" };
 
-        //TopPanel
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new GridLayout(2,3));
-        
-        //LABELS
-        JLabel theatreLabel = new JLabel("Theatres");
-        JLabel movieLabel = new JLabel("Movies");
-        JLabel timeLabel = new JLabel("Times");
+		// TopPanel
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new GridLayout(2, 3));
 
-        //COMBO BOXES
-        CB_Theatres = new JComboBox(theatreList);
-        CB_Movies = new JComboBox(movieList);
-        CB_Times = new JComboBox(timeList);
-        //Action Listeners for CBs
-        CB_Theatres.addActionListener(this);
-        CB_Movies.addActionListener(this);
-        CB_Times.addActionListener(this);
-        
-        //Add to topPanel
-        topPanel.add(theatreLabel);
-        topPanel.add(movieLabel);
-        topPanel.add(timeLabel);
-        topPanel.add(CB_Theatres);
-        topPanel.add(CB_Movies);
-        topPanel.add(CB_Times);
-        
-        
-        //BOTTOM PANEL
-        JPanel bottomPanel = new JPanel(); 
+		// LABELS
+		JLabel theatreLabel = new JLabel("Theatres");
+		JLabel movieLabel = new JLabel("Movies");
+		JLabel timeLabel = new JLabel("Times");
 
-        JButton BTN_Order = new JButton("Order");
-        JButton BTN_Account = new JButton("View Account");
-        JButton BTN_Logout = new JButton("Logout");
-        BTN_Order.addActionListener(this);
-        BTN_Account.addActionListener(this);
-        BTN_Logout.addActionListener(this);
+		// COMBO BOXES
+		CB_Theatres = new JComboBox(theatreList);
+		CB_Movies = new JComboBox(movieList);
+		CB_Times = new JComboBox(timeList);
+		// Action Listeners for CBs
+		CB_Theatres.addActionListener(this);
+		CB_Movies.addActionListener(this);
+		CB_Times.addActionListener(this);
 
-        bottomPanel.add(BTN_Order);
-        bottomPanel.add(BTN_Account);
-        bottomPanel.add(BTN_Logout);
+		// Add to topPanel
+		topPanel.add(theatreLabel);
+		topPanel.add(movieLabel);
+		topPanel.add(timeLabel);
+		topPanel.add(CB_Theatres);
+		topPanel.add(CB_Movies);
+		topPanel.add(CB_Times);
 
+		// BOTTOM PANEL
+		JPanel bottomPanel = new JPanel();
 
-        //ADD TO FRAME
-        this.add(BorderLayout.SOUTH, bottomPanel);
-        this.add(BorderLayout.NORTH, topPanel);
-        //frame.setVisible(true);
+		JButton BTN_Order = new JButton("Order");
+		JButton BTN_Account = new JButton("View Account");
+		JButton BTN_Logout = new JButton("Logout");
+		BTN_Order.addActionListener(this);
+		BTN_Account.addActionListener(this);
+		BTN_Logout.addActionListener(this);
+
+		bottomPanel.add(BTN_Order);
+		bottomPanel.add(BTN_Account);
+		bottomPanel.add(BTN_Logout);
+
+		// ADD TO FRAME
+		this.add(BorderLayout.SOUTH, bottomPanel);
+		this.add(BorderLayout.NORTH, topPanel);
+		// frame.setVisible(true);
 	}
-	
-	
+
 	public void paintComponent(Graphics g) {
-		
+
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//Get type
-		
-		switch(e.getActionCommand()) {
-		
-			case "comboBoxChanged":
-				selectedMovie =(String)  CB_Movies.getSelectedItem();
-				selectedTheatre = (String) CB_Theatres.getSelectedItem();
-				selectedTime = (String) CB_Times.getSelectedItem();
-				break;
-				
-			case "View Account":
-				controller.changeVisibility("account");
-				break;
-				
-			case "Order":
-				controller.changeVisibility("seat");
-				break;
-				
-			case "Logout":
-				controller.changeVisibility("login");
-				break;
+		// Get type
+
+		switch (e.getActionCommand()) {
+
+		case "comboBoxChanged":
+			selectedMovie = (String) CB_Movies.getSelectedItem();
+			selectedTheatre = (String) CB_Theatres.getSelectedItem();
+			selectedTime = (String) CB_Times.getSelectedItem();
+			break;
+
+		case "View Account":
+			controller.changeVisibility("account");
+			break;
+
+		case "Order":
+			controller.changeVisibility("seat");
+			break;
+
+		case "Logout":
+			controller.changeVisibility("login");
+			break;
 		}
 	}
 }
