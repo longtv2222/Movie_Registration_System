@@ -22,7 +22,6 @@ public class AccountView extends View{
 		super("Account View", controller);
 		// TODO Auto-generated constructor stub
 		frame = new JFrame("Account View");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
 
         //
@@ -114,6 +113,8 @@ public class AccountView extends View{
 				break;
 				
 			case "Return":
+				frame.dispose();
+				controller.changeVisibility(1);
 				break;
 				
 			case "Next Credit Card":

@@ -37,7 +37,6 @@ public class MenuView extends View {
 		
 		//Creating the Frame
         frame = new JFrame("Menu Frame");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
 
         //TopPanel
@@ -106,14 +105,18 @@ public class MenuView extends View {
 				break;
 				
 			case "View Account":
+				frame.dispose();
+				controller.changeVisibility(2);
 				break;
 				
 			case "Order":
-				System.out.println("FF");
+				frame.dispose();
 				controller.changeVisibility(3);
 				break;
 				
 			case "Logout":
+				frame.dispose();
+				controller.changeVisibility(0);
 				break;
 		}
 	}
