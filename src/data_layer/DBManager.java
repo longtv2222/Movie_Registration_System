@@ -279,7 +279,8 @@ public class DBManager {
 	}
 
 	public OrdinaryUser getOrdinaryUser(String email) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("SELECT * FROM User as U WHERE U.email = ?");
+		PreparedStatement statement = conn.prepareStatement(
+				"SELECT * FROM User as U INNER JOIN OrdinaryUser as O WHERE U.email = ? AND U.userid = O.userid;");
 		statement.setString(1, email);
 		ResultSet rs = statement.executeQuery();
 		OrdinaryUser user = new OrdinaryUser();
