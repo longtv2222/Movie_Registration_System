@@ -42,9 +42,7 @@ public class SeatView extends View {
 		}
 		//
 
-		// Intialize Frame
-		frame = new JFrame("Seat View");
-		frame.setSize(600, 600);
+
 
 		// Button Panel
 		JPanel panel_Button = new JPanel();
@@ -84,9 +82,9 @@ public class SeatView extends View {
 		panel_Button.add(BTN_Return);
 
 		// Add to frame
-		frame.getContentPane().add(BorderLayout.NORTH, LB_roomID);
-		frame.getContentPane().add(BorderLayout.CENTER, panel_seats);
-		frame.getContentPane().add(BorderLayout.SOUTH, panel_Button);
+		this.add(BorderLayout.NORTH, LB_roomID);
+		this.add(BorderLayout.CENTER, panel_seats);
+		this.add(BorderLayout.SOUTH, panel_Button);
 
 		//frame.setVisible(true);
 	}
@@ -99,8 +97,7 @@ public class SeatView extends View {
 			break;
 
 		case "Return":
-			frame.dispose();
-			controller.changeVisibility(1);
+			controller.changeVisibility("menu");
 			break;
 
 		// Handles all buttons for the seats

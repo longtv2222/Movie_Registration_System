@@ -51,10 +51,7 @@ public class LoginView extends View {
 		
 		
 		
-		frame.pack();
-		frame.repaint();
-	    frame.setSize(400,400);
-		frame.setVisible(true);
+
 		
 	}
 
@@ -66,13 +63,18 @@ public class LoginView extends View {
 		switch(e.getActionCommand()) {
 		
 			case "Login":
-
-				//REQUIRED TO CHECK HERE
+				boolean status=false;
+				if (pass.isEmpty()) {
+					status=controller.validateOrdinaryUser(user);
+					System.out.println("ORD");
+				}else {
+					status=controller.validateRegisteredUser(user, pass);
+				}
 				
 				
-				//moves to menu
-				frame.dispose();
-				controller.changeVisibility(1);
+				if(status) {
+				controller.changeVisibility("menu");
+				}else {}
 				
 				break;
 		}

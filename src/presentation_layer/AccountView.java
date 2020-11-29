@@ -21,8 +21,7 @@ public class AccountView extends View{
 	public AccountView(Controller controller) {
 		super("Account View", controller);
 		// TODO Auto-generated constructor stub
-		frame = new JFrame("Account View");
-        frame.setSize(400, 400);
+	
 
         //
         JPanel panel_Info = new JPanel(new GridLayout(14,2));
@@ -98,8 +97,8 @@ public class AccountView extends View{
         panel_Button.add(BTN_Return);
         panel_Button.add(BTN_NextCC);
         
-        frame.getContentPane().add(BorderLayout.NORTH, panel_Info);
-        frame.getContentPane().add(BorderLayout.SOUTH, panel_Button);
+        this.add(BorderLayout.NORTH, panel_Info);
+        this.add(BorderLayout.SOUTH, panel_Button);
         
         //frame.setVisible(true);
 	}
@@ -113,8 +112,8 @@ public class AccountView extends View{
 				break;
 				
 			case "Return":
-				frame.dispose();
-				controller.changeVisibility(1);
+				
+				controller.changeVisibility("menu");
 				break;
 				
 			case "Next Credit Card":
