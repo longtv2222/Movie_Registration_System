@@ -84,6 +84,10 @@ public class Controller {
 		}
 	}
 
+	/*
+	 * Validate ordinary user. If user doesn't exist, create ordinary user with the
+	 * given email.
+	 */
 	public boolean validateOrdinaryUser(String email) {
 		try {
 			this.user = DBManager.getInstance().getOrdinaryUser(email);

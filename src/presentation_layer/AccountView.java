@@ -124,7 +124,7 @@ public class AccountView extends View{
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
