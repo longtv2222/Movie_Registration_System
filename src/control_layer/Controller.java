@@ -5,10 +5,6 @@ import data_layer.DBManager;
 import data_layer.Movie;
 import data_layer.Theatre;
 import data_layer.User;
-import presentation_layer.AccountView;
-import presentation_layer.LoginView;
-import presentation_layer.MenuView;
-import presentation_layer.SeatView;
 import presentation_layer.View;
 
 import java.awt.CardLayout;
@@ -28,14 +24,16 @@ public class Controller {
 	private JFrame GUI;
 	private JPanel cards;
 
-	
 	public Controller(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList) {
 		this.theaterList = theaterList;
 		this.movieList = movieList;
 		this.views = new ArrayList<View>();
-		GUI =new JFrame("Movie Reservation Application");
+		GUI = new JFrame("Movie Reservation Application");
 	}
 
+	/*
+	 * Load all information about theater, movie to java object.
+	 */
 	public void loadAllInfo() {
 		try {
 			DBManager.getInstance().populateMovie(movieList);
@@ -49,31 +47,30 @@ public class Controller {
 	public void setViews(ArrayList<View> v) {
 		this.views = v;
 		cards = new JPanel(new CardLayout());
-		 cards.add(views.get(0), "login");
-	     cards.add(views.get(1), "menu");
-	     cards.add(views.get(2), "account");
-	     cards.add(views.get(3), "seat");
-	     GUI.getContentPane().add(cards);
-	     GUI.pack();
-	     GUI.repaint();
-	     GUI.setSize(600,600);
-	     GUI.setVisible(true);
+		cards.add(views.get(0), "login");
+		cards.add(views.get(1), "menu");
+		cards.add(views.get(2), "account");
+		cards.add(views.get(3), "seat");
+		GUI.getContentPane().add(cards);
+		GUI.pack();
+		GUI.repaint();
+		GUI.setSize(600, 600);
+		GUI.setVisible(true);
 	}
-	
+
 	public void changeVisibility(String visible) {
-		CardLayout cl = (CardLayout)(cards.getLayout());
+		CardLayout cl = (CardLayout) (cards.getLayout());
 		cl.show(cards, visible);
 		GUI.repaint();
-		}
-	
-	// Need to test this
+	}
+
 	public boolean validateRegisteredUser(String email, String password) {
 		try {
 			if (DBManager.getInstance().validateRegisteredUser(email, password)) {
 				// Created an object of user with given database id.
 				this.user = DBManager.getInstance().getRegisteredUser(email);
 				DBManager.getInstance().populateUserCard(user); // Populate card information of user
-				// Populate reservation of user with reference object from theater list
+				// Populate reservation of user with referenced object from theater list
 				DBManager.getInstance().populateUserReservation(user, theaterList, movieList);
 				return true;
 			} else {
