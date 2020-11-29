@@ -44,15 +44,7 @@ public class Controller {
 	}
 	
 	public void changeVisibility(int visible) {
-		System.out.println(visible);
-		for(int i = 0; i < views.size(); i++) {
-			if(i == visible) {
-				views.get(i).setVisible(true);
-			}
-			else {
-				views.get(i).setVisible(false);
-			}		
-		}
+		views.get(visible).changeVisibility(true);
 	}
 	
 	// Need to test this

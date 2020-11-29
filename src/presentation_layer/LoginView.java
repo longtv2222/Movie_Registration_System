@@ -62,8 +62,22 @@ public class LoginView extends View {
 	public void actionPerformed(ActionEvent e) {
 		user = username.getText();
 		pass = password.getText();
-		username.setText("");
-		password.setText("");
+		
+		switch(e.getActionCommand()) {
+		
+			case "Login":
+
+				//REQUIRED TO CHECK HERE
+				
+				
+				//moves to menu
+				frame.dispose();
+				controller.changeVisibility(1);
+				
+				break;
+		}
+		
+		
 		
 	}
 
