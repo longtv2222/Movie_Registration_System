@@ -89,7 +89,7 @@ public class SeatView extends View {
 		frame.getContentPane().add(BorderLayout.CENTER, panel_seats);
 		frame.getContentPane().add(BorderLayout.SOUTH, panel_Button);
 
-		frame.setVisible(true);
+		//frame.setVisible(true);
 	}
 
 	@Override

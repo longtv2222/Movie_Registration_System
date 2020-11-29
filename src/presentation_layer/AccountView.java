@@ -102,7 +102,7 @@ public class AccountView extends View{
         frame.getContentPane().add(BorderLayout.NORTH, panel_Info);
         frame.getContentPane().add(BorderLayout.SOUTH, panel_Button);
         
-        frame.setVisible(true);
+        //frame.setVisible(true);
 	}
 
 	@Override

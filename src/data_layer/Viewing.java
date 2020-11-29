@@ -16,7 +16,7 @@ public class Viewing {
 
 		seats = new ArrayList<ArrayList<Reservation>>(SIZE); // Initialized column
 		for (int i = 0; i < SIZE; i++) {
-			seats.set(i, new ArrayList<Reservation>(30)); // Initialized row
+			seats.add(new ArrayList<Reservation>(SIZE)); // Initialized row
 		}
 	}
 
