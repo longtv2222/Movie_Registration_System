@@ -130,7 +130,7 @@ public class DBManager {
 						+ "                          PRIMARY KEY (t_id,room_id, hour, minute, month, day, year, x_cor, y_cor),\r\n"
 						+ "                          FOREIGN KEY(t_id,room_id, hour, minute, month, day, yeaR) REFERENCES Viewing(t_id,room_id, hour, minute, month, day, year) ON DELETE CASCADE);");
 	}
-	
+
 	private void createOrdinaryUserTable() throws SQLException {
 		Statement state = conn.createStatement();
 		state.execute(
