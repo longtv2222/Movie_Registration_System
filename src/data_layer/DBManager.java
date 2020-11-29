@@ -130,17 +130,17 @@ public class DBManager {
 						+ "                          PRIMARY KEY (t_id,room_id, hour, minute, month, day, year, x_cor, y_cor),\r\n"
 						+ "                          FOREIGN KEY(t_id,room_id, hour, minute, month, day, yeaR) REFERENCES Viewing(t_id,room_id, hour, minute, month, day, year) ON DELETE CASCADE);");
 	}
+	
+	private void createOrdinaryUserTable() throws SQLException {
+		Statement state = conn.createStatement();
+		state.execute(
+				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer UNIQUE references User(userid)  ON DELETE CASCADE);");
+	}
 
 	private void createRegisteredUserTable() throws SQLException {
 		Statement state = conn.createStatement();
 		state.execute(
-				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer references User(userid) ON DELETE CASCADE);");
-	}
-
-	private void createOrdinaryUserTable() throws SQLException {
-		Statement state = conn.createStatement();
-		state.execute(
-				"CREATE TABLE IF NOT EXISTS RegisteredUser (userid integer references User(userid) ON DELETE CASCADE, password TEXT);");
+				"CREATE TABLE IF NOT EXISTS RegisteredUser (userid integer UNIQUE references User(userid) ON DELETE CASCADE UNIQUE, password TEXT);");
 	}
 
 	private void createCardTable() throws SQLException {
