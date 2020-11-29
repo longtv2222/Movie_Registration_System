@@ -215,11 +215,10 @@ public class DBManager {
 			Viewing view = new Viewing(hour, minute, month, day, year, movieList.get(movie_id)); // Creat Viewing object
 			Viewing refObject = theaterList.get(t_id).getViewing(room_id, view); // Find object view inside theater list
 
-			if (refObject != null) {
-				Reservation reser = new Reservation(movieList.get(movie_id), theaterList.get(t_id),
-						theaterList.get(t_id).getRoom().get(room_id), refObject, price, x_cor, y_cor);
-				refObject.addReservation(x_cor, y_cor, reser);
-			}
+			Reservation reser = new Reservation(movieList.get(movie_id), theaterList.get(t_id),
+					theaterList.get(t_id).getRoom().get(room_id), refObject, price, x_cor, y_cor);
+			refObject.addReservation(x_cor, y_cor, reser);
+
 		}
 	}
 

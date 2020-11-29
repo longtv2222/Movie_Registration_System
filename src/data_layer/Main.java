@@ -1,6 +1,5 @@
 package data_layer;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import control_layer.Controller;
