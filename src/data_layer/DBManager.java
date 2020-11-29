@@ -243,10 +243,10 @@ public class DBManager {
 	 * Check if user's username and password are legit or not. Return false if it's
 	 * not, true if it is.
 	 */
-	public boolean validateRegisteredUser(String userName, String password) throws SQLException {
+	public boolean validateRegisteredUser(String email, String password) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement(
-				"SELECT * FROM User AS U INNER JOIN RegisteredUser as R ON R.userid = U.UserID WHERE U.username = ? AND R.password = ?;");
-		statement.setString(1, userName);
+				"SELECT * FROM User AS U INNER JOIN RegisteredUser as R ON R.userid = U.UserID WHERE U.email = ? AND R.password = ?;");
+		statement.setString(1, email);
 		statement.setString(2, password);
 		ResultSet rs = statement.executeQuery();
 		if (!rs.isBeforeFirst()) // If there is no user, return false

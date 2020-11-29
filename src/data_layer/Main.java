@@ -23,7 +23,10 @@ public class Main {
 
 		// Done like this to preserve the relationship in the UML diagram
 		ArrayList<View> v = new ArrayList<View>();
-		v.add(new LoginView(controller)); v.add(new MenuView(controller)); v.add(new AccountView(controller)); v.add(new SeatView(controller));
+		v.add(new LoginView(controller));
+		v.add(new MenuView(controller));
+		v.add(new AccountView(controller));
+		v.add(new SeatView(controller));
 		controller.setViews(v);
 
 	}
