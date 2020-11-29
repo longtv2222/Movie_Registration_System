@@ -94,6 +94,7 @@ public class Controller {
 			return true;
 		} catch (SQLException e) {
 			System.out.println("User with given email already existed!");
+			e.printStackTrace();
 			return false;
 		}
 	}

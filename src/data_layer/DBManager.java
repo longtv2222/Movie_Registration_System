@@ -298,7 +298,7 @@ public class DBManager {
 			statement4.setInt(1, userId); // Insert this user to ordinary user table
 			statement4.execute();
 		} else { // If user in the db
-			user.setUserID(rs.getInt("UserID"));
+			user.setUserID(rs.getInt(1)); // Get user id, can't use name because it will be ambiguous
 			user.setEmail(rs.getString("email"));
 			rs.close();
 		}
