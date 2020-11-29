@@ -288,9 +288,7 @@ public class DBManager {
 		if (!rs.isBeforeFirst()) { // If user is not in the db
 			// Create user with given email
 			PreparedStatement statement2 = conn.prepareStatement("INSERT INTO User(email) VALUES (?)");
-
 			statement2.setString(1, email);
-			statement2.execute();
 
 			Statement statement3 = conn.createStatement();
 			ResultSet rs2 = statement3.executeQuery("SELECT LAST_INSERT_ROWID();");

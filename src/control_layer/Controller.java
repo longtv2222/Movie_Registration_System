@@ -93,7 +93,7 @@ public class Controller {
 			this.user = DBManager.getInstance().getOrdinaryUser(email);
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("User with given email already existed!");
 			return false;
 		}
 	}
