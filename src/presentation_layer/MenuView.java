@@ -115,9 +115,19 @@ public class MenuView extends View {
 	public void loadInformation() {
 		
 		theatreList = controller.getTheatreNames();
-		movieList = controller.getMovieNames();
 		changeComboBox(CB_Theatres, theatreList, selectedTheatre);
+		selectedTheatre = (String) CB_Theatres.getItemAt(0);
+		
+		movieList = controller.getMovieNames();
 		changeComboBox(CB_Movies, movieList, selectedMovie);
+		selectedMovie = (String) CB_Movies.getItemAt(0);
+		
+		//Managing movie times
+		
+		timeList = controller.getMovieTimes(selectedTheatre, selectedMovie).split("\n");
+		changeComboBox(CB_Times, timeList, selectedTime);
+		selectedTime = (String) CB_Times.getItemAt(0);
+		
 		assignActionListeners();
 	}
 	
@@ -139,9 +149,6 @@ public class MenuView extends View {
 		for(String s : newItems)
 			cb.addItem(s);
 		
-		
-		selectedString = (String) cb.getItemAt(0);
-		System.out.println(selectedString);
 		ACTIVE_ACTION = true;   //enable action listeners.
 	}
 
@@ -166,6 +173,7 @@ public class MenuView extends View {
 						selectedMovie = (String) CB_Movies.getSelectedItem();
 						String ans = controller.getMovieTimes(selectedTheatre, selectedMovie);
 						changeComboBox(CB_Times, ans.split("\n"), selectedTime);
+						selectedTime = (String) CB_Times.getItemAt(0);
 						break;
 					
 						
