@@ -282,13 +282,17 @@ public class DBManager {
 		PreparedStatement statement = conn.prepareStatement(
 				"SELECT * FROM User as U INNER JOIN OrdinaryUser as O WHERE U.email = ? AND U.userid = O.userid;");
 		statement.setString(1, email);
-		ResultSet rs = statement.executeQuery();
 		OrdinaryUser user = new OrdinaryUser();
+		ResultSet rs = statement.executeQuery();
 
-		if (!rs.isBeforeFirst()) { // If user is not in the db
+		if (rs.next()) { // If there's 1 record of user in the database
+			user.setUserID(rs.getInt(1)); // Get user id, can't use name because it will be ambiguous
+			user.setEmail(rs.getString("email"));
+		} else { // If user is not in the database
 			// Create user with given email
 			PreparedStatement statement2 = conn.prepareStatement("INSERT INTO User(email) VALUES (?)");
 			statement2.setString(1, email);
+			statement2.execute();
 
 			Statement statement3 = conn.createStatement();
 			ResultSet rs2 = statement3.executeQuery("SELECT LAST_INSERT_ROWID();");
@@ -297,10 +301,6 @@ public class DBManager {
 			PreparedStatement statement4 = conn.prepareStatement("INSERT INTO OrdinaryUser(userid) VALUES (?)");
 			statement4.setInt(1, userId); // Insert this user to ordinary user table
 			statement4.execute();
-		} else { // If user in the db
-			user.setUserID(rs.getInt(1)); // Get user id, can't use name because it will be ambiguous
-			user.setEmail(rs.getString("email"));
-			rs.close();
 		}
 
 		return user;

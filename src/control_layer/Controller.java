@@ -36,7 +36,7 @@ public class Controller {
 		this.movieList = movieList;
 		this.views = new ArrayList<View>();
 		GUI = new JFrame("Movie Reservation Application");
-		
+
 	}
 
 	/*
@@ -47,53 +47,52 @@ public class Controller {
 			DBManager.getInstance().populateMovie(movieList);
 			DBManager.getInstance().populateTheater(theaterList, movieList);
 			DBManager.getInstance().populateReservation(theaterList, movieList);
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	//Functions to update the Menu Screen
+
+	// Functions to update the Menu Screen
 	public String[] getTheatreNames() {
 		ArrayList<String> theatreNames = new ArrayList<String>();
 		Iterator it = theaterList.entrySet().iterator();
-		while(it.hasNext()) {
-			Map.Entry pair = (Map.Entry) it.next();
-			theatreNames.add(((Theatre)pair.getValue()).getName());
+		while (it.hasNext()) {
+			Map.Entry<Integer, Theatre> pair = (Map.Entry) it.next();
+			theatreNames.add(((Theatre) pair.getValue()).getName());
 		}
 		return theatreNames.toArray(new String[theatreNames.size()]);
-		
+
 	}
-	
-	public String[] getMovieNames(){
+
+	public String[] getMovieNames() {
 		ArrayList<String> movieNames = new ArrayList<String>();
 		Iterator it = movieList.entrySet().iterator();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
 			movieNames.add(((Movie) pair.getValue()).getMovieName());
 		}
-		
+
 		return movieNames.toArray(new String[movieNames.size()]);
 	}
-	
+
 	public String getMovieTimes(String Theatre, String movie) {
 		Theatre selectedTheatre = null;
-		
+
 		Iterator it = theaterList.entrySet().iterator();
-		//Find the correct theatre index based off name
-		while(it.hasNext()) {
+		// Find the correct theatre index based off name
+		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
-			//System.out.println(Theatre);
-			//If found get the selected theatre
-			if(((Theatre)pair.getValue()).getName() == Theatre) {
+			// System.out.println(Theatre);
+			// If found get the selected theatre
+			if (((Theatre) pair.getValue()).getName() == Theatre) {
 				selectedTheatre = theaterList.get((int) pair.getKey());
 				break;
 			}
 		}
-		
+
 		return selectedTheatre.getAllTimes(movie);
 	}
-	
 
 	public void setViews(ArrayList<View> v) {
 		this.views = v;
@@ -107,9 +106,8 @@ public class Controller {
 		GUI.repaint();
 		GUI.setSize(600, 600);
 		GUI.setVisible(true);
-		
-		
-		//Setting View information
+
+		// Setting View information
 		((MenuView) v.get(1)).loadInformation();
 	}
 
@@ -118,89 +116,81 @@ public class Controller {
 		cl.show(cards, visible);
 		GUI.repaint();
 	}
-	
-	//TODO:
-	//There is no current room selection. This means if two rooms have the same movie at the same time it will
-	//only select the first one
-	
+
+	// TODO:
+	// There is no current room selection. This means if two rooms have the same
+	// movie at the same time it will
+	// only select the first one
+
 	public void updateViewInfo(String mv, String theatre, String td) {
 		String date = td.split(" ")[0];
 		int year = Integer.parseInt(date.split("/")[0]);
 		int month = Integer.parseInt(date.split("/")[1]);
 		int day = Integer.parseInt(date.split("/")[2]);
-		
+
 		String time = td.split(" ")[1];
 		int hours = Integer.parseInt(time.split(":")[0]);
 		int minutes = Integer.parseInt(time.split(":")[1]);
-		
+
 		Theatre selectedTheatre = null;
 		Iterator it = theaterList.entrySet().iterator();
-		//Find the correct theatre index based off name
-		while(it.hasNext()) {
+		// Find the correct theatre index based off name
+		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
-			//If found get the selected theatre
-			if(((Theatre)pair.getValue()).getName() == theatre) {
+			// If found get the selected theatre
+			if (((Theatre) pair.getValue()).getName() == theatre) {
 				selectedTheatre = theaterList.get((int) pair.getKey());
 				break;
 			}
 		}
-	
-		
+
 		Iterator itroom = selectedTheatre.getAllRooms().entrySet().iterator();
-		while(itroom.hasNext()) {
+		while (itroom.hasNext()) {
 			Map.Entry pair = (Map.Entry) itroom.next();
-			//Extract the viewings
-			ArrayList<Viewing> viewings = selectedTheatre.getRoom().get((int)pair.getKey()).getArrViewing();
-			
-			for(Viewing v : viewings) {
-				System.out.println(v.getMovie().getMovieName() + " " + v.getCalendar().get(Calendar.HOUR_OF_DAY) + " " + v.getCalendar().get(Calendar.MINUTE));
+			// Extract the viewings
+			ArrayList<Viewing> viewings = selectedTheatre.getRoom().get((int) pair.getKey()).getArrViewing();
+
+			for (Viewing v : viewings) {
+				System.out.println(v.getMovie().getMovieName() + " " + v.getCalendar().get(Calendar.HOUR_OF_DAY) + " "
+						+ v.getCalendar().get(Calendar.MINUTE));
 				System.out.println(hours + " " + minutes);
-				//true if found correct viewing
-				if(v.getMovie().getMovieName() == mv && v.getCalendar().get(Calendar.HOUR_OF_DAY) == hours && 
-						v.getCalendar().get(Calendar.MINUTE) == minutes && (v.getCalendar().get(Calendar.YEAR)-1) == year &&
-						(v.getCalendar().get(Calendar.MONTH)+12) == month && v.getCalendar().get(Calendar.DAY_OF_MONTH) == day) {
-					((SeatView)views.get(3)).setCurrentView(v);
+				// true if found correct viewing
+				if (v.getMovie().getMovieName() == mv && v.getCalendar().get(Calendar.HOUR_OF_DAY) == hours
+						&& v.getCalendar().get(Calendar.MINUTE) == minutes
+						&& (v.getCalendar().get(Calendar.YEAR) - 1) == year
+						&& (v.getCalendar().get(Calendar.MONTH) + 12) == month
+						&& v.getCalendar().get(Calendar.DAY_OF_MONTH) == day) {
+					((SeatView) views.get(3)).setCurrentView(v);
 					return;
 				}
 			}
 		}
-		
-		/*
-		
-		
-		String date = td.split(" ")[0];
-		String time = td.split(" ")[1];
-		int hours = Integer.parseInt(time.split(":")[0]);
-		int minutes = Integer.parseInt(time.split(":")[1]);
-		int roomNum = Integer.parseInt(r);
-		int theatreIndex = 1;
-		
-		//System.out.println(theaterList.get(1));
-		
-		//Find the theatre ID with the right name
-		for(int i = 1; i < theaterList.size(); i++) {
-			if(theaterList.get(i).getName() == theatre) {
-				theatreIndex = i;
-				break;
-			}
-		}
-		//System.out.println(theatreIndex);
-		
-		Room room = theaterList.get(theatreIndex).getSpecificRoom(roomNum);
-		//System.out.println(room.getArrViewing().get(0).getCalendar().getTime().getHours()); 
 
-		Viewing v;
-		for(int i = 0; i < room.getArrViewing().size(); i++) {
-			v = room.getArrViewing().get(i);
-			if(v.getCalendar().getTime().getHours() == hours && v.getCalendar().getTime().getMinutes() == minutes) {
-				System.out.println("Found room");
-				SeatView seatView = (SeatView) views.get(3);
-				seatView.setCurrentView(v);
-				break;
-			}
-		}
-		
-		*/
+		/*
+		 * 
+		 * 
+		 * String date = td.split(" ")[0]; String time = td.split(" ")[1]; int hours =
+		 * Integer.parseInt(time.split(":")[0]); int minutes =
+		 * Integer.parseInt(time.split(":")[1]); int roomNum = Integer.parseInt(r); int
+		 * theatreIndex = 1;
+		 * 
+		 * //System.out.println(theaterList.get(1));
+		 * 
+		 * //Find the theatre ID with the right name for(int i = 1; i <
+		 * theaterList.size(); i++) { if(theaterList.get(i).getName() == theatre) {
+		 * theatreIndex = i; break; } } //System.out.println(theatreIndex);
+		 * 
+		 * Room room = theaterList.get(theatreIndex).getSpecificRoom(roomNum);
+		 * //System.out.println(room.getArrViewing().get(0).getCalendar().getTime().
+		 * getHours());
+		 * 
+		 * Viewing v; for(int i = 0; i < room.getArrViewing().size(); i++) { v =
+		 * room.getArrViewing().get(i); if(v.getCalendar().getTime().getHours() == hours
+		 * && v.getCalendar().getTime().getMinutes() == minutes) {
+		 * System.out.println("Found room"); SeatView seatView = (SeatView)
+		 * views.get(3); seatView.setCurrentView(v); break; } }
+		 * 
+		 */
 	}
 
 	public boolean validateRegisteredUser(String email, String password) {
@@ -237,8 +227,7 @@ public class Controller {
 			return false;
 		}
 	}
-	
-	
+
 	public User getUser() {
 		return user;
 	}
