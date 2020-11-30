@@ -169,6 +169,7 @@ public class AccountView extends View {
 		switch (e.getActionCommand()) {
 
 		case "Save Changes":
+			ReservationView x = new ReservationView(controller);
 			break;
 
 		case "Return":
