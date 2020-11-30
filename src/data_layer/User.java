@@ -24,11 +24,11 @@ public abstract class User {
 	public void setIsRegistered(boolean b) {
 		isRegistered = b;
 	}
-	
+
 	public boolean getIsRegistered() {
 		return isRegistered;
 	}
-	
+
 	public User(String email) {
 		this.email = email;
 	}
@@ -56,19 +56,19 @@ public abstract class User {
 	public void addReservations(Reservation r) {
 		reservations.add(r);
 	}
-	
+
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
-	
-	public ArrayList<Reservation> getReservations(){
+
+	public ArrayList<Reservation> getReservations() {
 		return reservations;
 	}
 
 	public int getUserID() {
 		return userID;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}

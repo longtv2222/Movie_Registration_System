@@ -117,9 +117,9 @@ public class Controller {
 		CardLayout cl = (CardLayout) (cards.getLayout());
 		cl.show(cards, visible);
 		GUI.repaint();
-		
-		if(visible == "account")
-			((AccountView)views.get(2)).loadAllInfo();
+
+		if (visible == "account")
+			((AccountView) views.get(2)).loadAllInfo();
 	}
 
 	// TODO:
@@ -206,10 +206,11 @@ public class Controller {
 				DBManager.getInstance().populateUserCard(user); // Populate card information of user
 				// Populate reservation of user with referenced object from theater list
 				DBManager.getInstance().populateUserReservation(user, theaterList, movieList);
-				
-				//indicate in parent class that is registered
-				((RegisteredUser)user).setPassword(password);
+
+				// indicate in parent class that is registered
+				((RegisteredUser) user).setPassword(password);
 				user.setIsRegistered(true);
+
 				return true;
 			} else {
 				System.out.println("Login failed! Your password or your username is wrong");
