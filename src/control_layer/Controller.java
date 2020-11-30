@@ -4,7 +4,6 @@ package control_layer;
 import data_layer.DBManager;
 import data_layer.Movie;
 import data_layer.RegisteredUser;
-import data_layer.Room;
 import data_layer.Theatre;
 import data_layer.User;
 import data_layer.Viewing;
@@ -49,7 +48,6 @@ public class Controller {
 			DBManager.getInstance().populateMovie(movieList);
 			DBManager.getInstance().populateTheater(theaterList, movieList);
 			DBManager.getInstance().populateReservation(theaterList, movieList);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

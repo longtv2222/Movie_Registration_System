@@ -1,17 +1,11 @@
 package presentation_layer;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
-
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SpringLayout;
+import javax.swing.JOptionPane;
 
 import control_layer.Controller;
 
@@ -39,10 +33,10 @@ public class LoginView extends View {
 		login.setBounds(100, 120, 80, 35);
 		login.addActionListener(this);
 
-		//set default login
+		// set default login
 		username.setText("joe@gmail.com");
 		password.setText("123123");
-		
+
 		this.add(username);
 		this.add(password);
 		this.add(usernameText);
@@ -65,14 +59,14 @@ public class LoginView extends View {
 			boolean status = false;
 			if (pass.isEmpty()) {
 				status = controller.validateOrdinaryUser(user);
-				System.out.println("ORD");
+				JOptionPane.showMessageDialog(null, "Ordinary user logged in succesfully");
 			} else {
 				status = controller.validateRegisteredUser(user, pass);
 			}
 
 			if (status) {
 				controller.changeVisibility("menu");
-			} else {
+				JOptionPane.showMessageDialog(null, "Registered user logged in succesfully");
 			}
 
 			break;
@@ -85,4 +79,5 @@ public class LoginView extends View {
 		// TODO Auto-generated method stub
 
 	}
+
 }
