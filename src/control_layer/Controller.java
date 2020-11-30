@@ -125,6 +125,10 @@ public class Controller {
 	
 	public void updateViewInfo(String mv, String theatre, String td) {
 		String date = td.split(" ")[0];
+		int year = Integer.parseInt(date.split("/")[0]);
+		int month = Integer.parseInt(date.split("/")[1]);
+		int day = Integer.parseInt(date.split("/")[2]);
+		
 		String time = td.split(" ")[1];
 		int hours = Integer.parseInt(time.split(":")[0]);
 		int minutes = Integer.parseInt(time.split(":")[1]);
@@ -152,7 +156,9 @@ public class Controller {
 				System.out.println(v.getMovie().getMovieName() + " " + v.getCalendar().get(Calendar.HOUR_OF_DAY) + " " + v.getCalendar().get(Calendar.MINUTE));
 				System.out.println(hours + " " + minutes);
 				//true if found correct viewing
-				if(v.getMovie().getMovieName() == mv && v.getCalendar().get(Calendar.HOUR_OF_DAY) == hours && v.getCalendar().get(Calendar.MINUTE) == minutes) {
+				if(v.getMovie().getMovieName() == mv && v.getCalendar().get(Calendar.HOUR_OF_DAY) == hours && 
+						v.getCalendar().get(Calendar.MINUTE) == minutes && (v.getCalendar().get(Calendar.YEAR)-1) == year &&
+						(v.getCalendar().get(Calendar.MONTH)+12) == month && v.getCalendar().get(Calendar.DAY_OF_MONTH) == day) {
 					((SeatView)views.get(3)).setCurrentView(v);
 					return;
 				}

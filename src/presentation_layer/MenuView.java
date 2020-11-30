@@ -176,8 +176,6 @@ public class MenuView extends View {
 						break;
 						
 				}
-				
-			
 				break;
 
 			case "View Account":
