@@ -137,7 +137,7 @@ public class DBManager {
 	private void createRegisteredUserTable() throws SQLException {
 		Statement state = conn.createStatement();
 		state.execute(
-				"CREATE TABLE IF NOT EXISTS RegisteredUser (userid integer UNIQUE references User(userid) ON DELETE CASCADE UNIQUE, password TEXT);");
+				"CREATE TABLE IF NOT EXISTS RegisteredUser (userid integer UNIQUE references User(userid) ON DELETE CASCADE UNIQUE, password TEXT, day int, month int, year int);");
 	}
 
 	private void createCardTable() throws SQLException {
