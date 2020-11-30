@@ -48,4 +48,10 @@ public abstract class User {
 		reservations.add(r);
 	}
 
+	public void inter() {
+		for (Reservation r : reservations) {
+			System.out.println(r.toString());
+		}
+	}
+
 }

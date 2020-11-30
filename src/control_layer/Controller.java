@@ -201,6 +201,7 @@ public class Controller {
 				DBManager.getInstance().populateUserCard(user); // Populate card information of user
 				// Populate reservation of user with referenced object from theater list
 				DBManager.getInstance().populateUserReservation(user, theaterList, movieList);
+				user.inter();
 				return true;
 			} else {
 				System.out.println("Login failed! Your password or your username is wrong");

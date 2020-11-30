@@ -188,7 +188,6 @@ public class DBManager {
 			int day = rs.getInt("day");
 			int year = rs.getInt("year");
 			int movie_id = rs.getInt("movieID");
-
 			Viewing view = new Viewing(hour, minute, month, day, year, movieList.get(movie_id)); // Creat Viewing object
 			theaterList.get(t_id).addViewing(room_id, view); // Add viewing to room of theater
 		}
@@ -267,13 +266,15 @@ public class DBManager {
 	}
 
 	public RegisteredUser getRegisteredUser(String email) throws SQLException {
-		PreparedStatement statement = conn.prepareStatement("SELECT * FROM User as U WHERE U.email = ?");
+		PreparedStatement statement = conn.prepareStatement(
+				"SELECT * FROM User as U INNER JOIN RegisteredUser AS R ON U.userid = R.userid  WHERE U.email = ? ");
 		statement.setString(1, email);
 		ResultSet rs = statement.executeQuery();
 
 		RegisteredUser user = new RegisteredUser();
-		user.setUserID(rs.getInt("UserID"));
-		user.setEmail(rs.getString("email"));
+		user.setUserID(rs.getInt(1));
+		user.setEmail(rs.getString(2));
+		user.setDayMonthYear(rs.getInt(5), rs.getInt(6), rs.getInt(7));
 		rs.close();
 		return user;
 	}
@@ -325,8 +326,9 @@ public class DBManager {
 	public void populateUserReservation(User user, HashMap<Integer, Theatre> theaterList,
 			HashMap<Integer, Movie> movieList) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("SELECT * FROM Reservation as R where R.userID = ?");
-		statement.setInt(1, user.userID);
+		statement.setString(1, Integer.toString(user.userID));
 		ResultSet rs = statement.executeQuery();
+
 		while (rs.next()) {
 			int t_id = rs.getInt("t_id");
 			int room_id = rs.getInt("room_id");
