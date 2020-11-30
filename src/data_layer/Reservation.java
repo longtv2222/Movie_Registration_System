@@ -10,6 +10,7 @@ public class Reservation {
 	private double price;
 	private int x_cor;
 	private int y_cor;
+	private boolean booked = false;
 
 	public Reservation(Movie movie, Theatre theatre, Room room, Viewing viewing, double price, int x_cor, int y_cor) {
 		this.movie = movie;
@@ -17,8 +18,17 @@ public class Reservation {
 		this.room = room;
 		this.viewing = viewing;
 		this.price = price;
+		booked = true;
+	}
+	
+	public Reservation() {
+		booked = false;
 	}
 
+	public boolean getBooked() {
+		return booked;
+	}
+	
 	public void changeSeat(int x, int y) {
 	}
 

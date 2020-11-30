@@ -37,6 +37,9 @@ public class Theatre {
 		return sb.toString();
 	}
 	
+	public HashMap<Integer, Room> getAllRooms(){
+		return theatreRoom;
+	}
 	
 	public void addRoom(int room_id, Room room) {
 		theatreRoom.put(room_id, room);

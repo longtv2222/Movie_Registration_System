@@ -1,3 +1,9 @@
+/*
+	NOTE:
+		The intialzation of Reservation int the contructor does not recieve the needed arguments.
+		That has to be fixed...
+
+*/
 package data_layer;
 
 import java.text.SimpleDateFormat;
@@ -5,7 +11,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Viewing {
-	private static final int SIZE = 30; // Assuming the size of all rooms are 30.
+	private static final int SIZE = 10; // Assuming the size of all rooms are 30.
 	private Calendar startTime;
 	private Movie show;
 	private Reservation[][] seats;
@@ -15,8 +21,18 @@ public class Viewing {
 	
 		this.show = show;
 		seats = new Reservation[SIZE][SIZE];
+		
+		for(int i = 0; i < SIZE; i++) {
+			for(int j = 0; j < SIZE; j++) {
+				seats[i][j] = new Reservation();
+			}
+		}
 	}
 
+	public Reservation[][] getReservations() {
+		return seats;
+	}
+	
 	public Reservation[][] getSeats() {
 		return this.seats;
 	}

@@ -15,6 +15,7 @@ import java.awt.CardLayout;
 import java.sql.SQLException;
 //Library import
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -82,7 +83,7 @@ public class Controller {
 		//Find the correct theatre index based off name
 		while(it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
-			System.out.println(Theatre);
+			//System.out.println(Theatre);
 			//If found get the selected theatre
 			if(((Theatre)pair.getValue()).getName() == Theatre) {
 				selectedTheatre = theaterList.get((int) pair.getKey());
@@ -91,7 +92,6 @@ public class Controller {
 		}
 		
 		return selectedTheatre.getAllTimes(movie);
-		
 	}
 	
 
@@ -119,9 +119,49 @@ public class Controller {
 		GUI.repaint();
 	}
 	
+	//TODO:
+	//There is no current room selection. This means if two rooms have the same movie at the same time it will
+	//only select the first one
+	
 	public void updateViewInfo(String mv, String theatre, String td) {
-
-			/*
+		String date = td.split(" ")[0];
+		String time = td.split(" ")[1];
+		int hours = Integer.parseInt(time.split(":")[0]);
+		int minutes = Integer.parseInt(time.split(":")[1]);
+		
+		Theatre selectedTheatre = null;
+		Iterator it = theaterList.entrySet().iterator();
+		//Find the correct theatre index based off name
+		while(it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			//If found get the selected theatre
+			if(((Theatre)pair.getValue()).getName() == theatre) {
+				selectedTheatre = theaterList.get((int) pair.getKey());
+				break;
+			}
+		}
+	
+		
+		Iterator itroom = selectedTheatre.getAllRooms().entrySet().iterator();
+		while(itroom.hasNext()) {
+			Map.Entry pair = (Map.Entry) itroom.next();
+			//Extract the viewings
+			ArrayList<Viewing> viewings = selectedTheatre.getRoom().get((int)pair.getKey()).getArrViewing();
+			
+			for(Viewing v : viewings) {
+				System.out.println(v.getMovie().getMovieName() + " " + v.getCalendar().get(Calendar.HOUR_OF_DAY) + " " + v.getCalendar().get(Calendar.MINUTE));
+				System.out.println(hours + " " + minutes);
+				//true if found correct viewing
+				if(v.getMovie().getMovieName() == mv && v.getCalendar().get(Calendar.HOUR_OF_DAY) == hours && v.getCalendar().get(Calendar.MINUTE) == minutes) {
+					((SeatView)views.get(3)).setCurrentView(v);
+					return;
+				}
+			}
+		}
+		
+		/*
+		
+		
 		String date = td.split(" ")[0];
 		String time = td.split(" ")[1];
 		int hours = Integer.parseInt(time.split(":")[0]);
@@ -153,8 +193,8 @@ public class Controller {
 				break;
 			}
 		}
-		*/	
 		
+		*/
 	}
 
 	public boolean validateRegisteredUser(String email, String password) {

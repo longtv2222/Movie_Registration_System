@@ -159,8 +159,6 @@ public class MenuView extends View {
 				switch(((JComboBox)e.getSource()).getName()) {
 					case "Theatres CB":
 						selectedTheatre = (String) CB_Theatres.getSelectedItem();
-						//movieList = controller.getMovieNames();
-						//changeComboBox(CB_Movies, movieList, selectedMovie);
 						break;
 						
 					case "Movies CB":
@@ -187,6 +185,9 @@ public class MenuView extends View {
 				break;
 
 			case "Order":
+				selectedTheatre = (String) CB_Theatres.getSelectedItem();
+				selectedMovie = (String) CB_Movies.getSelectedItem();
+				selectedTime = (String) CB_Times.getSelectedItem();
 				controller.updateViewInfo(selectedMovie, selectedTheatre, selectedTime);
 				controller.changeVisibility("seat");
 				break;
