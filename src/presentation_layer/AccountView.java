@@ -118,6 +118,10 @@ public class AccountView extends View {
 		switch (e.getActionCommand()) {
 
 		case "Save Changes":
+			ReservationView bruh =(ReservationView) controller.getViews().get(4);
+			bruh.update();
+			System.out.println(controller.getUser().getReservations().get(0));
+			controller.changeVisibility("reservation");
 			break;
 
 		case "Return":

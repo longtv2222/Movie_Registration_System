@@ -5,19 +5,19 @@ import java.util.ArrayList;
 public abstract class User {
 	protected int userID;
 	protected ArrayList<Card> cards;
-	protected ArrayList<Reservation> reservations;
+	private ArrayList<Reservation> reservations;
 	protected String email;
 
 	public User(int userID, ArrayList<Card> cards, ArrayList<Reservation> reservations, String email) {
 		this.userID = userID;
 		this.cards = cards;
-		this.reservations = reservations;
+		this.setReservations(reservations);
 		this.email = email;
 	}
 
 	public User() {
 		cards = new ArrayList<Card>();
-		reservations = new ArrayList<Reservation>();
+		setReservations(new ArrayList<Reservation>());
 	}
 
 	public User(String email) {
@@ -33,7 +33,7 @@ public abstract class User {
 	}
 
 	public void setReservation(ArrayList<Reservation> reservations) {
-		this.reservations = reservations;
+		this.setReservations(reservations);
 	}
 
 	public void setEmail(String email) {
@@ -45,7 +45,15 @@ public abstract class User {
 	}
 
 	public void addReservations(Reservation r) {
-		reservations.add(r);
+		getReservations().add(r);
+	}
+
+	public ArrayList<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(ArrayList<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 }

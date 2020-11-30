@@ -34,7 +34,7 @@ public class Controller {
 	public Controller(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList) {
 		this.theaterList = theaterList;
 		this.movieList = movieList;
-		this.views = new ArrayList<View>();
+		this.views = (new ArrayList<View>());
 		GUI = new JFrame("Movie Reservation Application");
 		
 	}
@@ -96,12 +96,13 @@ public class Controller {
 	
 
 	public void setViews(ArrayList<View> v) {
-		this.views = v;
+		this.views=(v);
 		cards = new JPanel(new CardLayout());
 		cards.add(views.get(0), "login");
 		cards.add(views.get(1), "menu");
 		cards.add(views.get(2), "account");
 		cards.add(views.get(3), "seat");
+		cards.add(views.get(4), "reservation");
 		GUI.getContentPane().add(cards);
 		GUI.pack();
 		GUI.repaint();
@@ -159,7 +160,7 @@ public class Controller {
 				if(v.getMovie().getMovieName() == mv && v.getCalendar().get(Calendar.HOUR_OF_DAY) == hours && 
 						v.getCalendar().get(Calendar.MINUTE) == minutes && (v.getCalendar().get(Calendar.YEAR)-1) == year &&
 						(v.getCalendar().get(Calendar.MONTH)+12) == month && v.getCalendar().get(Calendar.DAY_OF_MONTH) == day) {
-					((SeatView)views.get(3)).setCurrentView(v);
+					((SeatView)getViews().get(3)).setCurrentView(v);
 					return;
 				}
 			}
@@ -241,6 +242,10 @@ public class Controller {
 	
 	public User getUser() {
 		return user;
+	}
+
+	public ArrayList<View> getViews() {
+		return views;
 	}
 
 }
