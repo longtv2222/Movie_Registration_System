@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,10 +14,26 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import control_layer.Controller;
+import data_layer.Card;
+import data_layer.RegisteredUser;
+import data_layer.User;
 
 public class AccountView extends View {
 	private String[] creditCardList;
-
+	private JTextField TF_Username;
+	private JTextField TF_Password;
+	private JTextField TF_RegDate;
+	private JTextField TF_Email;
+	private JTextField TF_CreditCard;
+	private JTextField TF_CCV;
+	private JTextField TF_ExpiryDate;
+	
+	//credit card information
+	private ArrayList<String> accountNumList = new ArrayList<String>();
+	private ArrayList<String> ccvList = new ArrayList<String>();
+	private ArrayList<String> expiryList = new ArrayList<String>();
+	private int currentCard = 0;
+	
 	public AccountView(Controller controller) {
 		super("Account View", controller);
 		// TODO Auto-generated constructor stub
@@ -27,13 +45,13 @@ public class AccountView extends View {
 		// JPanel panel_password = new JPanel(new GridLayout(1,2));
 
 		// Text Fields
-		JTextField TF_Username = new JTextField();
-		JTextField TF_Password = new JTextField();
-		JTextField TF_RegDate = new JTextField();
-		JTextField TF_Email = new JTextField();
-		JTextField TF_CreditCard = new JTextField();
-		JTextField TF_CCV = new JTextField();
-		JTextField TF_ExpiryDate = new JTextField();
+	    TF_Username = new JTextField();
+		TF_Password = new JTextField();
+		TF_RegDate = new JTextField();
+		TF_Email = new JTextField();
+		TF_CreditCard = new JTextField();
+		TF_CCV = new JTextField();
+		TF_ExpiryDate = new JTextField();
 
 		// Labels
 		JLabel LB_Username = new JLabel("      Username: ");
@@ -111,6 +129,39 @@ public class AccountView extends View {
 
 		// frame.setVisible(true);
 	}
+	
+	public void loadAllInfo() {
+		User u = controller.getUser();
+		
+		TF_Username.setText(String.valueOf(u.getUserID()));
+		TF_Email.setText(u.getEmail());
+		
+		
+		for(Card c : u.getCards()) {
+			System.out.println("dd");
+			accountNumList.add(c.getAccountNumber());
+			ccvList.add(c.getCcv());
+			expiryList.add(new String(c.getExpiryDate().get(Calendar.YEAR) + "/" + c.getExpiryDate().get(Calendar.MONTH)));
+		}
+		
+		//make sure there are cards before attempt to load them
+		if(ccvList.size()>0) {
+			TF_CreditCard.setText(accountNumList.get(currentCard));
+			TF_CCV.setText(ccvList.get(currentCard));
+			TF_ExpiryDate.setText(expiryList.get(currentCard));
+		}
+		
+		//Load registered user's information
+		if(u.getIsRegistered() == true) {
+			RegisteredUser ru = (RegisteredUser) u;
+			TF_Password.setText(ru.getPassword());
+		}
+		//Load non registered user's information
+		else {
+			
+		}
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -125,6 +176,12 @@ public class AccountView extends View {
 			break;
 
 		case "Next Credit Card":
+			TF_CreditCard.setText(accountNumList.get(currentCard));
+			TF_CCV.setText(ccvList.get(currentCard));
+			TF_ExpiryDate.setText(expiryList.get(currentCard));
+			currentCard++;
+			if(currentCard >= ccvList.size())
+				currentCard = 0;
 			break;
 		}
 	}

@@ -7,6 +7,7 @@ public abstract class User {
 	protected ArrayList<Card> cards;
 	protected ArrayList<Reservation> reservations;
 	protected String email;
+	protected boolean isRegistered;
 
 	public User(int userID, ArrayList<Card> cards, ArrayList<Reservation> reservations, String email) {
 		this.userID = userID;
@@ -20,6 +21,14 @@ public abstract class User {
 		reservations = new ArrayList<Reservation>();
 	}
 
+	public void setIsRegistered(boolean b) {
+		isRegistered = b;
+	}
+	
+	public boolean getIsRegistered() {
+		return isRegistered;
+	}
+	
 	public User(String email) {
 		this.email = email;
 	}
@@ -47,5 +56,20 @@ public abstract class User {
 	public void addReservations(Reservation r) {
 		reservations.add(r);
 	}
+	
+	public ArrayList<Card> getCards() {
+		return cards;
+	}
+	
+	public ArrayList<Reservation> getReservations(){
+		return reservations;
+	}
 
+	public int getUserID() {
+		return userID;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
 }
