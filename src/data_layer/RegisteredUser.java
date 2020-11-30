@@ -30,5 +30,6 @@ public class RegisteredUser extends User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 
 }

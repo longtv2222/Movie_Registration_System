@@ -3,6 +3,7 @@ package control_layer;
 //Class import
 import data_layer.DBManager;
 import data_layer.Movie;
+import data_layer.RegisteredUser;
 import data_layer.Room;
 import data_layer.Theatre;
 import data_layer.User;
@@ -10,6 +11,7 @@ import data_layer.Viewing;
 import presentation_layer.MenuView;
 import presentation_layer.SeatView;
 import presentation_layer.View;
+import presentation_layer.AccountView;
 
 import java.awt.CardLayout;
 import java.sql.SQLException;
@@ -115,6 +117,9 @@ public class Controller {
 		CardLayout cl = (CardLayout) (cards.getLayout());
 		cl.show(cards, visible);
 		GUI.repaint();
+		
+		if(visible == "account")
+			((AccountView)views.get(2)).loadAllInfo();
 	}
 
 	// TODO:
@@ -197,10 +202,14 @@ public class Controller {
 		try {
 			if (DBManager.getInstance().validateRegisteredUser(email, password)) {
 				// Created an object of user with given database id.
-				this.user = DBManager.getInstance().getRegisteredUser(email);
+				this.user = (RegisteredUser) DBManager.getInstance().getRegisteredUser(email);
 				DBManager.getInstance().populateUserCard(user); // Populate card information of user
 				// Populate reservation of user with referenced object from theater list
 				DBManager.getInstance().populateUserReservation(user, theaterList, movieList);
+				
+				//indicate in parent class that is registered
+				((RegisteredUser)user).setPassword(password);
+				user.setIsRegistered(true);
 				return true;
 			} else {
 				System.out.println("Login failed! Your password or your username is wrong");

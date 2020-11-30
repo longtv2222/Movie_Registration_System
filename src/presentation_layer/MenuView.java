@@ -6,8 +6,13 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -37,6 +42,8 @@ public class MenuView extends View {
 	private JButton BTN_Order;
 	private JButton BTN_Account;
 	private JButton BTN_Logout; 
+	
+	private JLabel image;
 
 	public MenuView(Controller controller) {
 		super("Menu", controller);
@@ -101,10 +108,20 @@ public class MenuView extends View {
 		bottomPanel.add(BTN_Order);
 		bottomPanel.add(BTN_Account);
 		bottomPanel.add(BTN_Logout);
-
+		
+		//Image
+		BufferedImage pic = null;
+		try {
+			pic = ImageIO.read(new File("12AngryMen.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		image = new JLabel(new ImageIcon(pic)); 
+		
 		// ADD TO FRAME
 		this.add(BorderLayout.SOUTH, bottomPanel);
 		this.add(BorderLayout.NORTH, topPanel);
+		this.add(BorderLayout.CENTER, image);
 		// frame.setVisible(true);
 	}
 
@@ -174,6 +191,15 @@ public class MenuView extends View {
 						String ans = controller.getMovieTimes(selectedTheatre, selectedMovie);
 						changeComboBox(CB_Times, ans.split("\n"), selectedTime);
 						selectedTime = (String) CB_Times.getItemAt(0);
+						
+						System.out.println(selectedMovie);
+						if(selectedMovie.trim().equals("Blade Runner"))
+							image.setIcon(new ImageIcon("BladeRunner.jpg"));
+						else
+							image.setIcon(new ImageIcon("12AngryMen.jpg"));
+						
+						//image.setIcon(new ImageIcon("BladeRunner.jpg"));
+						
 						break;
 					
 						

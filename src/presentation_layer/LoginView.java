@@ -39,6 +39,10 @@ public class LoginView extends View {
 		login.setBounds(100, 120, 80, 35);
 		login.addActionListener(this);
 
+		//set default login
+		username.setText("joe@gmail.com");
+		password.setText("123123");
+		
 		this.add(username);
 		this.add(password);
 		this.add(usernameText);
