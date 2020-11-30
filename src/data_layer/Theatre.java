@@ -1,6 +1,8 @@
 package data_layer;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Theatre {
 	private String name;
@@ -21,6 +23,24 @@ public class Theatre {
 		this.theatreRoom = new HashMap<Integer, Room>();
 	}
 
+	public String getAllTimes(String movie) {
+		StringBuilder sb = new StringBuilder();
+		Iterator it = theatreRoom.entrySet().iterator();
+		while(it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			Room r = (Room)pair.getValue();
+			
+			//Loop through all the Viewings
+			sb.append(r.getAllShowTimes(movie));
+		}
+		
+		return sb.toString();
+	}
+	
+	public HashMap<Integer, Room> getAllRooms(){
+		return theatreRoom;
+	}
+	
 	public void addRoom(int room_id, Room room) {
 		theatreRoom.put(room_id, room);
 	}
@@ -29,6 +49,10 @@ public class Theatre {
 		return this.theatreRoom;
 	}
 
+	public Room getSpecificRoom(int r) {
+		return theatreRoom.get(r);
+	}
+	
 	public void addViewing(int roomID, Viewing view) {
 		theatreRoom.get(roomID).addViewing(view);
 	}
