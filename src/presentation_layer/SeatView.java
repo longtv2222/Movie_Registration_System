@@ -14,11 +14,8 @@ import javax.swing.JPanel;
 
 import control_layer.Controller;
 import data_layer.Reservation;
-<<<<<<< Updated upstream
 import data_layer.Room;
-=======
 import data_layer.User;
->>>>>>> Stashed changes
 import data_layer.Viewing;
 
 public class SeatView extends View {
@@ -137,9 +134,6 @@ public class SeatView extends View {
 				JOptionPane.showMessageDialog(null, "Please select a seat to reserve.");
 			else
 				controller.changeVisibility("payment");
-
-			controller.updatePaymentVar(theaterID, roomID, currentView, selectedSeat[0], selectedSeat[1]);
-			controller.changeVisibility("payment");
 
 			break;
 

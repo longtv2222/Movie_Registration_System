@@ -62,6 +62,8 @@ public class Controller {
 		Movie movie = null;
 		Room room = null;
 		Viewing viewing  = null;
+		int theatreID = 0;
+		int roomID = 0;
 		
 		//Get Account Information
 		int x = ((SeatView)views.get(3)).getSelectedX();
@@ -79,6 +81,7 @@ public class Controller {
 			Map.Entry<Integer, Theatre> pair = (Map.Entry) itTheatre.next();
 			if(pair.getValue().getName() == theatreStr) {
 				theatre = pair.getValue();
+				theatreID = (int)pair.getKey();
 				break;
 			}
 		}
@@ -109,7 +112,7 @@ public class Controller {
 			Map.Entry pair = (Map.Entry) itroom.next();
 			
 			room = (Room) pair.getValue();
-			
+			roomID = (int)pair.getKey();
 			// Extract the viewings
 			ArrayList<Viewing> viewings = theatre.getRoom().get((int) pair.getKey()).getArrViewing();
 			
@@ -138,6 +141,9 @@ public class Controller {
 		//Updating View in case the user goes back
 		((SeatView)views.get(3)).displayReservations();
 		
+		
+		//Send to Database
+		reserveSeat(theatreID, roomID, viewing, x, y);
 	}
 	
 	
@@ -208,20 +214,16 @@ public class Controller {
 
 		if (visible == "account") {
 			((AccountView) views.get(2)).loadAllInfo();
-<<<<<<< Updated upstream
 		}
+		
+		if(visible == "seat")
+			((SeatView) views.get(3)).setUser(user);
 
 		if (visible == "payment") {
 			((PaymentView) views.get(4)).updateUser();
 		}
 	}
 
-	/*
-	 * Populate member variable of PaymentView with nescessary informations.
-	 */
-	public void updatePaymentVar(int theaterID, int roomID, Viewing view, int x_cor, int y_cor) {
-		((PaymentView) views.get(4)).updatePaymentVar(theaterID, roomID, view, x_cor, y_cor);
-	}
 
 	public void reserveSeat(int theaterID, int roomID, Viewing view, int x_cor, int y_cor) {
 		try {
@@ -247,14 +249,7 @@ public class Controller {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-=======
-		
-		if(visible == "payment")
-			((PaymentView) views.get(4)).updateUser(user);
-		
-		if(visible == "seat")
-			((SeatView) views.get(3)).setUser(user);
->>>>>>> Stashed changes
+
 	}
 
 	// TODO:
