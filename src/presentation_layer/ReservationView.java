@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
@@ -63,7 +64,9 @@ public class ReservationView extends View{
 		switch (e.getActionCommand()) {	
 	
 			case "Cancel":
-				System.out.println(index);
+				controller.cancelReservation(reservations.get(index));
+				JOptionPane.showMessageDialog(null, "Reservation Cancelled");
+				controller.changeVisibility("account");
 			break;
 			
 			case "Return":
