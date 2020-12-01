@@ -146,7 +146,6 @@ public class PaymentView extends View{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getActionCommand());
 		switch(e.getActionCommand()) {
 			case "Return":
 				panel_Button.removeAll();
@@ -159,10 +158,10 @@ public class PaymentView extends View{
 				panel_Info.removeAll();
 				//TODO do the purchase with cards
 				if(u.getIsRegistered()==true) {
-					
+					controller.processRegisteredReservation();
 				}
 				else {
-					
+					controller.processOrdinaryReservation();
 				}
 				controller.changeVisibility("seat");
 				break;

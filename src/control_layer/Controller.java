@@ -54,6 +54,14 @@ public class Controller {
 		}
 	}
 
+	public void processRegisteredReservation() {
+		
+	}
+	
+	public void processOrdinaryReservation() {
+		
+	}
+	
 	// Functions to update the Menu Screen
 	public String[] getTheatreNames() {
 		ArrayList<String> theatreNames = new ArrayList<String>();
