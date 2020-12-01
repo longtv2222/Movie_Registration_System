@@ -61,10 +61,14 @@ public class LoginView extends View {
 				status = controller.validateOrdinaryUser(user);
 				if(status)
 					JOptionPane.showMessageDialog(null, "Ordinary user logged in succesfully");
+				else
+					JOptionPane.showMessageDialog(null, "Login Failed");
 			} else {
 				status = controller.validateRegisteredUser(user, pass);
 				if(status)
 					JOptionPane.showMessageDialog(null, "Registered user logged in succesfully");
+				else
+					JOptionPane.showMessageDialog(null, "Login Failed");
 			}
 			if(status)
 				controller.changeVisibility("menu");
