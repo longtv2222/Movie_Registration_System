@@ -50,9 +50,9 @@ public class Viewing {
 	}
 	
 	public boolean tooMuchRu() {
-		if((numberOfRegistered / SIZE*SIZE) >= 0.10)
-			return true;
-		else
+		//if((numberOfRegistered / SIZE*SIZE) >= 0.10)
+		//	return true;
+		//else
 			return false;
 	}
 
