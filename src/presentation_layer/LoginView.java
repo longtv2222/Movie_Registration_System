@@ -62,13 +62,11 @@ public class LoginView extends View {
 				JOptionPane.showMessageDialog(null, "Ordinary user logged in succesfully");
 			} else {
 				status = controller.validateRegisteredUser(user, pass);
-			}
-
-			if (status) {
-				controller.changeVisibility("menu");
 				JOptionPane.showMessageDialog(null, "Registered user logged in succesfully");
 			}
-
+			if(status)
+				controller.changeVisibility("menu");
+			
 			break;
 		}
 
