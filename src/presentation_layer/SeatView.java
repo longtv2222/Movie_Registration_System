@@ -102,6 +102,7 @@ public class SeatView extends View {
 			}
 		}
 		
+		//Updating seat cursor
 		selectedSeat[0] = -1;
 		selectedSeat[1] = -1;
 	}

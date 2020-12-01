@@ -56,7 +56,7 @@ public class Controller {
 		}
 	}
 
-	public void processRegisteredReservation() {
+	public void processReservation() {
 		Theatre theatre = null;
 		Movie movie = null;
 		Room room = null;
@@ -128,20 +128,18 @@ public class Controller {
 				}
 			}
 		}
-		System.out.println(x + " " + y);
+		System.out.println("GGGGGGGGGGGGGGGGGGG");
 		
 		Reservation newRes = new Reservation(movie,theatre,room,viewing,12.99,x,y);
-		user.addReservations(newRes);
+		if(user.getIsRegistered() == true)
+			user.addReservations(newRes);
 		viewing.addReservation(x,y,newRes);
 		
-		//Updating View incase the user goes back
+		//Updating View in case the user goes back
 		((SeatView)views.get(3)).displayReservations();
 		
 	}
 	
-	public void processOrdinaryReservation() {
-		
-	}
 	
 	// Functions to update the Menu Screen
 	public String[] getTheatreNames() {

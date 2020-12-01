@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -158,10 +159,15 @@ public class PaymentView extends View{
 				panel_Info.removeAll();
 				//TODO do the purchase with cards
 				if(u.getIsRegistered()==true) {
-					controller.processRegisteredReservation();
+					controller.processReservation();
 				}
 				else {
-					controller.processOrdinaryReservation();
+					//check information is loaded
+					if(TF_CCV.getText() == "" || TF_CreditCard.getText() == "" || TF_ExpiryDate.getText() == "" || TF_Name.getText() == "") {
+						JOptionPane.showMessageDialog(null, "Information Not Correct");
+						break;
+					}
+					controller.processReservation();
 				}
 				controller.changeVisibility("menu");
 				break;
