@@ -52,6 +52,7 @@ public class Controller {
 			DBManager.getInstance().populateMovie(movieList);
 			DBManager.getInstance().populateTheater(theaterList, movieList);
 			DBManager.getInstance().populateReservation(theaterList, movieList);
+			System.out.println("Done");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
