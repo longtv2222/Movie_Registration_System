@@ -163,7 +163,7 @@ public class PaymentView extends View{
 				else {
 					controller.processOrdinaryReservation();
 				}
-				controller.changeVisibility("seat");
+				controller.changeVisibility("menu");
 				break;
 				
 			case "comboBoxChanged":

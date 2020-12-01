@@ -4,6 +4,8 @@ package control_layer;
 import data_layer.DBManager;
 import data_layer.Movie;
 import data_layer.RegisteredUser;
+import data_layer.Reservation;
+import data_layer.Room;
 import data_layer.Theatre;
 import data_layer.User;
 import data_layer.Viewing;
@@ -55,6 +57,85 @@ public class Controller {
 	}
 
 	public void processRegisteredReservation() {
+		Theatre theatre = null;
+		Movie movie = null;
+		Room room = null;
+		Viewing viewing  = null;
+		
+		//Get Account Information
+		int x = ((SeatView)views.get(3)).getSelectedX();
+		int y = ((SeatView)views.get(3)).getSelectedY();
+		
+		String movieStr = ((MenuView)views.get(1)).getSelectedMovie();
+		String theatreStr = ((MenuView)views.get(1)).getSelectedTheatre();
+		String timeStr = ((MenuView)views.get(1)).getSelectedTime();
+		
+		
+		
+		//Find Correct Value
+		Iterator itTheatre = theaterList.entrySet().iterator();
+		while (itTheatre.hasNext()) {
+			Map.Entry<Integer, Theatre> pair = (Map.Entry) itTheatre.next();
+			if(pair.getValue().getName() == theatreStr) {
+				theatre = pair.getValue();
+				break;
+			}
+		}
+		
+		//Find Correct Movie
+		Iterator itMovie = movieList.entrySet().iterator();
+		while (itTheatre.hasNext()) {
+			Map.Entry<Integer, Movie> pair = (Map.Entry) itMovie.next();
+			if(pair.getValue().getMovieName() == theatreStr) {
+				movie = pair.getValue();
+				break;
+			}
+		}
+
+		//Find Correct Room
+		String date = timeStr.split(" ")[0];
+		int year = Integer.parseInt(date.split("/")[0]);
+		int month = Integer.parseInt(date.split("/")[1]);
+		int day = Integer.parseInt(date.split("/")[2]);
+
+		String time = timeStr.split(" ")[1];
+		int hours = Integer.parseInt(time.split(":")[0]);
+		int minutes = Integer.parseInt(time.split(":")[1]);
+		
+		boolean exit = false;
+		Iterator itroom = theatre.getAllRooms().entrySet().iterator();
+		while (itroom.hasNext() && exit == false) {
+			Map.Entry pair = (Map.Entry) itroom.next();
+			
+			room = (Room) pair.getValue();
+			
+			// Extract the viewings
+			ArrayList<Viewing> viewings = theatre.getRoom().get((int) pair.getKey()).getArrViewing();
+			
+			for (Viewing v : viewings) {
+				System.out.println(v.getMovie().getMovieName() + " " + v.getCalendar().get(Calendar.HOUR_OF_DAY) + " "
+						+ v.getCalendar().get(Calendar.MINUTE));
+				System.out.println(hours + " " + minutes);
+				// true if found correct viewing
+				if (v.getMovie().getMovieName() == movieStr && v.getCalendar().get(Calendar.HOUR_OF_DAY) == hours
+						&& v.getCalendar().get(Calendar.MINUTE) == minutes
+						&& (v.getCalendar().get(Calendar.YEAR) - 1) == year
+						&& (v.getCalendar().get(Calendar.MONTH) + 12) == month
+						&& v.getCalendar().get(Calendar.DAY_OF_MONTH) == day) {
+						viewing = v;
+						exit = true;
+						break;
+				}
+			}
+		}
+		System.out.println(x + " " + y);
+		
+		Reservation newRes = new Reservation(movie,theatre,room,viewing,12.99,x,y);
+		user.addReservations(newRes);
+		viewing.addReservation(x,y,newRes);
+		
+		//Updating View incase the user goes back
+		((SeatView)views.get(3)).displayReservations();
 		
 	}
 	

@@ -32,9 +32,7 @@ public class SeatView extends View {
 		super("Seat View", controller);
 		roomName = "Room 1";
 		seats = new ArrayList<ArrayList<JButton>>();
-
-		selectedSeat[0] = -1;
-		selectedSeat[1] = -1;
+		
 		// setting the reservations
 		// reservations = new ArrayList<ArrayList<Boolean>>(seatRows);
 		// for(int i = 0; i < reservations.size(); i++) {
@@ -103,6 +101,9 @@ public class SeatView extends View {
 					seats.get(i).get(j).setBackground(java.awt.Color.lightGray);
 			}
 		}
+		
+		selectedSeat[0] = -1;
+		selectedSeat[1] = -1;
 	}
 
 	@Override
@@ -157,5 +158,14 @@ public class SeatView extends View {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public int getSelectedX() {
+		return selectedSeat[0];
+	}
+	
+	public int getSelectedY() {
+		return selectedSeat[1];
+	}
+
 
 }

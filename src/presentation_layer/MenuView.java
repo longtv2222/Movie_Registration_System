@@ -222,4 +222,17 @@ public class MenuView extends View {
 			}
 		}
 	}
+	
+	public String getSelectedMovie() {
+		return selectedMovie;
+	}
+	
+	public String getSelectedTheatre() {
+		return selectedTheatre;
+	}
+	
+	public String getSelectedTime() {
+		return selectedTime;
+	}
+	
 }
