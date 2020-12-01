@@ -107,14 +107,9 @@ public class MenuView extends View {
 		bottomPanel.add(BTN_Logout);
 
 		// Image
-		BufferedImage pic = null;
-		try {
-			pic = ImageIO.read(new File("12AngryMen.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		image = new JLabel(new ImageIcon(pic));
-
+		image = new JLabel(new ImageIcon());
+		
+		
 		// ADD TO FRAME
 		this.add(BorderLayout.SOUTH, bottomPanel);
 		this.add(BorderLayout.NORTH, topPanel);
@@ -141,6 +136,8 @@ public class MenuView extends View {
 		changeComboBox(CB_Movies, movieList, selectedMovie);
 		selectedMovie = (String) CB_Movies.getItemAt(0);
 
+		//Update Movie
+		image.setIcon(new ImageIcon("12AngryMen.jpg"));
 		// Managing movie times
 
 		timeList = controller.getMovieTimes(selectedTheatre, selectedMovie).split("\n");
