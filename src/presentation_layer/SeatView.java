@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import control_layer.Controller;
@@ -32,6 +33,8 @@ public class SeatView extends View {
 		roomName = "Room 1";
 		seats = new ArrayList<ArrayList<JButton>>();
 
+		selectedSeat[0] = -1;
+		selectedSeat[1] = -1;
 		// setting the reservations
 		// reservations = new ArrayList<ArrayList<Boolean>>(seatRows);
 		// for(int i = 0; i < reservations.size(); i++) {
@@ -107,7 +110,11 @@ public class SeatView extends View {
 		// TODO Auto-generated method stub
 		switch (e.getActionCommand()) {
 		case "Reserve Seat": // Reserve seat need all information about user all reservation.
-			controller.changeVisibility("payment");
+			//Proper Seat not selected
+			if(selectedSeat[0] == -1)
+				JOptionPane.showMessageDialog(null, "Please select a seat to reserve.");
+			else
+				controller.changeVisibility("payment");
 			break;
 
 		case "Return":
