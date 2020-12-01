@@ -17,7 +17,13 @@ public class Reservation {
 		this.theatre = theatre;
 		this.room = room;
 		this.viewing = viewing;
+<<<<<<< Updated upstream
 		this.setPrice(price);
+=======
+		this.price = price;
+		this.x_cor = x_cor;
+		this.y_cor = y_cor;
+>>>>>>> Stashed changes
 		booked = true;
 	}
 
@@ -62,4 +68,13 @@ public class Reservation {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	public int getX() {
+		return x_cor;
+	}
+	
+	public int getY() {
+		return y_cor;
+	}
+			
 }

@@ -128,8 +128,7 @@ public class Controller {
 						break;
 				}
 			}
-		}
-		System.out.println("GGGGGGGGGGGGGGGGGGG");
+		}	
 		
 		Reservation newRes = new Reservation(movie,theatre,room,viewing,12.99,x,y);
 		if(user.getIsRegistered() == true)
@@ -209,6 +208,7 @@ public class Controller {
 
 		if (visible == "account") {
 			((AccountView) views.get(2)).loadAllInfo();
+<<<<<<< Updated upstream
 		}
 
 		if (visible == "payment") {
@@ -247,6 +247,14 @@ public class Controller {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+=======
+		
+		if(visible == "payment")
+			((PaymentView) views.get(4)).updateUser(user);
+		
+		if(visible == "seat")
+			((SeatView) views.get(3)).setUser(user);
+>>>>>>> Stashed changes
 	}
 
 	// TODO:
