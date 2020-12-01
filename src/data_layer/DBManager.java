@@ -240,7 +240,9 @@ public class DBManager {
 			String movie_name = rs.getString("movieName");
 			double price = rs.getDouble("price");
 			int duration = rs.getInt("duration");
-			movieList.put(movie_id, new Movie(movie_id, movie_name, price, duration));
+			boolean isPublic = rs.getBoolean("isPublic");
+			System.out.println(isPublic);
+			movieList.put(movie_id, new Movie(movie_id, movie_name, price, duration, isPublic));
 		}
 	}
 

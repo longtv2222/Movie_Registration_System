@@ -70,6 +70,19 @@ public class Controller {
 		}
 	}
 	
+	public boolean isMoviePublic(String name) {
+		Iterator itMovie = movieList.entrySet().iterator();
+		while (itMovie.hasNext()) {
+			Map.Entry<Integer, Movie> pair = (Map.Entry) itMovie.next();
+			if(pair.getValue().getMovieName() == name) {
+				if(pair.getValue().getMoviePublic() == true)
+					return true;
+				else
+					return false;
+			}
+		}
+		return false;
+	}
 
 	public void processReservation() {
 		Theatre theatre = null;
@@ -102,7 +115,7 @@ public class Controller {
 		
 		//Find Correct Movie
 		Iterator itMovie = movieList.entrySet().iterator();
-		while (itTheatre.hasNext()) {
+		while (itMovie.hasNext()) {
 			Map.Entry<Integer, Movie> pair = (Map.Entry) itMovie.next();
 			if(pair.getValue().getMovieName() == theatreStr) {
 				movie = pair.getValue();
@@ -179,12 +192,18 @@ public class Controller {
 
 	}
 
-	public String[] getMovieNames() {
+	public String[] getMovieNames(boolean loadAllMovies) {
 		ArrayList<String> movieNames = new ArrayList<String>();
 		Iterator it = movieList.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
-			movieNames.add(((Movie) pair.getValue()).getMovieName());
+			if(((Movie) pair.getValue()).getMoviePublic() == true) {
+				movieNames.add(((Movie) pair.getValue()).getMovieName());
+			}
+			else if(((Movie) pair.getValue()).getMoviePublic() == false && loadAllMovies == true) {
+				movieNames.add(((Movie) pair.getValue()).getMovieName());
+			}
+			
 		}
 
 		return movieNames.toArray(new String[movieNames.size()]);
@@ -221,12 +240,12 @@ public class Controller {
 		GUI.repaint();
 		GUI.setSize(600, 600);
 		GUI.setVisible(true);
-
-		// Setting View information
-		((MenuView) v.get(1)).loadInformation();
 	}
 
 	public void changeVisibility(String visible) {
+		if(visible == "menu")
+			((MenuView) views.get(1)).loadInformation();
+		
 		if (visible == "account") {
 			((AccountView) views.get(2)).loadAllInfo();
 		}
