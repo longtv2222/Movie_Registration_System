@@ -346,9 +346,11 @@ public class DBManager {
 			user.addReservations(refObject.getSeatCoordinate(x_cor, y_cor)); // Adding reservation at x_cor,y_cor to
 																				// user
 		}
-
+		
 		rs.close();
 	}
+	
+	
 
 	public void createRegisteredUser(RegisteredUser user) throws SQLException {
 

@@ -17,6 +17,8 @@ import data_layer.User;
 import data_layer.Viewing;
 
 public class PaymentView extends View {
+	//private User user;
+	
 	private JTextField TF_Name;
 	private JTextField TF_CreditCard;
 	private JTextField TF_CCV;
@@ -28,23 +30,10 @@ public class PaymentView extends View {
 	private JComboBox<String> CB_creditCardNum;
 	private String[] creditCardList;
 
-	private Viewing view;
-	private int theaterID;
-	private int roomID;
-	private int x_cor;
-	private int y_cor;
-
 	public PaymentView(Controller controller) {
 		super("Payment View", controller);
 	}
 
-	public void updatePaymentVar(int theaterID, int roomID, Viewing view, int x_cor, int y_cor) {
-		this.theaterID = theaterID;
-		this.roomID = roomID;
-		this.view = view;
-		this.x_cor = x_cor;
-		this.y_cor = y_cor;
-	}
 
 	public void updateUser() {
 
@@ -145,6 +134,10 @@ public class PaymentView extends View {
 		this.add(BorderLayout.SOUTH, panel_Button);
 
 	}
+	
+	//public void updateUser(User u) {
+	//	user = u;
+	//}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -158,8 +151,8 @@ public class PaymentView extends View {
 		case "Purchase":
 			panel_Button.removeAll();
 			panel_Info.removeAll();
-			controller.changeVisibility("seat");
-			controller.reserveSeat(theaterID, roomID, view, x_cor, y_cor);
+			controller.processReservation();
+			controller.changeVisibility("menu");
 			break;
 
 		case "comboBoxChanged":

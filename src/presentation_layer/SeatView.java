@@ -135,9 +135,6 @@ public class SeatView extends View {
 			else
 				controller.changeVisibility("payment");
 
-			controller.updatePaymentVar(theaterID, roomID, currentView, selectedSeat[0], selectedSeat[1]);
-			controller.changeVisibility("payment");
-
 			break;
 
 		case "Return":
