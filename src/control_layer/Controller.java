@@ -276,7 +276,6 @@ public class Controller {
 			Room room = th.getRoom().get(roomID);
 			Movie movie = view.getMovie();
 			Reservation r = new Reservation(movie, th, room, view, 12.99, x_cor, y_cor); // Assuming the price is 20!
-			this.getUser().addReservations(r);
 			// Update Object
 			// theaterList.get(theaterID).getRoom().get(roomID).getViewing(view).addReservation(x_cor,
 			// y_cor, r);
