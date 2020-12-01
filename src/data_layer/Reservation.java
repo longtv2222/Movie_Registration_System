@@ -16,7 +16,7 @@ public class Reservation {
 		this.movie = movie;
 		this.theatre = theatre;
 		this.room = room;
-		this.viewing = viewing;
+		this.setViewing(viewing);
 		this.setPrice(price);
 		this.price = price;
 		this.x_cor = x_cor;
@@ -38,8 +38,6 @@ public class Reservation {
 	public void changeTimeSlot(Calendar c) {
 	}
 
-	public void cancelTicket() {
-	}
 
 	public String createReciept() {
 		return null;
@@ -48,11 +46,11 @@ public class Reservation {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(this.movie.getMovieName() + " ");
-		sb.append(this.viewing.getCalendar().get(Calendar.YEAR) - 1 + "/"
-				+ (this.viewing.getCalendar().get(Calendar.MONTH) + 12) + "/"
-				+ this.viewing.getCalendar().get(Calendar.DAY_OF_MONTH) + " "
-				+ this.viewing.getCalendar().get(Calendar.HOUR_OF_DAY) + ":"
-				+ this.viewing.getCalendar().get(Calendar.MINUTE) + "\n");
+		sb.append(this.getViewing().getCalendar().get(Calendar.YEAR) - 1 + "/"
+				+ (this.getViewing().getCalendar().get(Calendar.MONTH) + 12) + "/"
+				+ this.getViewing().getCalendar().get(Calendar.DAY_OF_MONTH) + " "
+				+ this.getViewing().getCalendar().get(Calendar.HOUR_OF_DAY) + ":"
+				+ this.getViewing().getCalendar().get(Calendar.MINUTE) + "\n");
 
 		return sb.toString();
 
@@ -72,6 +70,14 @@ public class Reservation {
 	
 	public int getY() {
 		return y_cor;
+	}
+
+	public Viewing getViewing() {
+		return viewing;
+	}
+
+	public void setViewing(Viewing viewing) {
+		this.viewing = viewing;
 	}
 			
 }

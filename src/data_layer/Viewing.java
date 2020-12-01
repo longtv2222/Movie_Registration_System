@@ -44,6 +44,11 @@ public class Viewing {
 	public void addReservation(int x, int y, Reservation r) {
 		seats[x][y] = r;
 	}
+	
+	public void removeReservation(int x, int y) {
+		seats[x][y]=new Reservation();
+		
+	}
 
 	public void incrementRegisteredCount() {
 		numberOfRegistered++;

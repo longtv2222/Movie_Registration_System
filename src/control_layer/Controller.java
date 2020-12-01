@@ -181,6 +181,13 @@ public class Controller {
 	}
 	
 	
+	public void cancelReservation(Reservation r) {
+		user.getReservations().remove(r);
+		r.getViewing().removeReservation(r.getX(), r.getY());
+		
+		
+	}
+	
 	// Functions to update the Menu Screen
 	public String[] getTheatreNames() {
 		ArrayList<String> theatreNames = new ArrayList<String>();
