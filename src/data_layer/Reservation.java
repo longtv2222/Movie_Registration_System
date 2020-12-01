@@ -17,7 +17,7 @@ public class Reservation {
 		this.theatre = theatre;
 		this.room = room;
 		this.viewing = viewing;
-		this.price = price;
+		this.setPrice(price);
 		booked = true;
 	}
 
@@ -41,14 +41,25 @@ public class Reservation {
 	public String createReciept() {
 		return null;
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-				sb.append(this.movie.getMovieName()+" ");
-				sb.append(this.viewing.getCalendar().get(Calendar.YEAR)-1 + "/" + (this.viewing.getCalendar().get(Calendar.MONTH)+12) + "/" +  this.viewing.getCalendar().get(Calendar.DAY_OF_MONTH) + 
-						  " " + this.viewing.getCalendar().get(Calendar.HOUR_OF_DAY) + ":" + this.viewing.getCalendar().get(Calendar.MINUTE) + "\n");
-		
+		sb.append(this.movie.getMovieName() + " ");
+		sb.append(this.viewing.getCalendar().get(Calendar.YEAR) - 1 + "/"
+				+ (this.viewing.getCalendar().get(Calendar.MONTH) + 12) + "/"
+				+ this.viewing.getCalendar().get(Calendar.DAY_OF_MONTH) + " "
+				+ this.viewing.getCalendar().get(Calendar.HOUR_OF_DAY) + ":"
+				+ this.viewing.getCalendar().get(Calendar.MINUTE) + "\n");
+
 		return sb.toString();
-		
+
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 }

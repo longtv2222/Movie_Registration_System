@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import control_layer.Controller;
 import data_layer.Reservation;
+import data_layer.Room;
 import data_layer.Viewing;
 
 public class SeatView extends View {
@@ -21,22 +22,15 @@ public class SeatView extends View {
 	private String roomName;
 	private ArrayList<ArrayList<JButton>> seats;
 	private int[] selectedSeat = new int[2];
-	// private ArrayList<ArrayList<Boolean>> reservations; // Might need to be
-	// changed..
+
 	private Viewing currentView;
-	// TODO:
-	// place the reservations onto the board of seats
+	private int theaterID;
+	private int roomID;
 
 	public SeatView(Controller controller) {
 		super("Seat View", controller);
 		roomName = "Room 1";
 		seats = new ArrayList<ArrayList<JButton>>();
-
-		// setting the reservations
-		// reservations = new ArrayList<ArrayList<Boolean>>(seatRows);
-		// for(int i = 0; i < reservations.size(); i++) {
-		// reservations.set(i, new ArrayList<Boolean>(seatColumns));
-		// }
 
 		// Button Panel
 		JPanel panel_Button = new JPanel();
@@ -53,12 +47,8 @@ public class SeatView extends View {
 			for (int j = 0; j < seatColumns; j++) {
 				JButton b = new JButton(Integer.toString(i) + "," + Integer.toString(j));
 
-				// if (reservations.get(i).get(j) == true) {
-				// b.setBackground(java.awt.Color.blue);
-				// } else {
 				b.addActionListener(this);
 				b.setBackground(java.awt.Color.lightGray);
-				// }
 
 				seats.get(i).add(b);
 				panel_seats.add(b);
@@ -83,8 +73,10 @@ public class SeatView extends View {
 		// frame.setVisible(true);
 	}
 
-	public void setCurrentView(Viewing v) {
+	public void setCurrentView(Viewing v, int theaterID, int roomID) {
 		this.currentView = v;
+		this.theaterID = theaterID;
+		this.roomID = roomID;
 		displayReservations();
 	}
 
@@ -107,6 +99,7 @@ public class SeatView extends View {
 		// TODO Auto-generated method stub
 		switch (e.getActionCommand()) {
 		case "Reserve Seat": // Reserve seat need all information about user all reservation.
+			controller.updatePaymentVar(theaterID, roomID, currentView, selectedSeat[0], selectedSeat[1]);
 			controller.changeVisibility("payment");
 			break;
 
