@@ -50,9 +50,14 @@ public class Viewing {
 	}
 	
 	public boolean tooMuchRu() {
-		//if((numberOfRegistered / SIZE*SIZE) >= 0.10)
-		//	return true;
-		//else
+		//if not publicly avaliable must account for RU res limit
+		if(show.getMoviePublic() == false) {
+			if((numberOfRegistered / SIZE*SIZE) >= 0.10)
+				return true;
+			else
+				return false;
+		}
+		else
 			return false;
 	}
 

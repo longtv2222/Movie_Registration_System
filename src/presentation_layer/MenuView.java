@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import control_layer.Controller;
@@ -130,7 +131,13 @@ public class MenuView extends View {
 		changeComboBox(CB_Theatres, theatreList, selectedTheatre);
 		selectedTheatre = (String) CB_Theatres.getItemAt(0);
 
-		movieList = controller.getMovieNames();
+		//Choose to load publicly avaliable movies or non publc movies. 
+		if(controller.getUser().getIsRegistered() == false) {
+			movieList = controller.getMovieNames(false);
+		}
+		else
+			movieList = controller.getMovieNames(true);
+		
 		changeComboBox(CB_Movies, movieList, selectedMovie);
 		selectedMovie = (String) CB_Movies.getItemAt(0);
 
@@ -191,8 +198,10 @@ public class MenuView extends View {
 					System.out.println(selectedMovie);
 					if (selectedMovie.trim().equals("Blade Runner"))
 						image.setIcon(new ImageIcon("BladeRunner.jpg"));
-					else
+					else if (selectedMovie.trim().equals("12 Angry Men"))
 						image.setIcon(new ImageIcon("12AngryMen.jpg"));
+					else
+						image.setIcon(new ImageIcon("WonderfulLife.jpg"));
 					break;
 
 				case "Times CB":
@@ -209,14 +218,28 @@ public class MenuView extends View {
 				break;
 
 			case "Order":
+				boolean isPublic;
 				selectedTheatre = (String) CB_Theatres.getSelectedItem();
 				selectedMovie = (String) CB_Movies.getSelectedItem();
 				selectedTime = (String) CB_Times.getSelectedItem();
-				controller.updateViewInfo(selectedMovie, selectedTheatre, selectedTime);
-				controller.changeVisibility("seat");
+				
+				isPublic = controller.isMoviePublic(selectedMovie);
+				
+				if(isPublic == false && controller.getUser().getIsRegistered() == true) {
+					controller.updateViewInfo(selectedMovie, selectedTheatre, selectedTime);
+					controller.changeVisibility("seat");
+				}
+				else if(isPublic == true) {
+					controller.updateViewInfo(selectedMovie, selectedTheatre, selectedTime);
+					controller.changeVisibility("seat");
+				}
+				else
+					JOptionPane.showMessageDialog(null, "Only Registered Users can pre-order Tickets!");
+
 				break;
 
 			case "Logout":
+				image.setIcon(new ImageIcon("12AngryMen.jpg")); // Set to default photo
 				controller.changeVisibility("login");
 				break;
 			}
