@@ -208,11 +208,6 @@ public class Controller {
 	}
 
 	public void changeVisibility(String visible) {
-		CardLayout cl = (CardLayout) (cards.getLayout());
-		System.out.println(visible);
-		cl.show(cards, visible);
-		GUI.repaint();
-
 		if (visible == "account") {
 			((AccountView) views.get(2)).loadAllInfo();
 		}
@@ -223,6 +218,11 @@ public class Controller {
 		if (visible == "payment") {
 			((PaymentView) views.get(4)).updateUser();
 		}
+		
+		CardLayout cl = (CardLayout) (cards.getLayout());
+		System.out.println(visible);
+		cl.show(cards, visible);
+		GUI.repaint();
 	}
 
 
@@ -232,20 +232,22 @@ public class Controller {
 			Theatre th = theaterList.get(theaterID);
 			Room room = th.getRoom().get(roomID);
 			Movie movie = view.getMovie();
-			Reservation r = new Reservation(movie, th, room, view, 20, x_cor, y_cor); // Assuming the price is 20!
+			Reservation r = new Reservation(movie, th, room, view, 12.99, x_cor, y_cor); // Assuming the price is 20!
 
 			// Update Object
-			theaterList.get(theaterID).getRoom().get(roomID).getViewing(view).addReservation(x_cor, y_cor, r);
+			//theaterList.get(theaterID).getRoom().get(roomID).getViewing(view).addReservation(x_cor, y_cor, r);
 			// Update database
 
+			
 			int movieID = -1;
-			for (Entry<Integer, Movie> iter : movieList.entrySet()) {
-				if (iter.getValue().getMovieName().equals(view.getMovie().getMovieName())) {
-					movieID = iter.getKey();
-					break;
-				}
+			Iterator it = movieList.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pair = (Map.Entry) it.next();
+				if(((Movie)pair.getValue()).getMovieName() == view.getMovie().getMovieName())
+					movieID = (int)pair.getKey();
 			}
-			DBManager.getInstance().insertReservation(theaterID, roomID, view, x_cor, y_cor, this.getUser().getUserID(),
+			
+			DBManager.getInstance().insertReservation(theaterID, roomID, view, x_cor, y_cor, user.getUserID(),
 					movieID, r.getPrice());
 		} catch (SQLException e) {
 			e.printStackTrace();
