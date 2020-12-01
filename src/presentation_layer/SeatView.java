@@ -15,9 +15,11 @@ import javax.swing.JPanel;
 import control_layer.Controller;
 import data_layer.Reservation;
 import data_layer.Room;
+import data_layer.User;
 import data_layer.Viewing;
 
 public class SeatView extends View {
+	private User user;
 	private int seatRows = 10;
 	private int seatColumns = 10;
 	private String roomName;
@@ -86,14 +88,30 @@ public class SeatView extends View {
 		this.roomID = roomID;
 		displayReservations();
 	}
+	
+	public void setUser(User u) {
+		user = u;
+	}
 
 	public void displayReservations() {
 		Reservation[][] res = currentView.getReservations();
 
 		for (int i = 0; i < res.length; i++) {
 			for (int j = 0; j < res[i].length; j++) {
-				if (res[i][j].getBooked() == true)
-					seats.get(i).get(j).setBackground(java.awt.Color.blue);
+				if (res[i][j].getBooked() == true) {
+					if(user != null) {
+						//Check if user already has reservations
+						for(Reservation r : user.getReservations()) {
+							if(r.getX() == i && r.getY() == j) 		//Means it's this user's reservation
+								seats.get(i).get(j).setBackground(java.awt.Color.green);
+							else
+								seats.get(i).get(j).setBackground(java.awt.Color.blue);
+						}
+					}
+					else
+						seats.get(i).get(j).setBackground(java.awt.Color.blue);
+					
+				}
 				// reset the old seats
 				else
 					seats.get(i).get(j).setBackground(java.awt.Color.lightGray);
