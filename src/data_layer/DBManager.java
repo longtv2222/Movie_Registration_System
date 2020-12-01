@@ -357,7 +357,6 @@ public class DBManager {
 			Viewing refObject = theaterList.get(t_id).getViewing(room_id, view); // Find object view inside theater list
 			user.addReservations(refObject.getSeatCoordinate(x_cor, y_cor)); // Adding reservation at x_cor,y_cor to
 																				// user
-			System.out.println("a");
 		}
 
 		rs.close();
