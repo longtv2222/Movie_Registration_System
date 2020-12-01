@@ -381,7 +381,6 @@ public class DBManager {
 		statement.setInt(6, view.getCalendar().get(Calendar.DAY_OF_MONTH));
 		statement.setInt(7, view.getCalendar().get(Calendar.YEAR) - 1);
 
-		System.out.println(view.getCalendar().get(Calendar.MINUTE));
 		statement.setInt(8, movieID);
 		statement.setDouble(9, price);
 		statement.setInt(10, x_cor);
