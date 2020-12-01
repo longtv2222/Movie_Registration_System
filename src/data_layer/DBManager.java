@@ -375,7 +375,7 @@ public class DBManager {
 				.prepareStatement("INSERT INTO Reservation VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
 		statement.setInt(1, theaterID);
 		statement.setInt(2, roomID);
-		statement.setInt(3, view.getCalendar().get(Calendar.HOUR) + 12);
+		statement.setInt(3, view.getCalendar().get(Calendar.HOUR_OF_DAY));
 		statement.setInt(4, view.getCalendar().get(Calendar.MINUTE));
 		statement.setInt(5, view.getCalendar().get(Calendar.MONTH) + 12);
 		statement.setInt(6, view.getCalendar().get(Calendar.DAY_OF_MONTH));
