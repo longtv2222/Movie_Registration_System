@@ -7,10 +7,12 @@ import data_layer.RegisteredUser;
 import data_layer.Theatre;
 import data_layer.User;
 import data_layer.Viewing;
+
 import presentation_layer.MenuView;
 import presentation_layer.SeatView;
 import presentation_layer.View;
 import presentation_layer.AccountView;
+import presentation_layer.PaymentView;
 
 import java.awt.CardLayout;
 import java.sql.SQLException;
@@ -100,6 +102,7 @@ public class Controller {
 		cards.add(views.get(1), "menu");
 		cards.add(views.get(2), "account");
 		cards.add(views.get(3), "seat");
+		cards.add(views.get(4), "payment");
 		GUI.getContentPane().add(cards);
 		GUI.pack();
 		GUI.repaint();
@@ -112,11 +115,15 @@ public class Controller {
 
 	public void changeVisibility(String visible) {
 		CardLayout cl = (CardLayout) (cards.getLayout());
+		System.out.println(visible);
 		cl.show(cards, visible);
 		GUI.repaint();
 
 		if (visible == "account")
 			((AccountView) views.get(2)).loadAllInfo();
+		
+		if(visible == "payment")
+			((PaymentView) views.get(4)).updateUser(user);
 	}
 
 	// TODO:

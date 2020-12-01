@@ -6,6 +6,7 @@ import control_layer.Controller;
 import presentation_layer.AccountView;
 import presentation_layer.LoginView;
 import presentation_layer.MenuView;
+import presentation_layer.PaymentView;
 import presentation_layer.SeatView;
 import presentation_layer.View;
 
@@ -26,6 +27,7 @@ public class Main {
 		v.add(new MenuView(controller));
 		v.add(new AccountView(controller));
 		v.add(new SeatView(controller));
+		v.add(new PaymentView(controller));
 		controller.setViews(v);
 
 	}

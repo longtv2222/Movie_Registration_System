@@ -107,6 +107,7 @@ public class SeatView extends View {
 		// TODO Auto-generated method stub
 		switch (e.getActionCommand()) {
 		case "Reserve Seat": // Reserve seat need all information about user all reservation.
+			controller.changeVisibility("payment");
 			break;
 
 		case "Return":
