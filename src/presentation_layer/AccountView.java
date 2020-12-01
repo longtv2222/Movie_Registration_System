@@ -27,13 +27,13 @@ public class AccountView extends View {
 	private JTextField TF_CreditCard;
 	private JTextField TF_CCV;
 	private JTextField TF_ExpiryDate;
-	
-	//credit card information
+
+	// credit card information
 	private ArrayList<String> accountNumList = new ArrayList<String>();
 	private ArrayList<String> ccvList = new ArrayList<String>();
 	private ArrayList<String> expiryList = new ArrayList<String>();
 	private int currentCard = 0;
-	
+
 	public AccountView(Controller controller) {
 		super("Account View", controller);
 		// TODO Auto-generated constructor stub
@@ -45,7 +45,7 @@ public class AccountView extends View {
 		// JPanel panel_password = new JPanel(new GridLayout(1,2));
 
 		// Text Fields
-	    TF_Username = new JTextField();
+		TF_Username = new JTextField();
 		TF_Password = new JTextField();
 		TF_RegDate = new JTextField();
 		TF_Email = new JTextField();
@@ -129,38 +129,41 @@ public class AccountView extends View {
 
 		// frame.setVisible(true);
 	}
-	
+
 	public void loadAllInfo() {
 		User u = controller.getUser();
-		
+
 		TF_Username.setText(String.valueOf(u.getUserID()));
 		TF_Email.setText(u.getEmail());
-		
-		
-		for(Card c : u.getCards()) {
+
+		for (Card c : u.getCards()) {
 			System.out.println("dd");
 			accountNumList.add(c.getAccountNumber());
 			ccvList.add(c.getCcv());
-			expiryList.add(new String(c.getExpiryDate().get(Calendar.YEAR) + "/" + c.getExpiryDate().get(Calendar.MONTH)));
+			expiryList.add(
+					new String(c.getExpiryDate().get(Calendar.YEAR) + "/" + c.getExpiryDate().get(Calendar.MONTH)));
 		}
-		
-		//make sure there are cards before attempt to load them
-		if(ccvList.size()>0) {
+
+		// make sure there are cards before attempt to load them
+		if (ccvList.size() > 0) {
 			TF_CreditCard.setText(accountNumList.get(currentCard));
 			TF_CCV.setText(ccvList.get(currentCard));
 			TF_ExpiryDate.setText(expiryList.get(currentCard));
 		}
-		
-		//Load registered user's information
-		if(u.getIsRegistered() == true) {
+
+		// Load registered user's information
+		if (u.getIsRegistered() == true) {
 			RegisteredUser ru = (RegisteredUser) u;
 			TF_Password.setText(ru.getPassword());
+			Calendar calendar = ((RegisteredUser) u).getCalendar();
+			TF_RegDate.setText(new String(calendar.get(Calendar.YEAR) + "/" + calendar.get(Calendar.MONTH) + "/"
+					+ calendar.get(Calendar.DAY_OF_MONTH)));
 		}
-		//Load non registered user's information
+		// Load non registered user's information
 		else {
-			
+
 		}
-		
+
 	}
 
 	@Override
@@ -180,7 +183,7 @@ public class AccountView extends View {
 			TF_CCV.setText(ccvList.get(currentCard));
 			TF_ExpiryDate.setText(expiryList.get(currentCard));
 			currentCard++;
-			if(currentCard >= ccvList.size())
+			if (currentCard >= ccvList.size())
 				currentCard = 0;
 			break;
 		}

@@ -317,7 +317,7 @@ public class DBManager {
 			String ccv = rs.getString("ccv");
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(Calendar.YEAR, rs.getInt("YEAR"));
-			calendar.set(Calendar.MONTH, rs.getInt("month") - 1); // Calendar object month starts from 0
+			calendar.set(Calendar.MONTH, rs.getInt("month")); // Calendar object month starts from 0
 			user.addCard(new Card(accountNumber, ccv, calendar));
 		}
 		rs.close();

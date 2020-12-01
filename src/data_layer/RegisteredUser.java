@@ -37,9 +37,12 @@ public class RegisteredUser extends User {
 		return password;
 	}
 
+	public Calendar getCalendar() {
+		return this.calendar;
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 
 }

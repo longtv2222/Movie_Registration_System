@@ -37,7 +37,6 @@ public class Controller {
 		this.movieList = movieList;
 		this.views = new ArrayList<View>();
 		GUI = new JFrame("Movie Reservation Application");
-
 	}
 
 	/*

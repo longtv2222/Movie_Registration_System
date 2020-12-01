@@ -20,7 +20,7 @@ public class Reservation {
 		this.price = price;
 		booked = true;
 	}
-	
+
 	public Reservation() {
 		booked = false;
 	}
@@ -28,7 +28,7 @@ public class Reservation {
 	public boolean getBooked() {
 		return booked;
 	}
-	
+
 	public void changeSeat(int x, int y) {
 	}
 
