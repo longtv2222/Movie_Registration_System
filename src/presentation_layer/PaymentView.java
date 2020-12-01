@@ -164,8 +164,9 @@ public class PaymentView extends View{
 				else {
 					
 				}
-				break;
 				controller.changeVisibility("seat");
+				break;
+				
 			case "comboBoxChanged":
 				break;
 		}
