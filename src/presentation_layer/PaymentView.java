@@ -22,6 +22,9 @@ public class PaymentView extends View{
 	private JTextField TF_CCV;
 	private JTextField TF_ExpiryDate;
 	
+	private JPanel panel_Info;
+	private JPanel panel_Button;
+	
 	private JComboBox CB_creditCardNum;
 	private String[] creditCardList;
 	
@@ -47,8 +50,8 @@ public class PaymentView extends View{
 	}
 
 	private void displayRegistered() {
-		JPanel panel_Info = new JPanel(new GridLayout(3, 3));
-		JPanel panel_Button = new JPanel();
+		panel_Info = new JPanel(new GridLayout(3, 3));
+		panel_Button = new JPanel();
 		
 		CB_creditCardNum = new JComboBox(creditCardList);
 		CB_creditCardNum.addActionListener(this);
@@ -82,8 +85,8 @@ public class PaymentView extends View{
 	}
 
 	private void displayOrdinary() {
-		JPanel panel_Info = new JPanel(new GridLayout(10, 2));
-		JPanel panel_Button = new JPanel();
+		panel_Info = new JPanel(new GridLayout(10, 2));
+		panel_Button = new JPanel();
 		
 		TF_Name = new JTextField();
 		TF_CreditCard = new JTextField();
@@ -146,10 +149,14 @@ public class PaymentView extends View{
 		System.out.println(e.getActionCommand());
 		switch(e.getActionCommand()) {
 			case "Return":
+				panel_Button.removeAll();
+				panel_Info.removeAll();
 				controller.changeVisibility("seat");
 				break;
 				
 			case "Purchase":
+				panel_Button.removeAll();
+				panel_Info.removeAll();
 				//TODO do the purchase with cards
 				if(u.getIsRegistered()==true) {
 					
