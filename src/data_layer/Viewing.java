@@ -14,6 +14,7 @@ public class Viewing {
 	private Calendar startTime;
 	private Movie show;
 	private Reservation[][] seats;
+	private int numberOfRegistered;
 
 	public Viewing(int hour, int minute, int month, int day, int year, Movie show) {
 		startTime = new GregorianCalendar(year, month, day, hour, minute);
@@ -44,8 +45,15 @@ public class Viewing {
 		seats[x][y] = r;
 	}
 
+	public void incrementRegisteredCount() {
+		numberOfRegistered++;
+	}
+	
 	public boolean tooMuchRu() {
-		return false;
+		if((numberOfRegistered / SIZE*SIZE) >= 0.10)
+			return true;
+		else
+			return false;
 	}
 
 	public Calendar getCalendar() {

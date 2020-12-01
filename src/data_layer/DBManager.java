@@ -199,6 +199,7 @@ public class DBManager {
 		ResultSet rs = statement.executeQuery("SELECT * FROM Reservation");
 
 		while (rs.next()) { // I know this looks disastrous but trust me :)
+			boolean registered = false;
 			int t_id = rs.getInt("t_id");
 			int room_id = rs.getInt("room_id");
 			int hour = rs.getInt("hour");
@@ -210,10 +211,19 @@ public class DBManager {
 			int price = rs.getInt("PRICE");
 			int x_cor = rs.getInt("x_cor");
 			int y_cor = rs.getInt("y_cor");
+			
+			//Need to determine if registered user
+			int userID = rs.getInt("userID");
+			if(userID >= 1000 && userID <= 1999) {
+				registered = true;
+			}
 
 			Viewing view = new Viewing(hour, minute, month, day, year, movieList.get(movie_id)); // Creat Viewing object
 			Viewing refObject = theaterList.get(t_id).getViewing(room_id, view); // Find object view inside theater list
 
+			if(registered ==true)
+				refObject.incrementRegisteredCount();
+			
 			Reservation reser = new Reservation(movieList.get(movie_id), theaterList.get(t_id),
 					theaterList.get(t_id).getRoom().get(room_id), refObject, price, x_cor, y_cor);
 			refObject.addReservation(x_cor, y_cor, reser);
