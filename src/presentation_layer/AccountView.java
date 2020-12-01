@@ -66,9 +66,11 @@ public class AccountView extends View {
 		JButton BTN_Save = new JButton("Save Changes");
 		JButton BTN_Return = new JButton("Return");
 		JButton BTN_NextCC = new JButton("Next Credit Card");
+		JButton BTN_Reservations = new JButton("My Reservations");
 		BTN_Save.addActionListener(this);
 		BTN_Return.addActionListener(this);
 		BTN_NextCC.addActionListener(this);
+		BTN_Reservations.addActionListener(this);
 
 		// Adding components
 		// panel_username.add(LB_Username);
@@ -121,6 +123,7 @@ public class AccountView extends View {
 
 		// Buttons
 		panel_Button.add(BTN_Save);
+		panel_Button.add(BTN_Reservations);
 		panel_Button.add(BTN_Return);
 		panel_Button.add(BTN_NextCC);
 
@@ -175,6 +178,10 @@ public class AccountView extends View {
 			ReservationView x = new ReservationView(controller);
 			break;
 
+		case "My Reservations":
+			controller.changeVisibility("reservations");
+			break;
+			
 		case "Return":
 			controller.changeVisibility("menu");
 			break;

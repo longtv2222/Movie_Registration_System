@@ -1,11 +1,15 @@
 package presentation_layer;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
@@ -22,9 +26,13 @@ public class ReservationView extends View{
 
 	public ReservationView(Controller controller) {
 		super("", controller);
+	}
+	
+	public void update() {
+		this.removeAll();
+		this.setLayout(new GridLayout(2,1));
 		reservations = controller.getUser().getReservations();
-		JList list = new JList<Object>((reservations.toArray()));
-		JFrame view=new JFrame("view");
+		JList<Object> list = new JList<Object>((reservations.toArray()));
 		list.setSelectedIndex(0);  
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
         list.addListSelectionListener(new ListSelectionListener()  
@@ -35,13 +43,33 @@ public class ReservationView extends View{
             }
 
         }); 
-        view.setSize(300,300);
-        view.add(new JScrollPane(list));
-        view.setVisible(true);
+       
+        JButton BTN_cancel = new JButton("Cancel");
+        JButton BTN_return = new JButton("Return");
+        BTN_cancel.addActionListener(this);
+        BTN_return.addActionListener(this);
+        
+        JPanel BTN=new JPanel();
+        		BTN.add(BTN_cancel);
+        		BTN.add(BTN_return);
+       
+        		
+        this.add(new JScrollPane(list));
+        this.add(BTN);
+    
 	}
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {
+		switch (e.getActionCommand()) {	
+	
+			case "Cancel":
+				System.out.println(index);
+			break;
+			
+			case "Return":
+				controller.changeVisibility("account");
+				break;
+		}
 		
 	}
 

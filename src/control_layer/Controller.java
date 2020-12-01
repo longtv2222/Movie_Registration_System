@@ -15,6 +15,7 @@ import presentation_layer.SeatView;
 import presentation_layer.View;
 import presentation_layer.AccountView;
 import presentation_layer.PaymentView;
+import presentation_layer.ReservationView;
 
 import java.awt.CardLayout;
 import java.sql.SQLException;
@@ -216,6 +217,7 @@ public class Controller {
 		cards.add(views.get(2), "account");
 		cards.add(views.get(3), "seat");
 		cards.add(views.get(4), "payment");
+		cards.add(views.get(5), "reservations");
 		GUI.getContentPane().add(cards);
 		GUI.pack();
 		GUI.repaint();
@@ -236,6 +238,10 @@ public class Controller {
 
 		if (visible == "payment") {
 			((PaymentView) views.get(4)).updateUser();
+		}
+		
+		if(visible == "reservations") {
+			((ReservationView)views.get(5)).update();
 		}
 		
 		CardLayout cl = (CardLayout) (cards.getLayout());
