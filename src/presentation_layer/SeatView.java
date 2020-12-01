@@ -93,7 +93,7 @@ public class SeatView extends View {
 
 		for (int i = 0; i < res.length; i++) {
 			for (int j = 0; j < res[i].length; j++) {
-				if (res[i][j].getBooked() != true)
+				if (res[i][j].getBooked() == true)
 					seats.get(i).get(j).setBackground(java.awt.Color.blue);
 				// reset the old seats
 				else
@@ -106,7 +106,7 @@ public class SeatView extends View {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		switch (e.getActionCommand()) {
-		case "Reserve Seat":
+		case "Reserve Seat": // Reserve seat need all information about user all reservation.
 			break;
 
 		case "Return":
