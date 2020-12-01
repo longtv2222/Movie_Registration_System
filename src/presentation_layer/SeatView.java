@@ -91,6 +91,7 @@ public class SeatView extends View {
 	
 	public void setUser(User u) {
 		user = u;
+		displayReservations();
 	}
 
 	public void displayReservations() {
@@ -102,8 +103,12 @@ public class SeatView extends View {
 					if(user != null) {
 						//Check if user already has reservations
 						for(Reservation r : user.getReservations()) {
-							if(r.getX() == i && r.getY() == j) 		//Means it's this user's reservation
+							System.out.println(i + "  num " + j);
+							System.out.println(r.getX() + " res " + r.getY());
+							if(r.getX() == i && r.getY() == j) { 		//Means it's this user's reservation
 								seats.get(i).get(j).setBackground(java.awt.Color.green);
+								break;
+							}
 							else
 								seats.get(i).get(j).setBackground(java.awt.Color.blue);
 						}

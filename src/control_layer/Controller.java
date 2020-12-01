@@ -25,8 +25,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Controller {
@@ -36,12 +39,22 @@ public class Controller {
 	private User user;
 	private JFrame GUI;
 	private JPanel cards;
+	private Timer timer;
 
 	public Controller(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList) {
 		this.theaterList = theaterList;
 		this.movieList = movieList;
 		this.views = new ArrayList<View>();
 		GUI = new JFrame("Movie Reservation Application");
+		
+		//Intialize Day timer for sending reciepts
+		timer = new Timer();
+		timer.schedule(new TimerTask() {
+			  @Override
+			  public void run() {
+			    System.out.println("D");
+			  }
+			}, 1);
 	}
 
 	/*
@@ -52,11 +65,11 @@ public class Controller {
 			DBManager.getInstance().populateMovie(movieList);
 			DBManager.getInstance().populateTheater(theaterList, movieList);
 			DBManager.getInstance().populateReservation(theaterList, movieList);
-			System.out.println("Done");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void processReservation() {
 		Theatre theatre = null;
@@ -134,17 +147,23 @@ public class Controller {
 			}
 		}	
 		
-		Reservation newRes = new Reservation(movie,theatre,room,viewing,12.99,x,y);
-		if(user.getIsRegistered() == true)
-			user.addReservations(newRes);
-		viewing.addReservation(x,y,newRes);
-		
-		//Updating View in case the user goes back
-		((SeatView)views.get(3)).displayReservations();
-		
-		
-		//Send to Database
-		reserveSeat(theatreID, roomID, viewing, x, y);
+		//Double check were not over limit on the Registered User in a particular viewing
+		if(viewing.tooMuchRu() == true && user.getIsRegistered() == true) {
+			JOptionPane.showMessageDialog(null, "Too Many Registered Users!");
+		}
+		else {
+			Reservation newRes = new Reservation(movie,theatre,room,viewing,12.99,x,y);
+			if(user.getIsRegistered() == true)
+				user.addReservations(newRes);
+			viewing.addReservation(x,y,newRes);
+			
+			//Updating View in case the user goes back
+			((SeatView)views.get(3)).displayReservations();
+			
+			
+			//Send to Database
+			reserveSeat(theatreID, roomID, viewing, x, y);
+		}
 	}
 	
 	
@@ -208,11 +227,6 @@ public class Controller {
 	}
 
 	public void changeVisibility(String visible) {
-		CardLayout cl = (CardLayout) (cards.getLayout());
-		System.out.println(visible);
-		cl.show(cards, visible);
-		GUI.repaint();
-
 		if (visible == "account") {
 			((AccountView) views.get(2)).loadAllInfo();
 		}
@@ -223,6 +237,11 @@ public class Controller {
 		if (visible == "payment") {
 			((PaymentView) views.get(4)).updateUser();
 		}
+		
+		CardLayout cl = (CardLayout) (cards.getLayout());
+		System.out.println(visible);
+		cl.show(cards, visible);
+		GUI.repaint();
 	}
 
 
@@ -232,20 +251,22 @@ public class Controller {
 			Theatre th = theaterList.get(theaterID);
 			Room room = th.getRoom().get(roomID);
 			Movie movie = view.getMovie();
-			Reservation r = new Reservation(movie, th, room, view, 20, x_cor, y_cor); // Assuming the price is 20!
+			Reservation r = new Reservation(movie, th, room, view, 12.99, x_cor, y_cor); // Assuming the price is 20!
 
 			// Update Object
-			theaterList.get(theaterID).getRoom().get(roomID).getViewing(view).addReservation(x_cor, y_cor, r);
+			//theaterList.get(theaterID).getRoom().get(roomID).getViewing(view).addReservation(x_cor, y_cor, r);
 			// Update database
 
+			
 			int movieID = -1;
-			for (Entry<Integer, Movie> iter : movieList.entrySet()) {
-				if (iter.getValue().getMovieName().equals(view.getMovie().getMovieName())) {
-					movieID = iter.getKey();
-					break;
-				}
+			Iterator it = movieList.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pair = (Map.Entry) it.next();
+				if(((Movie)pair.getValue()).getMovieName() == view.getMovie().getMovieName())
+					movieID = (int)pair.getKey();
 			}
-			DBManager.getInstance().insertReservation(theaterID, roomID, view, x_cor, y_cor, this.getUser().getUserID(),
+			
+			DBManager.getInstance().insertReservation(theaterID, roomID, view, x_cor, y_cor, user.getUserID(),
 					movieID, r.getPrice());
 		} catch (SQLException e) {
 			e.printStackTrace();
