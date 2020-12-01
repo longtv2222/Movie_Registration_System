@@ -28,7 +28,7 @@ import java.util.Map.Entry;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+//
 public class Controller {
 	private HashMap<Integer, Theatre> theaterList;
 	private HashMap<Integer, Movie> movieList;
