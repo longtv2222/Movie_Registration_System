@@ -47,15 +47,15 @@ public class Controller {
 		this.movieList = movieList;
 		this.views = new ArrayList<View>();
 		GUI = new JFrame("Movie Reservation Application");
-		
-		//Intialize Day timer for sending reciepts
+
+		// Intialize Day timer for sending reciepts
 		timer = new Timer();
 		timer.schedule(new TimerTask() {
-			  @Override
-			  public void run() {
-			    System.out.println("D");
-			  }
-			}, 1);
+			@Override
+			public void run() {
+				System.out.println("D");
+			}
+		}, 1);
 	}
 
 	/*
@@ -70,13 +70,13 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean isMoviePublic(String name) {
 		Iterator itMovie = movieList.entrySet().iterator();
 		while (itMovie.hasNext()) {
 			Map.Entry<Integer, Movie> pair = (Map.Entry) itMovie.next();
-			if(pair.getValue().getMovieName() == name) {
-				if(pair.getValue().getMoviePublic() == true)
+			if (pair.getValue().getMovieName() == name) {
+				if (pair.getValue().getMoviePublic() == true)
 					return true;
 				else
 					return false;
@@ -89,42 +89,40 @@ public class Controller {
 		Theatre theatre = null;
 		Movie movie = null;
 		Room room = null;
-		Viewing viewing  = null;
+		Viewing viewing = null;
 		int theatreID = 0;
 		int roomID = 0;
-		
-		//Get Account Information
-		int x = ((SeatView)views.get(3)).getSelectedX();
-		int y = ((SeatView)views.get(3)).getSelectedY();
-		
-		String movieStr = ((MenuView)views.get(1)).getSelectedMovie();
-		String theatreStr = ((MenuView)views.get(1)).getSelectedTheatre();
-		String timeStr = ((MenuView)views.get(1)).getSelectedTime();
-		
-		
-		
-		//Find Correct Value
+
+		// Get Account Information
+		int x = ((SeatView) views.get(3)).getSelectedX();
+		int y = ((SeatView) views.get(3)).getSelectedY();
+
+		String movieStr = ((MenuView) views.get(1)).getSelectedMovie();
+		String theatreStr = ((MenuView) views.get(1)).getSelectedTheatre();
+		String timeStr = ((MenuView) views.get(1)).getSelectedTime();
+
+		// Find Correct Value
 		Iterator itTheatre = theaterList.entrySet().iterator();
 		while (itTheatre.hasNext()) {
 			Map.Entry<Integer, Theatre> pair = (Map.Entry) itTheatre.next();
-			if(pair.getValue().getName() == theatreStr) {
+			if (pair.getValue().getName() == theatreStr) {
 				theatre = pair.getValue();
-				theatreID = (int)pair.getKey();
+				theatreID = (int) pair.getKey();
 				break;
 			}
 		}
-		
-		//Find Correct Movie
+
+		// Find Correct Movie
 		Iterator itMovie = movieList.entrySet().iterator();
 		while (itMovie.hasNext()) {
 			Map.Entry<Integer, Movie> pair = (Map.Entry) itMovie.next();
-			if(pair.getValue().getMovieName() == theatreStr) {
+			if (pair.getValue().getMovieName() == theatreStr) {
 				movie = pair.getValue();
 				break;
 			}
 		}
 
-		//Find Correct Room
+		// Find Correct Room
 		String date = timeStr.split(" ")[0];
 		int year = Integer.parseInt(date.split("/")[0]);
 		int month = Integer.parseInt(date.split("/")[1]);
@@ -133,17 +131,17 @@ public class Controller {
 		String time = timeStr.split(" ")[1];
 		int hours = Integer.parseInt(time.split(":")[0]);
 		int minutes = Integer.parseInt(time.split(":")[1]);
-		
+
 		boolean exit = false;
 		Iterator itroom = theatre.getAllRooms().entrySet().iterator();
 		while (itroom.hasNext() && exit == false) {
 			Map.Entry pair = (Map.Entry) itroom.next();
-			
+
 			room = (Room) pair.getValue();
-			roomID = (int)pair.getKey();
+			roomID = (int) pair.getKey();
 			// Extract the viewings
 			ArrayList<Viewing> viewings = theatre.getRoom().get((int) pair.getKey()).getArrViewing();
-			
+
 			for (Viewing v : viewings) {
 				System.out.println(v.getMovie().getMovieName() + " " + v.getCalendar().get(Calendar.HOUR_OF_DAY) + " "
 						+ v.getCalendar().get(Calendar.MINUTE));
@@ -154,40 +152,36 @@ public class Controller {
 						&& (v.getCalendar().get(Calendar.YEAR) - 1) == year
 						&& (v.getCalendar().get(Calendar.MONTH) + 12) == month
 						&& v.getCalendar().get(Calendar.DAY_OF_MONTH) == day) {
-						viewing = v;
-						exit = true;
-						break;
+					viewing = v;
+					exit = true;
+					break;
 				}
 			}
-		}	
-		
-		//Double check were not over limit on the Registered User in a particular viewing
-		if(viewing.tooMuchRu() == true && user.getIsRegistered() == true) {
-			JOptionPane.showMessageDialog(null, "Too Many Registered Users!");
 		}
-		else {
-			Reservation newRes = new Reservation(movie,theatre,room,viewing,12.99,x,y);
-			if(user.getIsRegistered() == true)
+
+		// Double check were not over limit on the Registered User in a particular
+		// viewing
+		if (viewing.tooMuchRu() == true && user.getIsRegistered() == true) {
+			JOptionPane.showMessageDialog(null, "Too Many Registered Users!");
+		} else {
+			Reservation newRes = new Reservation(movie, theatre, room, viewing, 12.99, x, y);
+			if (user.getIsRegistered() == true)
 				user.addReservations(newRes);
-			viewing.addReservation(x,y,newRes);
-			
-			//Updating View in case the user goes back
-			((SeatView)views.get(3)).displayReservations();
-			
-			
-			//Send to Database
+			viewing.addReservation(x, y, newRes);
+
+			// Updating View in case the user goes back
+			((SeatView) views.get(3)).displayReservations();
+
+			// Send to Database
 			reserveSeat(theatreID, roomID, viewing, x, y);
 		}
 	}
-	
-	
+
 	public void cancelReservation(Reservation r) {
 		user.getReservations().remove(r);
 		r.getViewing().removeReservation(r.getX(), r.getY());
-		
-		
 	}
-	
+
 	// Functions to update the Menu Screen
 	public String[] getTheatreNames() {
 		ArrayList<String> theatreNames = new ArrayList<String>();
@@ -205,13 +199,12 @@ public class Controller {
 		Iterator it = movieList.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
-			if(((Movie) pair.getValue()).getMoviePublic() == true) {
+			if (((Movie) pair.getValue()).getMoviePublic() == true) {
+				movieNames.add(((Movie) pair.getValue()).getMovieName());
+			} else if (((Movie) pair.getValue()).getMoviePublic() == false && loadAllMovies == true) {
 				movieNames.add(((Movie) pair.getValue()).getMovieName());
 			}
-			else if(((Movie) pair.getValue()).getMoviePublic() == false && loadAllMovies == true) {
-				movieNames.add(((Movie) pair.getValue()).getMovieName());
-			}
-			
+
 		}
 
 		return movieNames.toArray(new String[movieNames.size()]);
@@ -252,30 +245,29 @@ public class Controller {
 	}
 
 	public void changeVisibility(String visible) {
-		if(visible == "menu")
+		if (visible == "menu")
 			((MenuView) views.get(1)).loadInformation();
-		
+
 		if (visible == "account") {
 			((AccountView) views.get(2)).loadAllInfo();
 		}
-		
-		if(visible == "seat")
+
+		if (visible == "seat")
 			((SeatView) views.get(3)).setUser(user);
 
 		if (visible == "payment") {
 			((PaymentView) views.get(4)).updateUser();
 		}
-		
-		if(visible == "reservations") {
-			((ReservationView)views.get(5)).update();
+
+		if (visible == "reservations") {
+			((ReservationView) views.get(5)).update();
 		}
-		
+
 		CardLayout cl = (CardLayout) (cards.getLayout());
 		System.out.println(visible);
 		cl.show(cards, visible);
 		GUI.repaint();
 	}
-
 
 	public void reserveSeat(int theaterID, int roomID, Viewing view, int x_cor, int y_cor) {
 		try {
@@ -284,22 +276,25 @@ public class Controller {
 			Room room = th.getRoom().get(roomID);
 			Movie movie = view.getMovie();
 			Reservation r = new Reservation(movie, th, room, view, 12.99, x_cor, y_cor); // Assuming the price is 20!
-
+			this.getUser().addReservations(r);
 			// Update Object
-			//theaterList.get(theaterID).getRoom().get(roomID).getViewing(view).addReservation(x_cor, y_cor, r);
+			// theaterList.get(theaterID).getRoom().get(roomID).getViewing(view).addReservation(x_cor,
+			// y_cor, r);
 			// Update database
 
-			
 			int movieID = -1;
-			Iterator it = movieList.entrySet().iterator();
+			Iterator<Entry<Integer, Movie>> it = movieList.entrySet().iterator();
 			while (it.hasNext()) {
-				Map.Entry pair = (Map.Entry) it.next();
-				if(((Movie)pair.getValue()).getMovieName() == view.getMovie().getMovieName())
-					movieID = (int)pair.getKey();
+				Map.Entry<Integer, Movie> pair = it.next();
+				if (pair.getValue().getMovieName() == view.getMovie().getMovieName()) {
+					movieID = pair.getKey();
+					break;
+				}
+
 			}
-			
-			DBManager.getInstance().insertReservation(theaterID, roomID, view, x_cor, y_cor, user.getUserID(),
-					movieID, r.getPrice());
+
+			DBManager.getInstance().insertReservation(theaterID, roomID, view, x_cor, y_cor, user.getUserID(), movieID,
+					r.getPrice());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

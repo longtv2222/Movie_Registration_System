@@ -88,7 +88,7 @@ public class SeatView extends View {
 		this.roomID = roomID;
 		displayReservations();
 	}
-	
+
 	public void setUser(User u) {
 		user = u;
 		displayReservations();
@@ -100,22 +100,20 @@ public class SeatView extends View {
 		for (int i = 0; i < res.length; i++) {
 			for (int j = 0; j < res[i].length; j++) {
 				if (res[i][j].getBooked() == true) {
-					if(user != null) {
-						//Check if user already has reservations
-						for(Reservation r : user.getReservations()) {
+					if (user != null) {
+						// Check if user already has reservations
+						for (Reservation r : user.getReservations()) {
 							System.out.println(i + "  num " + j);
 							System.out.println(r.getX() + " res " + r.getY());
-							if(r.getX() == i && r.getY() == j) { 		//Means it's this user's reservation
+							if (r.getX() == i && r.getY() == j) { // Means it's this user's reservation
 								seats.get(i).get(j).setBackground(java.awt.Color.green);
 								break;
-							}
-							else
+							} else
 								seats.get(i).get(j).setBackground(java.awt.Color.blue);
 						}
-					}
-					else
+					} else
 						seats.get(i).get(j).setBackground(java.awt.Color.blue);
-					
+
 				}
 				// reset the old seats
 				else
@@ -133,7 +131,6 @@ public class SeatView extends View {
 		// TODO Auto-generated method stub
 		switch (e.getActionCommand()) {
 		case "Reserve Seat": // Reserve seat need all information about user all reservation.
-
 			// Proper Seat not selected
 			if (selectedSeat[0] == -1)
 				JOptionPane.showMessageDialog(null, "Please select a seat to reserve.");

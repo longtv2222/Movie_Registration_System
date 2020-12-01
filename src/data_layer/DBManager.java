@@ -211,19 +211,19 @@ public class DBManager {
 			int price = rs.getInt("PRICE");
 			int x_cor = rs.getInt("x_cor");
 			int y_cor = rs.getInt("y_cor");
-			
-			//Need to determine if registered user
+
+			// Need to determine if registered user
 			int userID = rs.getInt("userID");
-			if(userID >= 1000 && userID <= 1999) {
+			if (userID >= 1000 && userID <= 1999) {
 				registered = true;
 			}
 
 			Viewing view = new Viewing(hour, minute, month, day, year, movieList.get(movie_id)); // Creat Viewing object
 			Viewing refObject = theaterList.get(t_id).getViewing(room_id, view); // Find object view inside theater list
 
-			if(registered ==true)
+			if (registered == true)
 				refObject.incrementRegisteredCount();
-			
+
 			Reservation reser = new Reservation(movieList.get(movie_id), theaterList.get(t_id),
 					theaterList.get(t_id).getRoom().get(room_id), refObject, price, x_cor, y_cor);
 			refObject.addReservation(x_cor, y_cor, reser);
@@ -338,7 +338,7 @@ public class DBManager {
 	public void populateUserReservation(User user, HashMap<Integer, Theatre> theaterList,
 			HashMap<Integer, Movie> movieList) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement("SELECT * FROM Reservation as R where R.userID = ?");
-		statement.setString(1, Integer.toString(user.userID));
+		statement.setInt(1, user.getUserID());
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
@@ -357,12 +357,11 @@ public class DBManager {
 			Viewing refObject = theaterList.get(t_id).getViewing(room_id, view); // Find object view inside theater list
 			user.addReservations(refObject.getSeatCoordinate(x_cor, y_cor)); // Adding reservation at x_cor,y_cor to
 																				// user
+			System.out.println("a");
 		}
-		
+
 		rs.close();
 	}
-	
-	
 
 	public void createRegisteredUser(RegisteredUser user) throws SQLException {
 
