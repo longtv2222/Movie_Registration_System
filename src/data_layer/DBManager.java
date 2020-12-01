@@ -368,4 +368,25 @@ public class DBManager {
 		statement3.execute();
 
 	}
+
+	public void insertReservation(int theaterID, int roomID, Viewing view, int x_cor, int y_cor, int userID,
+			int movieID, double price) throws SQLException {
+		PreparedStatement statement = conn
+				.prepareStatement("INSERT INTO Reservation VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
+		statement.setInt(1, theaterID);
+		statement.setInt(2, roomID);
+		statement.setInt(3, view.getCalendar().get(Calendar.HOUR) + 12);
+		statement.setInt(4, view.getCalendar().get(Calendar.MINUTE));
+		statement.setInt(5, view.getCalendar().get(Calendar.MONTH) + 12);
+		statement.setInt(6, view.getCalendar().get(Calendar.DAY_OF_MONTH));
+		statement.setInt(7, view.getCalendar().get(Calendar.YEAR) - 1);
+
+		System.out.println(view.getCalendar().get(Calendar.MINUTE));
+		statement.setInt(8, movieID);
+		statement.setDouble(9, price);
+		statement.setInt(10, x_cor);
+		statement.setInt(11, y_cor);
+		statement.setInt(12, userID);
+		statement.execute();
+	}
 }

@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -206,11 +207,46 @@ public class Controller {
 		cl.show(cards, visible);
 		GUI.repaint();
 
-		if (visible == "account")
+		if (visible == "account") {
 			((AccountView) views.get(2)).loadAllInfo();
-		
-		if(visible == "payment")
-			((PaymentView) views.get(4)).updateUser(user);
+		}
+
+		if (visible == "payment") {
+			((PaymentView) views.get(4)).updateUser();
+		}
+	}
+
+	/*
+	 * Populate member variable of PaymentView with nescessary informations.
+	 */
+	public void updatePaymentVar(int theaterID, int roomID, Viewing view, int x_cor, int y_cor) {
+		((PaymentView) views.get(4)).updatePaymentVar(theaterID, roomID, view, x_cor, y_cor);
+	}
+
+	public void reserveSeat(int theaterID, int roomID, Viewing view, int x_cor, int y_cor) {
+		try {
+			// Need to update the database and the object
+			Theatre th = theaterList.get(theaterID);
+			Room room = th.getRoom().get(roomID);
+			Movie movie = view.getMovie();
+			Reservation r = new Reservation(movie, th, room, view, 20, x_cor, y_cor); // Assuming the price is 20!
+
+			// Update Object
+			theaterList.get(theaterID).getRoom().get(roomID).getViewing(view).addReservation(x_cor, y_cor, r);
+			// Update database
+
+			int movieID = -1;
+			for (Entry<Integer, Movie> iter : movieList.entrySet()) {
+				if (iter.getValue().getMovieName().equals(view.getMovie().getMovieName())) {
+					movieID = iter.getKey();
+					break;
+				}
+			}
+			DBManager.getInstance().insertReservation(theaterID, roomID, view, x_cor, y_cor, this.getUser().getUserID(),
+					movieID, r.getPrice());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// TODO:
@@ -229,20 +265,20 @@ public class Controller {
 		int minutes = Integer.parseInt(time.split(":")[1]);
 
 		Theatre selectedTheatre = null;
-		Iterator it = theaterList.entrySet().iterator();
-		// Find the correct theatre index based off name
-		while (it.hasNext()) {
-			Map.Entry pair = (Map.Entry) it.next();
-			// If found get the selected theatre
-			if (((Theatre) pair.getValue()).getName() == theatre) {
-				selectedTheatre = theaterList.get((int) pair.getKey());
+		int theatreID = -1;
+
+		for (Map.Entry<Integer, Theatre> th : theaterList.entrySet()) {
+			if (th.getValue().getName().equals(theatre)) {
+				selectedTheatre = th.getValue();
+				theatreID = th.getKey();
 				break;
 			}
+
 		}
 
-		Iterator itroom = selectedTheatre.getAllRooms().entrySet().iterator();
+		Iterator<Entry<Integer, Room>> itroom = selectedTheatre.getAllRooms().entrySet().iterator();
 		while (itroom.hasNext()) {
-			Map.Entry pair = (Map.Entry) itroom.next();
+			Map.Entry<Integer, Room> pair = itroom.next();
 			// Extract the viewings
 			ArrayList<Viewing> viewings = selectedTheatre.getRoom().get((int) pair.getKey()).getArrViewing();
 
@@ -256,37 +292,11 @@ public class Controller {
 						&& (v.getCalendar().get(Calendar.YEAR) - 1) == year
 						&& (v.getCalendar().get(Calendar.MONTH) + 12) == month
 						&& v.getCalendar().get(Calendar.DAY_OF_MONTH) == day) {
-					((SeatView) views.get(3)).setCurrentView(v);
+					((SeatView) views.get(3)).setCurrentView(v, theatreID, pair.getKey());
 					return;
 				}
 			}
 		}
-
-		/*
-		 * 
-		 * 
-		 * String date = td.split(" ")[0]; String time = td.split(" ")[1]; int hours =
-		 * Integer.parseInt(time.split(":")[0]); int minutes =
-		 * Integer.parseInt(time.split(":")[1]); int roomNum = Integer.parseInt(r); int
-		 * theatreIndex = 1;
-		 * 
-		 * //System.out.println(theaterList.get(1));
-		 * 
-		 * //Find the theatre ID with the right name for(int i = 1; i <
-		 * theaterList.size(); i++) { if(theaterList.get(i).getName() == theatre) {
-		 * theatreIndex = i; break; } } //System.out.println(theatreIndex);
-		 * 
-		 * Room room = theaterList.get(theatreIndex).getSpecificRoom(roomNum);
-		 * //System.out.println(room.getArrViewing().get(0).getCalendar().getTime().
-		 * getHours());
-		 * 
-		 * Viewing v; for(int i = 0; i < room.getArrViewing().size(); i++) { v =
-		 * room.getArrViewing().get(i); if(v.getCalendar().getTime().getHours() == hours
-		 * && v.getCalendar().getTime().getMinutes() == minutes) {
-		 * System.out.println("Found room"); SeatView seatView = (SeatView)
-		 * views.get(3); seatView.setCurrentView(v); break; } }
-		 * 
-		 */
 	}
 
 	public boolean validateRegisteredUser(String email, String password) {
