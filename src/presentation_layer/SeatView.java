@@ -33,7 +33,6 @@ public class SeatView extends View {
 		super("Seat View", controller);
 		roomName = "Room 1";
 		seats = new ArrayList<ArrayList<JButton>>();
-
 		// setting the reservations
 		// reservations = new ArrayList<ArrayList<Boolean>>(seatRows);
 		// for(int i = 0; i < reservations.size(); i++) {
@@ -162,7 +161,6 @@ public class SeatView extends View {
 				selectedSeat[1] = -1;
 			}
 
-
 			break;
 
 		}
@@ -171,7 +169,6 @@ public class SeatView extends View {
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
 
 	}
 

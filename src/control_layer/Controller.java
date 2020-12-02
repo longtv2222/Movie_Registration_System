@@ -58,7 +58,7 @@ public class Controller {
 		this.movieList = movieList;
 		this.views = new ArrayList<View>();
 		GUI = new JFrame("Movie Reservation Application");
-
+		GUI.setResizable(false);
 		// Intialize Day timer for sending reciepts
 		timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -273,8 +273,9 @@ public class Controller {
 				user.getReservations().remove(r);
 				r.getViewing().removeReservation(r.getX(), r.getY());
 				DBManager.getInstance().removeReservation(r, this.getUser().getUserID());
-				if(!user.getIsRegistered()) {
-				DBManager.getInstance().updateOrdinaryUserCreditDate((OrdinaryUser)user, r.getViewing().getCalendar());
+				if (!user.getIsRegistered()) {
+					DBManager.getInstance().updateOrdinaryUserCreditDate((OrdinaryUser) user,
+							r.getViewing().getCalendar());
 				}
 				return true;
 			} catch (SQLException e) {
@@ -478,13 +479,10 @@ public class Controller {
 		try {
 			this.user = DBManager.getInstance().getOrdinaryUser(email);
 			DBManager.getInstance().populateUserReservation(user, theaterList, movieList); // Populate reservation.
-			
-			Calendar r =((OrdinaryUser)user).getCalendar();
-			int[] res = { (r.get(Calendar.YEAR) - 1),
-					(r.get(Calendar.MONTH) + 12),
-					r.get(Calendar.DAY_OF_MONTH),
-					r.get(Calendar.HOUR_OF_DAY),
-					r.get(Calendar.MINUTE) };
+
+			Calendar r = ((OrdinaryUser) user).getCalendar();
+			int[] res = { (r.get(Calendar.YEAR) - 1), (r.get(Calendar.MONTH) + 12), r.get(Calendar.DAY_OF_MONTH),
+					r.get(Calendar.HOUR_OF_DAY), r.get(Calendar.MINUTE) };
 			Calendar calendar = Calendar.getInstance();
 
 			int year = res[0] - calendar.get(Calendar.YEAR);
@@ -496,14 +494,14 @@ public class Controller {
 			System.out.println(year + "+" + month + "+" + day + "+" + hour);
 
 			if (time < 8759) {
-				((OrdinaryUser)user).setCredit(0);
+				((OrdinaryUser) user).setCredit(0);
 			} else {
-				
+
 			}
 			return true;
 		} catch (SQLException e) {
-			//System.out.println("User with given email already existed!");
-			//e.printStackTrace();
+			// System.out.println("User with given email already existed!");
+			// e.printStackTrace();
 			return false;
 		}
 	}
