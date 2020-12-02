@@ -177,13 +177,37 @@ public class Controller {
 		}
 	}
 
-	public void cancelReservation(Reservation r) {
+	
+	public boolean cancelReservation(Reservation r) {
+		int [] res= {(r.getViewing().getCalendar().get(Calendar.YEAR) - 1),
+				 (r.getViewing().getCalendar().get(Calendar.MONTH) + 12),
+				r.getViewing().getCalendar().get(Calendar.DAY_OF_MONTH),
+				 r.getViewing().getCalendar().get(Calendar.HOUR_OF_DAY),
+				 r.getViewing().getCalendar().get(Calendar.MINUTE)};
+				Calendar calendar = Calendar.getInstance();
+			    
+				int year=res[0]-calendar.get(Calendar.YEAR);
+				int month=res[1]-(calendar.get(Calendar.MONTH)+1);
+				int day=res[2]-calendar.get(Calendar.DAY_OF_MONTH);
+				int hour=res[3]-calendar.get(Calendar.HOUR_OF_DAY);
+				
+				int time=year*8760+month*730+day*24+hour;
+				System.out.println(year+"+"+month+"+"+day+"+"+hour);
+				
+		if(time<71) {
+			return false;
+		}else {
+		
+	
 		try {
 			user.getReservations().remove(r);
 			r.getViewing().removeReservation(r.getX(), r.getY());
 			DBManager.getInstance().removeReservation(r, this.getUser().getUserID());
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		return false;
 		}
 	}
 

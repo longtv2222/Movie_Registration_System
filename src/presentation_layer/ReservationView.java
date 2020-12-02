@@ -34,7 +34,8 @@ public class ReservationView extends View{
 		this.setLayout(new GridLayout(2,1));
 		reservations = controller.getUser().getReservations();
 		JList<Object> list = new JList<Object>((reservations.toArray()));
-		list.setSelectedIndex(0);  
+		list.setSelectedIndex(0);
+		index=0;
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  
         list.addListSelectionListener(new ListSelectionListener()  
         {  
@@ -64,8 +65,15 @@ public class ReservationView extends View{
 		switch (e.getActionCommand()) {	
 	
 			case "Cancel":
-				controller.cancelReservation(reservations.get(index));
+				if(reservations.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "You have no reservations");
+				}else {
+				if(controller.cancelReservation(reservations.get(index))) {
 				JOptionPane.showMessageDialog(null, "Reservation Cancelled");
+				}else {
+					JOptionPane.showMessageDialog(null, "Reservation Not Cancelled: Movie is within 72 hrs");
+				}
+				}
 				controller.changeVisibility("account");
 			break;
 			
