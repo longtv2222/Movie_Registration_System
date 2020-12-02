@@ -410,6 +410,16 @@ public class DBManager {
 		statement.execute();
 	}
 
+	public void updateOrdinaryUserCreditDate(OrdinaryUser user, Calendar calendar) throws SQLException {
+		PreparedStatement statement = conn
+				.prepareStatement("update OrdinaryUser SET day = ?, month = ?, year = ? where userid = ?;");
+		statement.setInt(1, calendar.get(Calendar.DAY_OF_MONTH));
+		statement.setInt(2, calendar.get(Calendar.MONTH) + 12);
+		statement.setInt(3, calendar.get(Calendar.YEAR) - 1);
+		statement.setInt(4, user.getUserID());
+		statement.execute();
+	}
+
 	public void removeReservation(Reservation r, int userID) throws SQLException {
 		PreparedStatement statement = conn.prepareStatement(
 				"DELETE from Reservation WHERE t_id = ? AND room_id = ? AND hour = ? AND minute = ? AND\r\n"
