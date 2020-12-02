@@ -12,9 +12,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 /**
- *
- *
- * https://stackoverflow.com/questions/3649014/send-email-using-java
+ * CREDIT FOR THIS CODE:
+ * @author doraemon
+ * @source https://stackoverflow.com/questions/3649014/send-email-using-java
+ * 
  */
 public class Email {
     private Email() {
