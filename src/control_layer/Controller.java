@@ -409,6 +409,7 @@ public class Controller {
 	public boolean validateOrdinaryUser(String email) {
 		try {
 			this.user = DBManager.getInstance().getOrdinaryUser(email);
+			DBManager.getInstance().populateUserReservation(user, theaterList, movieList); // Populate reservation.
 			return true;
 		} catch (SQLException e) {
 			System.out.println("User with given email already existed!");

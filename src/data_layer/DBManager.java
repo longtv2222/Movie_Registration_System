@@ -302,6 +302,7 @@ public class DBManager {
 			user.setUserID(rs.getInt(1)); // Get user id, can't use name because it will be ambiguous
 			user.setEmail(rs.getString("email"));
 			user.setCredit(rs.getDouble("credit"));
+			System.out.println("a");
 		} else { // If user is not in the database
 			// Create user with given email
 			PreparedStatement statement2 = conn.prepareStatement("INSERT INTO User(email) VALUES (?)");
