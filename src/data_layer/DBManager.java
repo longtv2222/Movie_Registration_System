@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 //Singleton class DBManager.
@@ -131,7 +132,7 @@ public class DBManager {
 	private void createOrdinaryUserTable() throws SQLException {
 		Statement state = conn.createStatement();
 		state.execute(
-				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer UNIQUE references User(userid)  ON DELETE CASCADE, credit DOUBLE);");
+				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer UNIQUE references User(userid)  ON DELETE CASCADE, credit DOUBLE, DAY INTEGER, MONTH INTEGER, YEAR INTEGER);");
 	}
 
 	private void createRegisteredUserTable() throws SQLException {
@@ -301,6 +302,14 @@ public class DBManager {
 			user.setUserID(rs.getInt(1)); // Get user id, can't use name because it will be ambiguous
 			user.setEmail(rs.getString("email"));
 			user.setCredit(rs.getDouble("credit"));
+
+
+
+			Calendar calendar = new GregorianCalendar();
+			calendar.clear();
+			calendar.set(rs.getInt("Year"), rs.getInt("Month"), rs.getInt("Day"));
+			user.setCalendar(calendar);
+
 		} else { // If user is not in the database
 			// Create user with given email
 			PreparedStatement statement2 = conn.prepareStatement("INSERT INTO User(email) VALUES (?)");
@@ -400,6 +409,16 @@ public class DBManager {
 		statement.setInt(10, x_cor);
 		statement.setInt(11, y_cor);
 		statement.setInt(12, userID);
+		statement.execute();
+	}
+
+	public void updateOrdinaryUserCreditDate(OrdinaryUser user, Calendar calendar) throws SQLException {
+		PreparedStatement statement = conn
+				.prepareStatement("update OrdinaryUser SET day = ?, month = ?, year = ? where userid = ?;");
+		statement.setInt(1, calendar.get(Calendar.DAY_OF_MONTH));
+		statement.setInt(2, calendar.get(Calendar.MONTH) + 12);
+		statement.setInt(3, calendar.get(Calendar.YEAR) - 1);
+		statement.setInt(4, user.getUserID());
 		statement.execute();
 	}
 

@@ -234,6 +234,7 @@ public class MenuView extends View {
 				break;
 
 			case "Logout":
+				
 				image.setIcon(new ImageIcon("12AngryMen.jpg")); // Set to default photo
 				controller.changeVisibility("login");
 				break;
