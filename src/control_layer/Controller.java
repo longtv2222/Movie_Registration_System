@@ -81,7 +81,8 @@ public class Controller {
 
 			//String[] sendto = new String[] {"ensf480finalprojectemail@gmail.com"};
 		  //SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&",sendto
-					//, "Whatssssssssgood", "Test");
+		
+		/*//, "Whatssssssssgood", "Test");
 		try {
 			SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&","ensf480finalprojectemail@gmail.com", ""
 						, "Whatssssssssgood", "Test");
@@ -92,6 +93,7 @@ public class Controller {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 		
 	}
 	
@@ -208,7 +210,7 @@ public class Controller {
 		Iterator itMovie = movieList.entrySet().iterator();
 		while (itMovie.hasNext()) {
 			Map.Entry<Integer, Movie> pair = (Map.Entry) itMovie.next();
-			if(pair.getValue().getMovieName() == theatreStr) {
+			if(pair.getValue().getMovieName() == movieStr) {
 				movie = pair.getValue();
 				break;
 			}
@@ -267,6 +269,25 @@ public class Controller {
 			
 			//Send to Database
 			reserveSeat(theatreID, roomID, viewing, x, y);
+			
+			
+			//Send reciept
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append("To : "+ user.getUserID() + "\n" +
+					  "Movie: " + movie.getMovieName() + "\n" +
+					  "Theatre: " + theatre.getTheatreID() + "\n" +
+					  "Time: " + viewing.getCalendar().get(Calendar.MONTH) + "/" + viewing.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" +viewing.getCalendar().get(Calendar.YEAR) +
+					  " " + viewing.getCalendar().get(Calendar.HOUR_OF_DAY) + ":" + viewing.getCalendar().get(Calendar.MINUTE) + "\n" +
+					  "Amount Paid: " + movie.getPrice() + "\n");
+			
+			try {
+				SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&","ensf480finalprojectemail@gmail.com", ""
+						, "Your Movie Purchase", sb.toString());
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -32,4 +32,8 @@ public class Movie {
 	public boolean getMoviePublic() {
 		return isPublic;
 	}
+	
+	public double getPrice() {
+		return price;
+	}
 }
