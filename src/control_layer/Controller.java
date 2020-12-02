@@ -20,6 +20,7 @@ import presentation_layer.ReservationView;
 
 import java.awt.CardLayout;
 import java.sql.SQLException;
+import java.time.LocalDate;
 //Library import
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,13 +61,6 @@ public class Controller {
 		GUI = new JFrame("Movie Reservation Application");
 		GUI.setResizable(false);
 		// Intialize Day timer for sending reciepts
-		timer = new Timer();
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-
-			}
-		}, 1);
 	}
 
 	/**
@@ -461,6 +455,20 @@ public class Controller {
 				((RegisteredUser) user).setPassword(password);
 				user.setIsRegistered(true);
 
+				timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						int day = ((RegisteredUser) user).getCalendar().get(Calendar.DAY_OF_MONTH);
+						int month = ((RegisteredUser) user).getCalendar().get(Calendar.MONTH) + 12;
+						int year = ((RegisteredUser) user).getCalendar().get(Calendar.YEAR) - 1;
+						LocalDate today = LocalDate.now();
+
+						if (today.getDayOfMonth() == day && month == today.getMonthValue() && today.getYear() == year) {
+							// Send email
+						}
+					}
+				}, 1);
 				return true;
 			} else {
 				return false;
