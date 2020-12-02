@@ -20,6 +20,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import control_layer.Controller;
+import data_layer.OrdinaryUser;
 import data_layer.Reservation;
 
 public class ReservationView extends View{
@@ -74,7 +75,13 @@ public class ReservationView extends View{
 					StringBuilder sb = new StringBuilder();
 					sb.append("You have cancelled your ticket for " + reservations.get(index).getViewing().getMovie().getMovieName() + 
 							" on: " + reservations.get(index).getViewing().getCalendar().get(Calendar.MONTH) + "/" + reservations.get(index).getViewing().getCalendar().get(Calendar.DAY_OF_MONTH));
+					if(!controller.getUser().getIsRegistered()) {
+						double credit=((OrdinaryUser)controller.getUser()).getCredit();
+						((OrdinaryUser)controller.getUser()).setCredit(credit+reservations.get(index).getViewing().getMovie().getPrice()*0.85);
+					}
+					
 					if(controller.cancelReservation(reservations.get(index))) {
+						
 						try {
 							
 							controller.SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&","ensf480finalprojectemail@gmail.com", ""

@@ -3,6 +3,7 @@ package control_layer;
 //Class import
 import data_layer.DBManager;
 import data_layer.Movie;
+import data_layer.OrdinaryUser;
 import data_layer.RegisteredUser;
 import data_layer.Reservation;
 import data_layer.Room;
@@ -272,6 +273,9 @@ public class Controller {
 				user.getReservations().remove(r);
 				r.getViewing().removeReservation(r.getX(), r.getY());
 				DBManager.getInstance().removeReservation(r, this.getUser().getUserID());
+				if(!user.getIsRegistered()) {
+				DBManager.getInstance().updateOrdinaryUserCreditDate((OrdinaryUser)user, r.getViewing().getCalendar());
+				}
 				return true;
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -474,6 +478,28 @@ public class Controller {
 		try {
 			this.user = DBManager.getInstance().getOrdinaryUser(email);
 			DBManager.getInstance().populateUserReservation(user, theaterList, movieList); // Populate reservation.
+			
+			Calendar r =((OrdinaryUser)user).getCalendar();
+			int[] res = { (r.get(Calendar.YEAR) - 1),
+					(r.get(Calendar.MONTH) + 12),
+					r.get(Calendar.DAY_OF_MONTH),
+					r.get(Calendar.HOUR_OF_DAY),
+					r.get(Calendar.MINUTE) };
+			Calendar calendar = Calendar.getInstance();
+
+			int year = res[0] - calendar.get(Calendar.YEAR);
+			int month = res[1] - (calendar.get(Calendar.MONTH) + 1);
+			int day = res[2] - calendar.get(Calendar.DAY_OF_MONTH);
+			int hour = res[3] - calendar.get(Calendar.HOUR_OF_DAY);
+
+			int time = year * 8760 + month * 730 + day * 24 + hour;
+			System.out.println(year + "+" + month + "+" + day + "+" + hour);
+
+			if (time < 8759) {
+				((OrdinaryUser)user).setCredit(0);
+			} else {
+				
+			}
 			return true;
 		} catch (SQLException e) {
 			//System.out.println("User with given email already existed!");
