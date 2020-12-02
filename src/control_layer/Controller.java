@@ -29,6 +29,7 @@ import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.mail.MessagingException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -56,6 +57,18 @@ public class Controller {
 			    System.out.println("D");
 			  }
 			}, 1);
+		
+		
+		
+		//Testing Email
+		try {
+			Email.Send("ensf480finalprojectemail", "ensfpassword1&", "ensf480finalprojectemail@gmail.com"
+					, "Whats good", "Test");
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	/*
@@ -180,6 +193,10 @@ public class Controller {
 		}
 	}
 	
+	
+	public void email(String emailWords, String email) {
+		 
+	}
 	
 	public void cancelReservation(Reservation r) {
 		user.getReservations().remove(r);
