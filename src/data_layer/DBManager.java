@@ -241,7 +241,6 @@ public class DBManager {
 			double price = rs.getDouble("price");
 			int duration = rs.getInt("duration");
 			boolean isPublic = rs.getBoolean("isPublic");
-			System.out.println(isPublic);
 			movieList.put(movie_id, new Movie(movie_id, movie_name, price, duration, isPublic));
 		}
 	}
@@ -302,7 +301,6 @@ public class DBManager {
 			user.setUserID(rs.getInt(1)); // Get user id, can't use name because it will be ambiguous
 			user.setEmail(rs.getString("email"));
 			user.setCredit(rs.getDouble("credit"));
-			System.out.println("a");
 		} else { // If user is not in the database
 			// Create user with given email
 			PreparedStatement statement2 = conn.prepareStatement("INSERT INTO User(email) VALUES (?)");

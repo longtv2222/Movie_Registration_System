@@ -179,7 +179,6 @@ public class MenuView extends View {
 			switch (e.getActionCommand()) {
 
 			case "comboBoxChanged":
-				System.out.println(((JComboBox) e.getSource()).getName());
 				switch (((JComboBox) e.getSource()).getName()) {
 				case "Theatres CB":
 					selectedTheatre = (String) CB_Theatres.getSelectedItem();
@@ -192,7 +191,6 @@ public class MenuView extends View {
 					changeComboBox(CB_Times, ans.split("\n"), selectedTime);
 					selectedTime = (String) CB_Times.getItemAt(0);
 
-					System.out.println(selectedMovie);
 					if (selectedMovie.trim().equals("Blade Runner"))
 						image.setIcon(new ImageIcon("BladeRunner.jpg"));
 					else if (selectedMovie.trim().equals("12 Angry Men"))

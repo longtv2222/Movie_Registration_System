@@ -102,8 +102,6 @@ public class SeatView extends View {
 					if (user != null) {
 						// Check if user already has reservations
 						for (Reservation r : user.getReservations()) {
-							System.out.println(i + "  num " + j);
-							System.out.println(r.getX() + " res " + r.getY());
 							if (r.getX() == i && r.getY() == j) { // Means it's this user's reservation
 								seats.get(i).get(j).setBackground(java.awt.Color.green);
 								break;
@@ -147,7 +145,6 @@ public class SeatView extends View {
 			int[] ss = new int[2];
 			ss[0] = Integer.parseInt((e.getActionCommand()).split(",")[0]);
 			ss[1] = Integer.parseInt((e.getActionCommand()).split(",")[1]);
-			// System.out.println(seats.get(ss[0]).get(ss[1]).getBackground());
 
 			// Not selected
 			if (seats.get(ss[0]).get(ss[1]).getBackground() == java.awt.Color.lightGray) {
@@ -165,7 +162,6 @@ public class SeatView extends View {
 				selectedSeat[1] = -1;
 			}
 
-			System.out.println(selectedSeat[0] + " " + selectedSeat[1]);
 
 			break;
 

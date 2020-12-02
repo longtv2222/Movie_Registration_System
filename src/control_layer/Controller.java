@@ -63,7 +63,7 @@ public class Controller {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				System.out.println("D");
+
 			}
 		}, 1);
 	}
@@ -202,9 +202,6 @@ public class Controller {
 			ArrayList<Viewing> viewings = theatre.getRoom().get((int) pair.getKey()).getArrViewing();
 
 			for (Viewing v : viewings) {
-				System.out.println(v.getMovie().getMovieName() + " " + v.getCalendar().get(Calendar.HOUR_OF_DAY) + " "
-						+ v.getCalendar().get(Calendar.MINUTE));
-				System.out.println(hours + " " + minutes);
 				// true if found correct viewing
 				if (v.getMovie().getMovieName() == movieStr && v.getCalendar().get(Calendar.HOUR_OF_DAY) == hours
 						&& v.getCalendar().get(Calendar.MINUTE) == minutes
@@ -272,7 +269,6 @@ public class Controller {
 		int hour = res[3] - calendar.get(Calendar.HOUR_OF_DAY);
 
 		int time = year * 8760 + month * 730 + day * 24 + hour;
-		System.out.println(year + "+" + month + "+" + day + "+" + hour);
 
 		if (time < 71) {
 			return false;
@@ -325,7 +321,6 @@ public class Controller {
 		// Find the correct theatre index based off name
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
-			// System.out.println(Theatre);
 			// If found get the selected theatre
 			if (((Theatre) pair.getValue()).getName() == Theatre) {
 				selectedTheatre = theaterList.get((int) pair.getKey());
@@ -372,7 +367,6 @@ public class Controller {
 		}
 
 		CardLayout cl = (CardLayout) (cards.getLayout());
-		System.out.println(visible);
 		cl.show(cards, visible);
 		GUI.repaint();
 	}
@@ -442,9 +436,6 @@ public class Controller {
 			ArrayList<Viewing> viewings = selectedTheatre.getRoom().get((int) pair.getKey()).getArrViewing();
 
 			for (Viewing v : viewings) {
-				System.out.println(v.getMovie().getMovieName() + " " + v.getCalendar().get(Calendar.HOUR_OF_DAY) + " "
-						+ v.getCalendar().get(Calendar.MINUTE));
-				System.out.println(hours + " " + minutes);
 				// true if found correct viewing
 				if (v.getMovie().getMovieName() == mv && v.getCalendar().get(Calendar.HOUR_OF_DAY) == hours
 						&& v.getCalendar().get(Calendar.MINUTE) == minutes
@@ -473,11 +464,9 @@ public class Controller {
 
 				return true;
 			} else {
-				System.out.println("Login failed! Your password or your username is wrong");
 				return false;
 			}
 		} catch (SQLException e) {
-			System.out.println("Login failed! Your password or your username is wrong");
 			e.printStackTrace();
 			return false;
 		}
@@ -493,8 +482,8 @@ public class Controller {
 			DBManager.getInstance().populateUserReservation(user, theaterList, movieList); // Populate reservation.
 			return true;
 		} catch (SQLException e) {
-			System.out.println("User with given email already existed!");
-			e.printStackTrace();
+			//System.out.println("User with given email already existed!");
+			//e.printStackTrace();
 			return false;
 		}
 	}
