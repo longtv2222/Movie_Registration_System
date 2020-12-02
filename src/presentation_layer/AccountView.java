@@ -73,13 +73,6 @@ public class AccountView extends View {
 		BTN_NextCC.addActionListener(this);
 		BTN_Reservations.addActionListener(this);
 
-		// Adding components
-		// panel_username.add(LB_Username);
-		// panel_username.add(TF_Username);
-
-		// panel_password.add(LB_Password);
-		// panel_password.add(TF_Password);
-
 		panel_Info.add(new JLabel(""));
 		panel_Info.add(new JLabel(""));
 
@@ -138,7 +131,7 @@ public class AccountView extends View {
 		accountNumList = new ArrayList<String>();
 		ccvList = new ArrayList<String>();
 		expiryList = new ArrayList<String>();
-		
+
 		TF_Username.setText("");
 		TF_Password.setText("");
 		TF_RegDate.setText("");
@@ -147,12 +140,11 @@ public class AccountView extends View {
 		TF_CCV.setText("");
 		TF_ExpiryDate.setText("");
 	}
-	
+
 	public void loadAllInfo() {
 		User u = controller.getUser();
-		clearAll(); //clears old stuff
-		
-		
+		clearAll(); // clears old stuff
+
 		TF_Username.setText(String.valueOf(u.getUserID()));
 		TF_Email.setText(u.getEmail());
 
@@ -191,27 +183,30 @@ public class AccountView extends View {
 		switch (e.getActionCommand()) {
 
 		case "Save Changes":
-			ReservationView x = new ReservationView(controller);
+
 			break;
 
 		case "My Reservations":
-			if(!controller.getUser().getIsRegistered()) {
-				JOptionPane.showMessageDialog(null, "WARNING:\n	15% Admin fee will be applied to any cancellations since you are not a registered user!");
+			if (!controller.getUser().getIsRegistered()) {
+				JOptionPane.showMessageDialog(null,
+						"WARNING:\n	15% Admin fee will be applied to any cancellations since you are not a registered user!");
 			}
 			controller.changeVisibility("reservations");
 			break;
-			
+
 		case "Return":
 			controller.changeVisibility("menu");
 			break;
 
 		case "Next Credit Card":
+
 			TF_CreditCard.setText(accountNumList.get(currentCard));
 			TF_CCV.setText(ccvList.get(currentCard));
 			TF_ExpiryDate.setText(expiryList.get(currentCard));
 			currentCard++;
 			if (currentCard >= ccvList.size())
 				currentCard = 0;
+
 			break;
 		}
 	}

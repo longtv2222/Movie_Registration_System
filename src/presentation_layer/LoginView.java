@@ -6,12 +6,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 import control_layer.Controller;
 
 public class LoginView extends View {
 	private TextField username;
-	private TextField password;
+	private JPasswordField password;
 	private JLabel usernameText;
 	private JLabel passwordText;
 	private String user;
@@ -23,7 +24,7 @@ public class LoginView extends View {
 
 		username = new TextField(20);
 		username.setBounds(100, 30, 200, 25);
-		password = new TextField(20);
+		password = new JPasswordField(20);
 		password.setBounds(100, 80, 200, 25);
 		usernameText = new JLabel("User");
 		usernameText.setBounds(20, 30, 30, 25);
@@ -59,20 +60,20 @@ public class LoginView extends View {
 			boolean status = false;
 			if (pass.isEmpty()) {
 				status = controller.validateOrdinaryUser(user);
-				if(status)
+				if (status)
 					JOptionPane.showMessageDialog(null, "Ordinary user logged in succesfully");
 				else
 					JOptionPane.showMessageDialog(null, "Login Failed");
 			} else {
 				status = controller.validateRegisteredUser(user, pass);
-				if(status)
+				if (status)
 					JOptionPane.showMessageDialog(null, "Registered user logged in succesfully");
 				else
 					JOptionPane.showMessageDialog(null, "Login Failed");
 			}
-			if(status)
+			if (status)
 				controller.changeVisibility("menu");
-			
+
 			break;
 		}
 
