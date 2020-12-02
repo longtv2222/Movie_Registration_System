@@ -33,6 +33,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.mail.Message;
+
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.AddressException;
@@ -42,8 +43,13 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import java.util.Properties;
+
+import javax.mail.*;
+import javax.mail.internet.MimeMessage;
+
+
 import com.sun.mail.smtp.SMTPTransport;
-import com.sun.net.ssl.*;
 
 public class Controller {
 	private HashMap<Integer, Theatre> theaterList;
@@ -72,9 +78,16 @@ public class Controller {
 		
 		
 		//Testing Email
+
+			//String[] sendto = new String[] {"ensf480finalprojectemail@gmail.com"};
+		  //SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&",sendto
+					//, "Whatssssssssgood", "Test");
 		try {
-		  SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&", "ensf480finalprojectemail@gmail.com", ""
-					, "Whatssssssssgood", "Test");
+			SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&","ensf480finalprojectemail@gmail.com", ""
+						, "Whatssssssssgood", "Test");
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,17 +95,66 @@ public class Controller {
 		
 	}
 	
+	public void sendMovieReceipt() {
+		
+	}
+	
+	
 	/**
 	 * CODE FOR THIS FUNCTION BASED ON doraemon's stackoverflow post as seen here:
 	 * @source https://stackoverflow.com/questions/3649014/send-email-using-java
 	 * 
 	 */
+	/*
+	public void SendEmail(String from, String pass, String[] to, String subject, String body){
+		Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", from);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(props);
+        javax.mail.internet.MimeMessage message = new javax.mail.internet.MimeMessage(session);
+
+        try {
+            message.setFrom(new InternetAddress(from));
+            InternetAddress[] toAddress = new InternetAddress[to.length];
+
+            // To get the array of addresses
+            for( int i = 0; i < to.length; i++ ) {
+                toAddress[i] = new InternetAddress(to[i]);
+            }
+
+            for( int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+
+            message.setSubject(subject);
+            message.setText(body);
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        }
+        catch (AddressException ae) {
+            ae.printStackTrace();
+        }
+        catch (MessagingException me) {
+            me.printStackTrace();
+        }
+	  }
+	  */
+	
+	
     public void SendEmail(String username, String password, String recipientEmail, String ccEmail, String title, String message)
     throws AddressException, MessagingException 
     {
     	String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
     	SMTPTransport t;
-    	MimeMessage msg;
+    	javax.mail.internet.MimeMessage msg;
     	//Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         
 
@@ -107,10 +169,10 @@ public class Controller {
 
         props.put("mail.smtps.quitwait", "false");
 
-        Session session = Session.getInstance(props, null);
+        javax.mail.Session session = javax.mail.Session.getInstance(props, null);
 
         //Create a new message
-        msg = new MimeMessage(session);
+        msg = new javax.mail.internet.MimeMessage(session);
 
         //Set the FROM and TO fields
         msg.setFrom(new InternetAddress(username));
