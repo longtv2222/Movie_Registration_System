@@ -22,6 +22,7 @@ import java.sql.SQLException;
 //Library import
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,6 +33,14 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.sun.mail.smtp.SMTPTransport;
+
+import javax.mail.*;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
+import java.util.Properties;
 
 public class Controller {
 	private HashMap<Integer, Theatre> theaterList;
@@ -58,6 +67,55 @@ public class Controller {
 		}, 1);
 	}
 
+	
+	/**
+	 * CODE FOR THIS FUNCTION BASED ON doraemon's stackoverflow post as seen here:
+	 * @source https://stackoverflow.com/questions/3649014/send-email-using-java
+	 * 
+	 */
+    public void SendEmail(String username, String password, String recipientEmail, String ccEmail, String title, String message)
+    throws AddressException, MessagingException 
+    {
+    	String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+    	SMTPTransport t;
+    	javax.mail.internet.MimeMessage msg;
+    	//Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+        
+
+        // Get a Properties object
+        Properties props = System.getProperties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        //props.put("mail.smtps.quitwait", "false");
+
+        javax.mail.Session session = javax.mail.Session.getInstance(props, null);
+
+        //Create a new message
+        msg = new javax.mail.internet.MimeMessage(session);
+
+        //Set the FROM and TO fields
+        msg.setFrom(new InternetAddress(username));
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
+
+        if (ccEmail.length() > 0) {
+            msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
+        }
+
+        msg.setSubject(title);
+        msg.setText(message, "utf-8");
+        msg.setSentDate(new Date());
+//
+        t = (SMTPTransport)session.getTransport("smtps");
+
+        t.connect("smtp.gmail.com", username, password);
+        t.sendMessage(msg, msg.getAllRecipients());      
+        t.close();
+    }
+	
 	/*
 	 * Load all information about theater, movie to java object.
 	 */
@@ -116,7 +174,7 @@ public class Controller {
 		Iterator<Entry<Integer, Movie>> itMovie = movieList.entrySet().iterator();
 		while (itMovie.hasNext()) {
 			Map.Entry<Integer, Movie> pair = itMovie.next();
-			if (pair.getValue().getMovieName() == theatreStr) {
+			if (pair.getValue().getMovieName() == movieStr) {
 				movie = pair.getValue();
 				break;
 			}
@@ -163,17 +221,38 @@ public class Controller {
 		// viewing
 		if (viewing.tooMuchRu() == true && user.getIsRegistered() == true) {
 			JOptionPane.showMessageDialog(null, "Too Many Registered Users!");
-		} else {
-			Reservation newRes = new Reservation(movie, theatre, room, viewing, 12.99, x, y);
-			if (user.getIsRegistered() == true)
+		} 
+		else {
+			Reservation newRes = new Reservation(movie,theatre,room,viewing,12.99,x,y);
+			if(user.getIsRegistered() == true)
 				user.addReservations(newRes);
-			viewing.addReservation(x, y, newRes);
-
-			// Updating View in case the user goes back
-			((SeatView) views.get(3)).displayReservations();
-
-			// Send to Database
+			viewing.addReservation(x,y,newRes);
+			
+			//Updating View in case the user goes back
+			((SeatView)views.get(3)).displayReservations();
+			
+			
+			//Send to Database
 			reserveSeat(theatreID, roomID, viewing, x, y);
+			
+			
+			//Send reciept
+			StringBuilder sb = new StringBuilder();
+			
+			sb.append("To : "+ user.getUserID() + "\n" +
+					  "Movie: " + movie.getMovieName() + "\n" +
+					  "Theatre: " + theatre.getTheatreID() + "\n" +
+					  "Time: " + viewing.getCalendar().get(Calendar.MONTH) + "/" + viewing.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" +viewing.getCalendar().get(Calendar.YEAR) +
+					  " " + viewing.getCalendar().get(Calendar.HOUR_OF_DAY) + ":" + viewing.getCalendar().get(Calendar.MINUTE) + "\n" +
+					  "Amount Paid: " + movie.getPrice() + "\n");
+			
+			try {
+				SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&","ensf480finalprojectemail@gmail.com", ""
+						, "Your Movie Purchase", sb.toString());
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
