@@ -2,6 +2,7 @@ package data_layer;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class OrdinaryUser extends User {
 	private double credit;
@@ -14,7 +15,8 @@ public class OrdinaryUser extends User {
 
 	public OrdinaryUser() {
 		super();
-		calendar = null;
+		calendar = new GregorianCalendar();
+		calendar.clear();
 		credit = 0;
 	}
 
