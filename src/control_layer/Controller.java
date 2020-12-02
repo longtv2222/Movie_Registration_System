@@ -50,6 +50,7 @@ public class Controller {
 	private JFrame GUI;
 	private JPanel cards;
 	private Timer timer;
+	private int TicketNumber = 1000000;
 
 	public Controller(HashMap<Integer, Theatre> theaterList, HashMap<Integer, Movie> movieList) {
 		this.theaterList = theaterList;
@@ -242,9 +243,10 @@ public class Controller {
 			sb.append("To : "+ user.getUserID() + "\n" +
 					  "Movie: " + movie.getMovieName() + "\n" +
 					  "Theatre: " + theatre.getTheatreID() + "\n" +
-					  "Time: " + viewing.getCalendar().get(Calendar.MONTH) + "/" + viewing.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" +viewing.getCalendar().get(Calendar.YEAR) +
+					  "Showing Time: " + viewing.getCalendar().get(Calendar.MONTH) + "/" + viewing.getCalendar().get(Calendar.DAY_OF_MONTH) + "/" +viewing.getCalendar().get(Calendar.YEAR) +
 					  " " + viewing.getCalendar().get(Calendar.HOUR_OF_DAY) + ":" + viewing.getCalendar().get(Calendar.MINUTE) + "\n" +
-					  "Amount Paid: " + movie.getPrice() + "\n");
+					  "Amount Paid: " + movie.getPrice() + "\n" + 
+					  "Ticket Number:" + TicketNumber++ +"\n" );
 			
 			try {
 				SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&","ensf480finalprojectemail@gmail.com", ""
