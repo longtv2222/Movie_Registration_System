@@ -1,0 +1,9 @@
+If it isnt working you need to go into google account settings and enable less secure
+apps to communicate with your account.
+
+
+email:
+ensf480finalprojectemail@gmail.com
+
+password:
+ensfpassword1&
