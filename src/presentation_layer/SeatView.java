@@ -7,14 +7,13 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import control_layer.Controller;
 import data_layer.Reservation;
-import data_layer.Room;
 import data_layer.User;
 import data_layer.Viewing;
 

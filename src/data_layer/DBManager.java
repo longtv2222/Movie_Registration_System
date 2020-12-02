@@ -131,7 +131,7 @@ public class DBManager {
 	private void createOrdinaryUserTable() throws SQLException {
 		Statement state = conn.createStatement();
 		state.execute(
-				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer UNIQUE references User(userid)  ON DELETE CASCADE);");
+				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer UNIQUE references User(userid)  ON DELETE CASCADE, credit DOUBLE);");
 	}
 
 	private void createRegisteredUserTable() throws SQLException {
@@ -301,6 +301,7 @@ public class DBManager {
 		if (rs.next()) { // If there's 1 record of user in the database
 			user.setUserID(rs.getInt(1)); // Get user id, can't use name because it will be ambiguous
 			user.setEmail(rs.getString("email"));
+			user.setCredit(rs.getDouble("credit"));
 		} else { // If user is not in the database
 			// Create user with given email
 			PreparedStatement statement2 = conn.prepareStatement("INSERT INTO User(email) VALUES (?)");
@@ -311,8 +312,10 @@ public class DBManager {
 			ResultSet rs2 = statement3.executeQuery("SELECT LAST_INSERT_ROWID();");
 			int userId = rs2.getInt(1);// Get id from the database
 			user.setUserID(userId); // Set id to user
+			user.setCredit(0);
 			PreparedStatement statement4 = conn.prepareStatement("INSERT INTO OrdinaryUser(userid) VALUES (?)");
 			statement4.setInt(1, userId); // Insert this user to ordinary user table
+
 			statement4.execute();
 		}
 
