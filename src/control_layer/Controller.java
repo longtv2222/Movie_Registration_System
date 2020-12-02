@@ -72,7 +72,7 @@ public class Controller {
 		
 		//Testing Email
 		try {
-		  Send("ensf480finalprojectemail", "ensfpassword1&", "ensf480finalprojectemail@gmail.com", ""
+		  SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&", "ensf480finalprojectemail@gmail.com", ""
 					, "Whats good", "Test");
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
@@ -86,7 +86,9 @@ public class Controller {
 	 * @source https://stackoverflow.com/questions/3649014/send-email-using-java
 	 * 
 	 */
-    public void Send(final String username, final String password, String recipientEmail, String ccEmail, String title, String message) throws AddressException, MessagingException {
+    public void SendEmail(String username, String password, String recipientEmail, String ccEmail, String title, String message)
+    throws AddressException, MessagingException 
+    {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
@@ -99,23 +101,15 @@ public class Controller {
         props.setProperty("mail.smtp.socketFactory.port", "465");
         props.setProperty("mail.smtps.auth", "true");
 
-        /*
-        If set to false, the QUIT command is sent and the connection is immediately closed. If set 
-        to true (the default), causes the transport to wait for the response to the QUIT command.
-
-        ref :   http://java.sun.com/products/javamail/javadocs/com/sun/mail/smtp/package-summary.html
-                http://forum.java.sun.com/thread.jspa?threadID=5205249
-                smtpsend.java - demo program from javamail
-        */
         props.put("mail.smtps.quitwait", "false");
 
         Session session = Session.getInstance(props, null);
 
-        // -- Create a new message --
+        //Create a new message
         final MimeMessage msg = new MimeMessage(session);
 
-        // -- Set the FROM and TO fields --
-        msg.setFrom(new InternetAddress(username + "@gmail.com"));
+        //Set the FROM and TO fields
+        msg.setFrom(new InternetAddress(username));
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
 
         if (ccEmail.length() > 0) {
