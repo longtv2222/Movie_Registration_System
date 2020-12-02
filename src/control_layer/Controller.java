@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -468,7 +469,7 @@ public class Controller {
 							// Send email
 						}
 					}
-				}, 1);
+				}, TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
 				return true;
 			} else {
 				return false;
