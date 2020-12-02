@@ -400,4 +400,21 @@ public class DBManager {
 		statement.setInt(12, userID);
 		statement.execute();
 	}
+
+	public void removeReservation(Reservation r, int userID) throws SQLException {
+		PreparedStatement statement = conn.prepareStatement(
+				"DELETE from Reservation WHERE t_id = ? AND room_id = ? AND hour = ? AND minute = ? AND\r\n"
+						+ "month = ? AND day = ? AND year = ? AND x_cor = ? AND y_cor = ? AND userID = ?;");
+		statement.setInt(1, r.getTheatre().getTheatreID());
+		statement.setInt(2, r.getRoom().getroomID());
+		statement.setInt(3, r.getViewing().getCalendar().get(Calendar.HOUR_OF_DAY));
+		statement.setInt(4, r.getViewing().getCalendar().get(Calendar.MINUTE));
+		statement.setInt(5, r.getViewing().getCalendar().get(Calendar.MONTH) + 12);
+		statement.setInt(6, r.getViewing().getCalendar().get(Calendar.DAY_OF_MONTH));
+		statement.setInt(7, r.getViewing().getCalendar().get(Calendar.YEAR) - 1);
+		statement.setInt(8, r.getX());
+		statement.setInt(9, r.getY());
+		statement.setInt(10, userID);
+		statement.execute();
+	}
 }

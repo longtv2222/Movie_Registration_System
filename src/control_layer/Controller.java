@@ -72,9 +72,9 @@ public class Controller {
 	}
 
 	public boolean isMoviePublic(String name) {
-		Iterator itMovie = movieList.entrySet().iterator();
+		Iterator<Entry<Integer, Movie>> itMovie = movieList.entrySet().iterator();
 		while (itMovie.hasNext()) {
-			Map.Entry<Integer, Movie> pair = (Map.Entry) itMovie.next();
+			Map.Entry<Integer, Movie> pair = itMovie.next();
 			if (pair.getValue().getMovieName() == name) {
 				if (pair.getValue().getMoviePublic() == true)
 					return true;
@@ -102,9 +102,9 @@ public class Controller {
 		String timeStr = ((MenuView) views.get(1)).getSelectedTime();
 
 		// Find Correct Value
-		Iterator itTheatre = theaterList.entrySet().iterator();
+		Iterator<Entry<Integer, Theatre>> itTheatre = theaterList.entrySet().iterator();
 		while (itTheatre.hasNext()) {
-			Map.Entry<Integer, Theatre> pair = (Map.Entry) itTheatre.next();
+			Map.Entry<Integer, Theatre> pair = itTheatre.next();
 			if (pair.getValue().getName() == theatreStr) {
 				theatre = pair.getValue();
 				theatreID = (int) pair.getKey();
@@ -113,9 +113,9 @@ public class Controller {
 		}
 
 		// Find Correct Movie
-		Iterator itMovie = movieList.entrySet().iterator();
+		Iterator<Entry<Integer, Movie>> itMovie = movieList.entrySet().iterator();
 		while (itMovie.hasNext()) {
-			Map.Entry<Integer, Movie> pair = (Map.Entry) itMovie.next();
+			Map.Entry<Integer, Movie> pair = itMovie.next();
 			if (pair.getValue().getMovieName() == theatreStr) {
 				movie = pair.getValue();
 				break;
@@ -133,9 +133,9 @@ public class Controller {
 		int minutes = Integer.parseInt(time.split(":")[1]);
 
 		boolean exit = false;
-		Iterator itroom = theatre.getAllRooms().entrySet().iterator();
+		Iterator<Entry<Integer, Room>> itroom = theatre.getAllRooms().entrySet().iterator();
 		while (itroom.hasNext() && exit == false) {
-			Map.Entry pair = (Map.Entry) itroom.next();
+			Map.Entry<Integer, Room> pair = itroom.next();
 
 			room = (Room) pair.getValue();
 			roomID = (int) pair.getKey();
@@ -178,8 +178,13 @@ public class Controller {
 	}
 
 	public void cancelReservation(Reservation r) {
-		user.getReservations().remove(r);
-		r.getViewing().removeReservation(r.getX(), r.getY());
+		try {
+			user.getReservations().remove(r);
+			r.getViewing().removeReservation(r.getX(), r.getY());
+			DBManager.getInstance().removeReservation(r, this.getUser().getUserID());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// Functions to update the Menu Screen
