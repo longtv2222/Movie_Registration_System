@@ -455,34 +455,19 @@ public class Controller {
 				// indicate in parent class that is registered
 				((RegisteredUser) user).setPassword(password);
 				user.setIsRegistered(true);
-				/*
-				timer = new Timer();
-				timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						int day = ((RegisteredUser) user).getCalendar().get(Calendar.DAY_OF_MONTH);
-						int month = ((RegisteredUser) user).getCalendar().get(Calendar.MONTH) + 12;
-						int year = ((RegisteredUser) user).getCalendar().get(Calendar.YEAR) - 1;
-						LocalDate today = LocalDate.now();
 
-						if (today.getDayOfMonth() == day && month == today.getMonthValue() && today.getYear() == year) {
-							// Send email
-						}
-					}
-				}, TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
-				*/
-				//Check if they have to pay
-				System.out.println("DDDDDDDDD");
-				boolean payedDues = ((RegisteredUser)user).createAnnualInvoice();
-				if(payedDues == true)
+				// Check if they have to pay
+				boolean payedDues = ((RegisteredUser) user).createAnnualInvoice();
+				if (payedDues == true)
 					return true;
 				else {
 					JOptionPane.showMessageDialog(null, "Please pay your yearly dues");
-					SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&", "ensf480finalprojectemail@gmail.com",
-							"", "Yearly Fee Due", "Please mail in your 40 dollars to Cineplex to regain your registered user status");
+					SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&",
+							"ensf480finalprojectemail@gmail.com", "", "Yearly Fee Due",
+							"Please mail in your 40 dollars to Cineplex to regain your registered user status");
 					return false;
 				}
-				
+
 			} else {
 				return false;
 			}

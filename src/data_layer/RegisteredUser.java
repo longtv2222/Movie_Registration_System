@@ -28,18 +28,17 @@ public class RegisteredUser extends User {
 	}
 
 	public boolean createAnnualInvoice() {
-		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+
 		Calendar today = Calendar.getInstance();
-		
-		
-		System.out.println("DDDDDDDDDDDDDDD");
-		
-		if(today.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH) && today.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
-				&& today.get(Calendar.YEAR)>= calendar.get(Calendar.YEAR)) {
+
+		if (today.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)
+				&& today.get(Calendar.MONTH) + 1 == calendar.get(Calendar.MONTH) + 12
+				&& today.get(Calendar.YEAR) >= calendar.get(Calendar.YEAR) - 1) {
 			return false;
-		}
-		else
+		} else {
 			return true;
+		}
+
 	}
 
 	public void setDayMonthYear(int day, int month, int year) {

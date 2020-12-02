@@ -3,6 +3,9 @@ package presentation_layer;
 import java.awt.Graphics;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -65,7 +68,14 @@ public class LoginView extends View {
 				else
 					JOptionPane.showMessageDialog(null, "Login Failed");
 			} else {
-				status = controller.validateRegisteredUser(user, pass);
+				try {
+					status = controller.validateRegisteredUser(user, pass);
+				} catch (AddressException e1) {
+					e1.printStackTrace();
+				} catch (MessagingException e1) {
+					e1.printStackTrace();
+				}
+
 				if (status)
 					JOptionPane.showMessageDialog(null, "Registered user logged in succesfully");
 				else
