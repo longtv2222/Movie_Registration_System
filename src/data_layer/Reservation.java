@@ -45,7 +45,7 @@ public class Reservation {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.movie.getMovieName() + " ");
+		//sb.append(this.movie.getMovieName() + " ");
 		sb.append(this.getViewing().getCalendar().get(Calendar.YEAR) - 1 + "/"
 				+ (this.getViewing().getCalendar().get(Calendar.MONTH) + 12) + "/"
 				+ this.getViewing().getCalendar().get(Calendar.DAY_OF_MONTH) + " "
