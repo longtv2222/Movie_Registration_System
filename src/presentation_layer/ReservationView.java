@@ -5,7 +5,9 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import javax.mail.MessagingException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -69,7 +71,15 @@ public class ReservationView extends View{
 					JOptionPane.showMessageDialog(null, "You have no reservations");
 				}else {
 				if(controller.cancelReservation(reservations.get(index))) {
-				JOptionPane.showMessageDialog(null, "Reservation Cancelled");
+					JOptionPane.showMessageDialog(null, "Reservation Cancelled");
+					try {
+						controller.SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&","ensf480finalprojectemail@gmail.com", ""
+								, "Your Cancellation", "You have cancelled your ticket for " + reservations.get(index-1).getViewing().getMovie().getMovieName() + 
+								" on: " + reservations.get(index-1).getViewing().getCalendar().get(Calendar.MONTH) + "/" + reservations.get(index-1).getViewing().getCalendar().get(Calendar.DAY_OF_MONTH));
+					} catch (MessagingException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}else {
 					JOptionPane.showMessageDialog(null, "Reservation Not Cancelled: Movie is within 72 hrs");
 				}
