@@ -10,6 +10,7 @@ import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -173,12 +174,15 @@ public class AccountView extends View {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		switch (e.getActionCommand()) {
-
+ 
 		case "Save Changes":
 			ReservationView x = new ReservationView(controller);
 			break;
 
 		case "My Reservations":
+			if(!controller.getUser().getIsRegistered()) {
+				JOptionPane.showMessageDialog(null, "WARNING:\n	15% Admin fee will be applied to any cancellations since you are not a registered user!");
+			}
 			controller.changeVisibility("reservations");
 			break;
 			
