@@ -443,7 +443,7 @@ public class Controller {
 		}
 	}
 
-	public boolean validateRegisteredUser(String email, String password) {
+	public boolean validateRegisteredUser(String email, String password) throws AddressException, MessagingException {
 		try {
 			if (DBManager.getInstance().validateRegisteredUser(email, password)) {
 				// Created an object of user with given database id.
@@ -455,7 +455,7 @@ public class Controller {
 				// indicate in parent class that is registered
 				((RegisteredUser) user).setPassword(password);
 				user.setIsRegistered(true);
-
+				/*
 				timer = new Timer();
 				timer.schedule(new TimerTask() {
 					@Override
@@ -470,7 +470,19 @@ public class Controller {
 						}
 					}
 				}, TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
-				return true;
+				*/
+				//Check if they have to pay
+				System.out.println("DDDDDDDDD");
+				boolean payedDues = ((RegisteredUser)user).createAnnualInvoice();
+				if(payedDues == true)
+					return true;
+				else {
+					JOptionPane.showMessageDialog(null, "Please pay your yearly dues");
+					SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&", "ensf480finalprojectemail@gmail.com",
+							"", "Yearly Fee Due", "Please mail in your 40 dollars to Cineplex to regain your registered user status");
+					return false;
+				}
+				
 			} else {
 				return false;
 			}
