@@ -74,7 +74,7 @@ public class Controller {
 		//Testing Email
 		try {
 		  SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&", "ensf480finalprojectemail@gmail.com", ""
-					, "Whats good", "Test");
+					, "Whatssssssssgood", "Test");
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,7 +93,7 @@ public class Controller {
     	String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
     	SMTPTransport t;
     	MimeMessage msg;
-    	Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+    	//Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         
 
         // Get a Properties object
@@ -123,7 +123,7 @@ public class Controller {
         msg.setSubject(title);
         msg.setText(message, "utf-8");
         msg.setSentDate(new Date());
-
+//
         t = (SMTPTransport)session.getTransport("smtps");
 
         t.connect("smtp.gmail.com", username, password);
