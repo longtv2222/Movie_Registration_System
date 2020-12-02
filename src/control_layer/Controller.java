@@ -43,6 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.sun.mail.smtp.SMTPTransport;
+import com.sun.net.ssl.*;
 
 public class Controller {
 	private HashMap<Integer, Theatre> theaterList;
