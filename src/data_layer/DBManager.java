@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 //Singleton class DBManager.
@@ -131,7 +132,7 @@ public class DBManager {
 	private void createOrdinaryUserTable() throws SQLException {
 		Statement state = conn.createStatement();
 		state.execute(
-				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer UNIQUE references User(userid)  ON DELETE CASCADE, credit DOUBLE);");
+				"CREATE TABLE IF NOT EXISTS OrdinaryUser (userid integer UNIQUE references User(userid)  ON DELETE CASCADE, credit DOUBLE, DAY INTEGER, MONTH INTEGER, YEAR INTEGER);");
 	}
 
 	private void createRegisteredUserTable() throws SQLException {
@@ -302,7 +303,11 @@ public class DBManager {
 			user.setUserID(rs.getInt(1)); // Get user id, can't use name because it will be ambiguous
 			user.setEmail(rs.getString("email"));
 			user.setCredit(rs.getDouble("credit"));
-			System.out.println("a");
+
+			Calendar calendar = new GregorianCalendar();
+			calendar.clear();
+			calendar.set(rs.getInt("Year"), rs.getInt("Month"), rs.getInt("Day"));
+			user.setCalendar(calendar);
 		} else { // If user is not in the database
 			// Create user with given email
 			PreparedStatement statement2 = conn.prepareStatement("INSERT INTO User(email) VALUES (?)");
