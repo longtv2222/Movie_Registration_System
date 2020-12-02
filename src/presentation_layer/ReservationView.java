@@ -70,17 +70,20 @@ public class ReservationView extends View{
 				if(reservations.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "You have no reservations");
 				}else {
-				if(controller.cancelReservation(reservations.get(index))) {
-					try {
-						
-						controller.SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&","ensf480finalprojectemail@gmail.com", ""
-								, "Your Cancellation", "You have cancelled your ticket for " + reservations.get(index-1).getViewing().getMovie().getMovieName() + 
-								" on: " + reservations.get(index-1).getViewing().getCalendar().get(Calendar.MONTH) + "/" + reservations.get(index-1).getViewing().getCalendar().get(Calendar.DAY_OF_MONTH));
-						JOptionPane.showMessageDialog(null, "Reservation Cancelled");
-					} catch (MessagingException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					//Must make the string before sending it
+					StringBuilder sb = new StringBuilder();
+					sb.append("You have cancelled your ticket for " + reservations.get(index).getViewing().getMovie().getMovieName() + 
+							" on: " + reservations.get(index).getViewing().getCalendar().get(Calendar.MONTH) + "/" + reservations.get(index).getViewing().getCalendar().get(Calendar.DAY_OF_MONTH));
+					if(controller.cancelReservation(reservations.get(index))) {
+						try {
+							
+							controller.SendEmail("ensf480finalprojectemail@gmail.com", "ensfpassword1&","ensf480finalprojectemail@gmail.com", ""
+									, "Your Cancellation", sb.toString());
+							JOptionPane.showMessageDialog(null, "Reservation Cancelled");
+						} catch (MessagingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 				}else {
 					JOptionPane.showMessageDialog(null, "Reservation Not Cancelled: Movie is within 72 hrs");
 				}
