@@ -82,15 +82,18 @@ public class Controller {
 	}
 	
 	/**
-	 * CODE FOR THIS SECTION BASED ON doraemon's stackoverflow post seen here:
+	 * CODE FOR THIS FUNCTION BASED ON doraemon's stackoverflow post as seen here:
 	 * @source https://stackoverflow.com/questions/3649014/send-email-using-java
 	 * 
 	 */
     public void SendEmail(String username, String password, String recipientEmail, String ccEmail, String title, String message)
     throws AddressException, MessagingException 
     {
-        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+    	String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+    	SMTPTransport t;
+    	MimeMessage msg;
+    	Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+        
 
         // Get a Properties object
         Properties props = System.getProperties();
@@ -106,7 +109,7 @@ public class Controller {
         Session session = Session.getInstance(props, null);
 
         //Create a new message
-        final MimeMessage msg = new MimeMessage(session);
+        msg = new MimeMessage(session);
 
         //Set the FROM and TO fields
         msg.setFrom(new InternetAddress(username));
@@ -120,7 +123,7 @@ public class Controller {
         msg.setText(message, "utf-8");
         msg.setSentDate(new Date());
 
-        SMTPTransport t = (SMTPTransport)session.getTransport("smtps");
+        t = (SMTPTransport)session.getTransport("smtps");
 
         t.connect("smtp.gmail.com", username, password);
         t.sendMessage(msg, msg.getAllRecipients());      
