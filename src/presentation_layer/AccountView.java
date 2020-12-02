@@ -134,14 +134,29 @@ public class AccountView extends View {
 		// frame.setVisible(true);
 	}
 
+	public void clearAll() {
+		accountNumList = new ArrayList<String>();
+		ccvList = new ArrayList<String>();
+		expiryList = new ArrayList<String>();
+		
+		TF_Username.setText("");
+		TF_Password.setText("");
+		TF_RegDate.setText("");
+		TF_Email.setText("");
+		TF_CreditCard.setText("");
+		TF_CCV.setText("");
+		TF_ExpiryDate.setText("");
+	}
+	
 	public void loadAllInfo() {
 		User u = controller.getUser();
-
+		clearAll(); //clears old stuff
+		
+		
 		TF_Username.setText(String.valueOf(u.getUserID()));
 		TF_Email.setText(u.getEmail());
 
 		for (Card c : u.getCards()) {
-			System.out.println("dd");
 			accountNumList.add(c.getAccountNumber());
 			ccvList.add(c.getCcv());
 			expiryList.add(
