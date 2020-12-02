@@ -38,7 +38,6 @@ public class Reservation {
 	public void changeTimeSlot(Calendar c) {
 	}
 
-
 	public String createReciept() {
 		return null;
 	}
@@ -63,11 +62,11 @@ public class Reservation {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
 	public int getX() {
 		return x_cor;
 	}
-	
+
 	public int getY() {
 		return y_cor;
 	}
@@ -95,5 +94,5 @@ public class Reservation {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-			
+
 }
