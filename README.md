@@ -1,6 +1,6 @@
 # Movie_Registration_System
 
-a Java desktop application allowing users to view and book movie ticket. 
+A Java desktop application allowing users to view and book movie ticket. 
 
 ## Build With
 - [Java](https://www.java.com/en/)
